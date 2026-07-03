@@ -1,0 +1,52 @@
+22
+3.2.4
+Multimodal Fusion Strategy
+A late fusion of the outputs of the branches is made at probability level. Each branch makes a class
+prediction, and the aggregated branch predictions are done using weights based on normalized
+AUROC and AUPRC statistics; an alternative combiner, called a logistic-regression meta-learner on
+branch probabilities, is also evaluated.
+The approach selected is late fusion and the reason for this is that the datasets are not patient-aligned.
+There were other options considered, early feature-level fusion and joint end-to-end fusion networks
+for multiple modalities, which could in principle learn the modalities' interaction in principle on the
+row level but were rejected because these would require creating patient equivalences in the data that
+were used for fusion, and would be fabricated, in violation of the no-fabrication principle of this study.
+A single-model alternative in which only the features of the MIMIC EHR was put into consideration,
+and serves as the backbone of the locked hospital model and Streamlit prototype, but because of its
+inability to address the multimodal integration objective, it was not selected as a separate research
+design. The positive side of late fusion is that it works without loss of functionality under a structural
+constraint of independent cohorts, it is independently trainable, auditable and replaceable and also has
+very low inference cost as fusion is taking place in the probability space. The downside is that, like, if
+you have aligned data, then there could be cross-modal feature interactions that a joint representation
+could learn but it can't learn here due to late fusion, this is explicitly stated. These modularities are
+clinically and deployable beneficial: the hospital, the population and the wearable branches can
+independently be improved when new data occurs, but due to the lack of an aligned cohort, it is not a
+clinically validated multimodal renal diagnosis system, but rather a deployable fusion protocol
+reported under proxy conditions.
+3.2.5
+Model Architecture and Selection
+Several models were explored for each of the tabular branches: calibrated logistic regression, Random
+Forest (400 trees, max depth 16, weighted 0.5 subsample for each class), XGBoost (400 estimators,
+max depth 5, learning rate 0.05, histogram method, positive class weighted), tabular MLP (128/64
+hidden units, ReLU, dropout 0.2, AdamW 1 × 10-3), and tabular Residual Network (128-dim
+projection, three layer-normalized residual blocks, AdamW 8 × 10-4, 50 epochs). Random Forest
+window-level statistics on wearable branch. The locked primary model for the hospital EHR branch
+was logistic regression with Platt (sigmoid) calibration of the validation prediction.
+The downside of the selected approach would be the training of deep tabular networks as opposed to
+good tree ensembles and the linear model as the main deep MIMIC classifier that is always calibrated.
+Recurrent and transformer-based EHR sequence models were considered, but end to end sequence
+models were not since EHR sequence modelling has been successfully applied in longitudinal studies
+[25], [28] but were felt to be very susceptible to over-fitting in this small cohort with a tabular
+admission-level representation where laboratories were already aggregated within the admission
+window, and do not substantially improve upon strong tabular baselines [23], [24]. The tree
+ensembles and deep networks that comprised the trained tabular models however gave slightly better
+ranking on the MIMIC test partition while calibrated logistic regression was much better, especially
+with regard to the most important criterion of ECE which is essential for a risk oriented decision
+support [14], [47]. For the wearable branch, Random Forest was the better algorithm as it can learn
+nonlinear patterns from low-dimensional window statistics without requiring large CKD-labelled
+wearable cohorts. The advantage of the main model selected is the low serving time, low and stable
+probabilities and easy understandable; the disadvantage is the slightly lower ranking results as
+compared with the optimal nonlinear models. Going on the positive side, the linear primary model is
+very cheap to train and deploy, which helps in the prototyping of Streamlit, and any batch-scoring
+pipeline generated at the end of the model trainings. Clinically calibrated (not just "good rank")
+probabilities are the appropriate way to prioritize for decision support, since the clinician's goal is to
+have a good estimate of the risk – see [14] for details.

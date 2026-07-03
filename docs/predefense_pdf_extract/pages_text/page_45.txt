@@ -1,0 +1,21 @@
+35
+structural data constraints, not a deployed diagnostic system.
+Overall, the project is best thought of as a research framework for branch-level leakage-aware,
+calibrated and explainable hospital admission risk-stratification, in view of branch-level evidence,
+SHAP review, and a Streamlit decision-support prototype. Before deployment to the real world, there
+would be need for prospective clinical validation as well as same patient multimodal data.
+4.4
+Summary
+A testing and evaluation infrastructure was introduced as a stepping stone to the implementation of
+the proposed multimodal CKD risk prediction framework and empirical results as part of the proposed
+framework was introduced in this chapter. This software stack, defensive design grouping and
+discrimination metrics, model calibration metrics and a phased testing process were also experimented
+with prior to reporting. Last, and certainly not least, a model, the sigmoid calibrated logistic
+regression, is a locked model that might have been applied in the main MIMIC cohort of admissions
+and these models are able to provide just as good, and indeed far better, baselines with much better
+probability reliability level. A more intensive patient-level validations of the multimodal approach
+were required, however, as well as limited usage of the proxy which is worn by patients with the
+WESAD system. Using SHAP analysis and Streamlit prototype, the explanation of the decision
+support was presented and visualised. The chapter emphasizes and illustrates and explains the case of:
+risk stratification evidence not necessarily used in patients, but based on the fact that a set of markers
+is present in the public data sets.

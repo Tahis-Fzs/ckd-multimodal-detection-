@@ -1,0 +1,3554 @@
+
+============================================================
+PAGE 1
+============================================================
+1
+A Deep Learning Framework for Early Detection
+of Chronic Kidney Disease: Integrating Multi-
+Modal Data from Wearable Devices and Clinical
+Records with Explainable AI
+By
+Md. Shadman Tahsin
+0242220005101461
+Md. Shadman Hasin
+0242220005101462
+FINAL YEAR DESIGN PROJECT REPORT
+This Report Presented in Partial Fulfillment of the Requirements for the
+Degree of Bachelor of Science in Computer Science and Engineering
+Supervised by
+Dr. Naznin Sultana
+Associate Professor
+Department of Computer Science and Engineering
+Daffodil International University
+Co-Supervised by
+Md. Abbas Ali Khan
+Assistant Professor
+Department of Computer Science and Engineering
+Daffodil International University
+DAFFODIL INTERNATIONAL UNIVERSITY
+Dhaka, Bangladesh
+July 06, 2026
+
+
+============================================================
+PAGE 2
+============================================================
+I
+APPROVAL
+This Project titled “A Deep Learning Framework for Early Detection of Chronic Kidney
+Disease: Integrating Multi-Modal Data from Wearable Devices and Clinical Records with
+Explainable AI, ” submitted by Md. Shadman Tahsin, ID: 0242220005101461 and Md.
+Shadman Hasin, ID: 0242220005101462 to the Department of Computer Science and
+Engineering, Daffodil International University, has been accepted as satisfactory for the partial
+fulfillment of the requirements for the degree of B.Sc. in Computer Science and Engineering
+and approved as to its style and contents. The presentation has been held on 06-07-2026.
+BOARD OF EXAMINERS
+Dr. Sheak Rashed Haider Noori
+Board Chairman
+Professor & Head, Department of CSE,
+FSIT Daffodil International University
+Name
+Internal Examiner 1
+Designation, Department of CSE, FSIT
+Daffodil International University
+Name
+Internal Examiner 2
+Designation, Department of CSE, FSIT
+Daffodil International University
+Name
+External Examiner
+Designation, Department of CSE, FSIT
+Daffodil International University
+
+
+============================================================
+PAGE 3
+============================================================
+II
+DECLARATION
+We hereby declare that this project has been done by us under the supervision of Dr. Naznin
+Sultana, Associate Professor, Department of Computer Science and Engineering, Daffodil
+International University. We also declare that neither this project nor any part of this project has
+been submitted elsewhere for the award of any degree or diploma.
+Supervised by:
+Dr. Naznin Sultana
+Associate Professor
+Department of Computer Science and Engineering
+Daffodil International University
+Co-Supervised by:
+Md. Abbas Ali Khan
+Assistant Professor
+Department of Computer Science and Engineering
+Daffodil International University
+Submitted by:
+Md. Shadman Tahsin
+Student ID: 0242220005101461
+Department of Computer Science and Engineering
+Daffodil International University
+Md. Shadman Hasin
+Student ID: 0242220005101462
+Department of Computer Science and Engineering
+Daffodil International University
+
+
+============================================================
+PAGE 4
+============================================================
+III
+ACKNOWLEDGEMENTS
+This work would not have been possible without the support and contributions of many
+individuals over the past two semesters. We are deeply grateful to everyone who has assisted us
+in one way or another.
+First, we express our heartfelt thanks and gratefulness to the almighty for His divine blessing,
+making it possible for us to complete the Final Year Design Project(FYDP) successfully.
+We are grateful and wish our profound indebtedness to Dr. Naznin Sultana, Associate
+Professor, Department of Computer Science and Engineering, Daffodil International University,
+Dhaka, Bangladesh. Deep knowledge and keen interest of our supervisor in the field of Deep
+learning to
+carry
+out
+this
+project. Her
+endless
+patience, scholarly guidance, continual
+encouragement, constant and energetic supervision, constructive criticism, valuable advice,
+reading many inferior drafts, and correcting them at all stages have made it possible to complete
+this project.
+We would like to express our heartfelt gratitude to the Head of the Department of Computer
+Science and Engineering, for his kind help in finishing our project and also to other faculty
+members and the staff of the Department of Computer Science and Engineering, Daffodil
+International University.
+We would like to thank our entire course-mates at Daffodil International University, who took
+part in this discussion while completing the coursework.
+Finally, we must acknowledge with due respect the constant support and patience of our parents.
+
+
+============================================================
+PAGE 5
+============================================================
+IV
+ABSTRACT
+CKD (Chronic Kidney Disease) is a big problem all over the world, and is often only associated
+with the affected kidney when it is at an advanced stage and there is not a lot that can be done.
+Most of the computational approaches involve a unique modality, and do not typically combine
+leakage-aware evaluation, and explainability in a single, reproducible pipeline for decision
+support. In this thesis, multi-modal solution using clinical records, population biochemistry and
+wearable physiology to predict the risk of CKD in the early stage using explainable AI is
+proposed. Three branches are created: NHANES is used for modelling the population; MIMIC-
+IV is used for admission level hospital risk stratification; and a proxy of stress-physiology
+(WESAD) is used for feature extraction as the labels of CKD are not available in the WESAD
+cohort. This also includes providing grouped splits at the subject level and providing
+standardized feature engineering, and explicit labeling from population or from hospital proxies.
+Calibrated logistic regression, gradient-boosted trees, and random forests and tabular neural
+networks have been tested; in late fusion, which does not involve any cross-cohort patient
+alignment, the probability of the trees is combined by following a published protocol. The main
+empirical finding is on the admission branch of the MIMIC: post-hoc calibration significantly
+improves the probability reliability, compared with baselines that aren't calibrated, while
+showing competitive discrimination. Global SHAP analysis on the MIMIC held-out test set
+shows that the top four factors are the insurance, race, admission characteristics and age. With a
+prototype built in Streamlit, we also introduced thresholds, and offer explanations to
+stakeholders on a local and global level. While NHANES and WESAD branches were tested
+separately, no significant CKD detection advantage of multi-modal fusion was found. The work
+is a purely research decision support framework to target leakage-aware, calibrated and
+explainable multi-modal hospital risk modelling.
+
+
+============================================================
+PAGE 6
+============================================================
+V
+Table of Contents
+Approval
+i
+Declaration
+ii
+Acknowledgements
+iii
+Abstract
+iv
+List of Figures
+viii
+List of Tables
+ix
+1
+Introduction
+1
+1.1
+Introduction..................................................................................................................... 1
+1.2
+Motivation....................................................................................................................... 2
+1.3
+Objectives........................................................................................................................2
+1.4
+Methodology....................................................................................................................3
+1.5
+Project Outcome..............................................................................................................3
+1.6
+Organization of the Report..............................................................................................4
+2
+Background
+5
+2.1
+Introduction..................................................................................................................... 5
+2.2
+Literature Review............................................................................................................5
+2.2.1
+Similar Applications...........................................................................................8
+2.3
+Gap Analysis................................................................................................................... 9
+2.4
+Summary........................................................................................................................11
+3
+Research Methodology
+12
+3.1
+Methodology..................................................................................................................12
+3.1.1
+Overview...........................................................................................................12
+3.1.2
+Proposed Methodology.....................................................................................12
+3.1.3
+Functional and Nonfunctional Requirements................................................... 13
+3.1.4
+Data Flow Diagram...........................................................................................17
+3.1.5
+UI Design............................................................................................................17
+3.2
+Detailed Methodology and Design..................................................................................19
+3.2.1
+Dataset Description.............................................................................................19
+3.2.2
+Data Preparation..................................................................................................20
+3.2.3
+Feature Engineering............................................................................................21
+3.2.4
+Multi-modal Fusion Strategy..............................................................................22
+
+
+============================================================
+PAGE 7
+============================================================
+VI
+3.2.5
+Model Architecture and Selection...................................................................... 22
+3.2.6
+Explainable AI Integration..................................................................................23
+3.2.7
+Training Procedure............................................................................................. 23
+3.3
+Project Plan......................................................................................................................24
+3.4
+Task Allocation............................................................................................................... 26
+3.5
+Summary..........................................................................................................................26
+4
+Implementation and Results
+27
+4.1
+Environment Setup..........................................................................................................27
+4.1.1
+Hardware and Software Environment.................................................................27
+4.1.2
+Hyperparameter Configuration...........................................................................27
+4.1.3
+Experiment Parameters Summary...................................................................... 28
+4.1.4
+Clinical Decision-Support Prototype Setup........................................................28
+4.2
+Testing and Evaluation....................................................................................................29
+4.2.1
+Validation Strategy.............................................................................................29
+4.2.2
+Evaluation Metrics..............................................................................................29
+4.2.3
+Testing Procedures..............................................................................................29
+4.3
+Results and Discussion....................................................................................................30
+4.3.1
+Individual Model Performance...........................................................................30
+4.3.2
+Evaluation of the Locked Primary Model...........................................................30
+4.3.3
+Confusion Matrix Analysis.................................................................................31
+4.3.4
+Robustness and Temporal Validation.................................................................32
+4.3.5
+NHANES Population Branch Results................................................................ 33
+4.3.6
+Wearable Proxy Branch Results......................................................................... 33
+4.3.7
+Multi-modal Fusion Protocol Evaluation........................................................... 33
+4.3.8
+Explainability Analysis.......................................................................................33
+4.3.9
+Clinical Decision-Support Prototype Demonstration......................................... 34
+4.3.10 Discussion...........................................................................................................34
+4.4
+Summary..........................................................................................................................35
+5
+Engineering Standards and Design Challenges
+36
+5.1
+Compliance with the Standards.......................................................................................36
+5.1.1
+Software Standards............................................................................................. 36
+5.1.2
+Hardware Standards............................................................................................36
+5.1.3
+Communication Standards..................................................................................36
+5.2
+Impact on Society, Environment and Sustainability....................................................... 37
+5.2.1
+Impact on Life.....................................................................................................37
+5.2.2
+Impact on Society & Environment..................................................................... 37
+5.2.3
+Ethical Aspects................................................................................................... 37
+5.2.4
+Sustainability Plan.............................................................................................. 37
+5.3
+Project Management and Financial Analysis.................................................................. 37
+5.4
+Complex Engineering Problem....................................................................................... 38
+5.4.1
+Complex Problem Solving..................................................................................38
+5.4.2
+Engineering Activities........................................................................................ 40
+
+
+============================================================
+PAGE 8
+============================================================
+VII
+5.5
+Summary..........................................................................................................................41
+6
+Conclusion
+42
+6.1
+Summary........................................................................................................................42
+6.2
+Limitation...................................................................................................................... 42
+6.3
+Future Work...................................................................................................................43
+References
+44
+
+
+============================================================
+PAGE 9
+============================================================
+VIII
+List of Figures
+3.1
+System Architecture Diagram
+13
+3.2
+Data Flow Diagram
+17
+3.3
+UI Design Example Admission
+18
+3.4
+UI Design Manual Entry
+18
+3.5
+UI Design Global SHAP
+19
+3.6
+Sample WESAD Wrist Signal Window
+21
+4.1 MIMIC Calibration Reliability Diagram
+31
+4.2 MIMIC Confusion Matrix
+32
+4.3 Global SHAP Feature Attribution
+34
+
+
+============================================================
+PAGE 10
+============================================================
+IX
+List of Tables
+2.1
+Summary of Literature Reviewed
+7
+2.2
+Summary of Similar Application
+9
+2.3
+Gap Analysis
+10
+3.1 Functional Requirements
+14
+3.2 Non-Functional Requirements
+15
+3.3 Summary of datasets
+20
+3.4 Branch models and key hyper-parameters
+23
+3.5 Grouped train,validation,test partition by branch
+24
+3.6 Project Plan Summary
+25
+3.7 Task Allocation summary
+26
+4.1 Hyperparameter configuration summary
+28
+4.2 Summary of experiment configuration
+28
+4.3 MIMIC admission branch held-out test performance
+30
+4.4 Locked primary model results
+31
+4.5 Supplementary MIMIC validation results
+32
+4.6 NHANES test-set performance
+33
+5.1 Project budget summary
+38
+5.2 Alternate budget summary
+38
+5.3 Mapping with complex problem solving
+38
+5.4 Mapping with knowledge Profile
+41
+5.5 Mapping with complex engineering activities
+41
+
+
+============================================================
+PAGE 11
+============================================================
+1
+Chapter 1
+Introduction
+The chapter sets out the motivation and aims of the project and outlines its methodology and expected
+outcomes as well as formulating the overall structure of the project. It offers a glimpse into the early
+Chronic Kidney Disease risk prediction problem and introduces a proposed explainable multi-modal
+decision-support framework.
+1.1
+Introduction
+CKD is a slowly progressive disease where kidney function decreases over a period of time as shown
+by a declining eGFR or kidney damage in terms of structure or function [2], [18]. The severity of the
+disease varies and can lead to end stage renal failure (ESRF), dialysis and transplant which is very
+costly [2]. The prevalence of CKD is found worldwide, it often accompanies hypertension and type 2
+diabetes and it is a condition that may not present with symptoms in the initial stages and therefore
+not be diagnosed [2], [18]. Evidence of decreased kidney function or albuminuria early makes it
+possible to intervene with meds and a modification of the diet and management of risk factors [17],
+[18]. It is therefore a challenge for the nephrology and the preventive medicine community to be able
+to identify high-risk persons so early.
+Serum creatinine, eGFR using the CKD-EPI equation and urine ACR [17] have been the laboratory
+markers traditionally used for the diagnosis of CKD. They are clinically useful, but are not continuous,
+do not reflect the renal function, and are cross-sectional and dependent on time of day, muscle mass
+and hydration, and also on the presence of other illnesses [1]. Laboratory screening is also hamstrung
+by its intermittent lag time between clinic visits [2] and imaging has proven to be costly and less
+available with the added problem of the inability to continuously monitor patients [2]. Thus, novel
+diagnostic methods are needed that can detect any evolving alterations in the physiologic state before
+renal dysfunction becomes evident, in this high-risk group.
+There are new opportunities for using Artificial Intelligence (AI) in clinical risk prediction. Structured
+and high dimensional patient data can be leveraged by analysing such data with machine learning or
+deep learning algorithms, thus discovering complex nonlinear relationships which can supersede a
+humanly-designed clinical scoring system in many cases [1], [13], [43]. Using deep learning on EHR
+data has enabled better prediction of outcomes using temporal modelling on EHR data [8]. However,
+the existing approaches to predict a CKD are mostly performed at present on one particular modality
+of information, and fail to integrate complementary information from the other modality such as
+wearable physiological sensors [1], [13], [32], [35]. Multi-modal wearable signals and clinical records
+in structured format in the context of CKD remains an area that is yet to be explored in modelling [36].
+However, another restriction is its interpretability. Clinicians in a critical clinical context would have
+to view and understand the contributions of the inputs to the prediction, even in the event of good
+discriminative performance of a model [46], [49], [50]. In the area of CKD prediction, understanding
+feature attributions with explainable AI (XAI) methods and calibrated probabilistic outputs, and
+framing them as decision support, are not sufficiently developed and remain as non-reproducible
+elements of the same pipeline.
+The next major challenge addressed in the research is the need for a multi-modal framework which
+uses both EHR
+and clinical data along with wearable, physiological signals, is able to obtain
+estimates of personalized and calibrated risk scores, is explainable, and is feasible given lack of
+patient-level alignment with public EHR, clinical, and non-clinical datasets. This thesis tries to solve
+this issue by proposing a multi-modal deep learning framework, by connecting these data sources in a
+probability level late fusion [36] and explainable with SHAP-based explainability [15] in order to
+support transparent clinical decision making, instead of the autonomy of diagnosis [1], [42], [49].
+
+
+============================================================
+PAGE 12
+============================================================
+2
+1.2
+Motivation
+The prevalence of Chronic Kidney Disease (CKD) is rising, as well as the lack of diagnosis of the
+disease before the time at which clinical interventions can make a real difference in the world. This
+change in renal function is a gradual process and in the early stages of CKD, there may be no
+identifiable signs or symptoms; many of those at risk of being diagnosed with the condition will only
+have nephron loss when diagnosed [2], [18]. This necessitates the demand for a predictive tool that
+can be employed in identifying the high risk patients early on and manage and monitor them with
+different types of drugs and changes in the lifestyle before taking them to end stage deterioration [17],
+[18].
+The workup for this is measurement of blood levels of creatinine, eGFR and urinary albumin to
+creatinine ratio [17] periodically in the laboratory. The measurements are episodic and static, are
+prone to non-renal effects and cannot be used in resource poor environments [1]. Current screening
+systems can't keep up with patients in between screenings and lack much data, including a need for AI
+systems that can process larger, more diverse data sets of patients.
+The need for the work is related to the computation aspect arising from the intrinsic intractability
+problem. When it comes to risk prediction of CKD, issues of high dimensionality of a sparse feature
+space, non-existence of a cohort of patients with clinical data and physiological signals gathered from
+wearable devices, heterogeneities of different data modalities and high degree of class imbalance all
+pose challenges. New architectures introduced by these constraints require non-classical design of
+classification and require principled design of architecture in deep learning models: (1) Late Fusion
+and (2) Selection of the model based on the calibration. An important computation issue is how to
+come up with solutions that can be applied to such real-world data sets.
+Wearable devices provide continuous measurement of more general physiological parameters such as
+BVP, EDA and skin temperature which have been demonstrated to be sensitive to more general
+autonomic and cardiovascular measures relevant to chronic disease state [32], [35]. Use of multimodal
+approach in combination with the structured data feature of EHR clinical can build up an enriched
+predictive environment as compared to considering only one of them. But there are some practical
+engineering problems to be addressed on a systematic basis, such as proxy label alignment, cross
+dataset generalization and mismatching sampling rate, to mention a few.
+There can be a number of direct hits to a problem's solution. But from a clinical point of view, if there
+is a validated early detection tool, nephrologists can find the patients at risk before they start to show
+symptoms, thus reducing dialysis burden, and improving the outcome of their quality of life [18], [43].
+From a technical perspective, it can be seen as an extension of multimodal deep learning and SHAP
+explainability to a relatively less explored field in healthcare that makes pipelines reproducible and
+calibrates multimodal models to deliver clinically interpretable or relevant values to the burgeoning
+field of explainable healthcare AI models [15], [49]. The project aims to enable the research team
+immediately to extend their capabilities in a field where there is a dire demand among both academic
+researchers and practitioners of AI in healthcare specially in clinical data engineering as well as deep
+learning model design and XAI systems.
+1.3
+Objectives
+The aim of the research is to develop an explainable machine learning and a Deep Learning
+framework able to predict the risk of CKD patients from the very early stage with the assistance of
+wearable generated physiological data and structured clinical data and a final system that instead of
+being an automatic diagnostic system, works as a system able to support clinical decisions.
+I.
+To prepare and preprocess CKD-relevant clinical datasets from NHANES and MIMIC-IV,
+including feature selection, missing-value handling, leakage removal, CKD label construction,
+and grouped train-validation-test splitting.
+II.
+To extract and prepare wearable physiological features from the WESAD dataset using window-
+based signal processing for the wearable branch of the system.
+III. To develop and compare branch-level prediction models for clinical and EHR data, including
+logistic regression with calibration, Random Forest, XGBoost, Tabular MLP, and residual MLP
+
+
+============================================================
+PAGE 13
+============================================================
+3
+architectures.
+IV. To evaluate each model using clinically relevant classification and calibration metrics, including
+AUROC, AUPRC, F1-score, sensitivity, specificity, balanced accuracy, Brier score, and
+expected calibration error.
+V.
+To implement
+an explainability
+component using
+feature-importance
+and SHAP-based
+interpretation so that model predictions can be reviewed in a clinically understandable manner.
+VI. To design a late-fusion strategy that combines independently trained branch-level probability
+outputs from available clinical and wearable-related data sources under the constraint that no
+same-patient aligned multimodal CKD cohort is available.
+VII. To develop a prototype decision-support interface that presents CKD risk prediction outputs and
+explanation results in a usable format for demonstration and research evaluation.
+The locked primary hospital model is a calibrated logistic regression (LR) classifier; the LR classifiers
+were used as well as deep tabular models and wearable encoders as branch baselines. Multimodal
+integration is said to be a reproducible later fusion method on different publicly available cohorts, but
+not a clinically proven same patient multimodal CKD detector.
+1.4
+Methodology
+This research starts with a pipeline that begins with three publicly available datasets: The NHANES
+dataset, a population level dataset, in which the primary focus is on clinical data [16], the MIMIC-IV
+dataset, a hospital-based EHR dataset [6] and the WESAD dataset with a primary focus on wearable
+physiology modalities [5]. All the data in each of these datasets were separately preprocessed and
+labels of CKD were created using clinical criteria; subject level leakage was avoided by sampling the
+data in to three such set of training, validation and testing [17], [18]. For each branch clinical features
+were extracted from the structured data and statistical features were extracted cross-sectionally
+windowing the data of the wearable signals. The discrimination and calibration performances of these
+models were used for model selection as several supervised learning models: deep tabular models,
+Logistic regression with the probability calibration, Random Forest model and XGBoost model, were
+trained at each branch. Level fusion with quality fusion based on normalized predictions performances
+[36] was performed to fuse the predictions of different modalities. To gain clinical transparency from
+the main clinical model, SHAP-based explainability was added to the model to produce explainable
+feature attribution scores towards that end [15], [48]. The AUROC score, AUPRC score, F1 score,
+calibration error and robustness were used to evaluate system performance with different experimental
+conditions.
+1.5
+Project Outcome
+The outcome of the research will be a simple system to detect the early CKD risk from the structured
+clinical data, hospital EHR data and wearable data. This system will not be used as medical diagnosis
+system.
+The accuracy, AUROC, F1-Score, Specificity, Recall and ECE is 69.2%, 0.7614, 0.4145, 0.6959,
+0.6739 and 0.0203 respectively of the primary calibrated MIMIC-IV model on held-out test set. This
+best model of NHANES clinical branch achieved an accuracy of 96.60%, AUROC of 0.9922 and F1
+score of 0.7975. This proxy Stress vs Baseline task was able to achieve an accuracy of the wearable of
+81.21%, an AUROC value of 0.7639 and F1-Score of the standard value 0.6667
+The project also prepared a late-fusion combination framework which can be tailored to each branch
+on the basis of a concept labeled as probability of right prediction. However, the datasets have not
+been same-patient aligned, and as there currently are no CKD labels available in the WESAD data,
+fusion is a research outcome evaluated, and for this reason a clinically-validated multimodal CKD
+system cannot be considered yet.
+The reproducible CKD prediction pipeline, branch assessed models, calibrated main disease model,
+explainability via SHAPs, multimodal fusion and prototype decision support interface are the outputs
+of end-to-end.
+
+
+============================================================
+PAGE 14
+============================================================
+4
+1.6
+Organization of the Report
+There are six chapters in this report.
+Chapter 1 provides an introduction to CKD, reasons for developing a method for early risk prediction,
+research goals, methodology, primary outcomes, and the structure of the report.
+Existing research works related to CKD prediction, deep learning in healthcare, the EHR/wearable
+system, multimodal fusion techniques, clinical decision-support systems and explainable AI are
+reviewed in chapter 2 and a gap analysis is presented for the proposed framework.
+The research methodology, datasets (NHANES, MIMIC-IV, WESAD), preprocessing, feature
+engineering, model development, Late-Fusion protocol, explainability using SHAP values, and
+evaluation design, and the project plan are discussed in Chapter 3.
+Chapter 4 contains the implementation details, experimental setup, results for each branch,
+explainability and calibration analysis and the Streamlit decision-support prototype.
+Chapter 5 covers engineering standards, ethical and societal issues, project management and
+engineering of projects with complex mapping.
+Results are summarized and limitation is given in chapter 6, which also includes the directions for
+work to be continued which includes the clinical validation and aligned Multimodal data collection.
+
+
+============================================================
+PAGE 15
+============================================================
+5
+Chapter 2
+Background
+The key area of focus of the chapter is the literature background and context investigation where
+important literature work that will form a vital base for the proposed CKD risk prediction framework
+is explored. It covers the cutting edge prediction of CKD, AI in health care from EHR (Electronic
+Health Records), Wearables to monitor in health care, Multimodal learning, explainable AI and
+related prior works and not yet explored research gaps in this project.
+2.1
+Introduction
+Because it is not easily diagnosed and only picked up in later stages of the condition, there are many
+people around the world who suffer from Chronic Kidney Disease, in particular those living with
+moderate to severe kidney damage. Chronic kidney disease is under-diagnosed in the early phases of
+the condition due to the limitations of time on time laboratory based screening, although it affects a
+significant proportion of adults around the world. Much research has been devoted to the application
+of machine learning and deep learning approaches to clinical data to predict the risk of CKD, with a
+pattern from basic classifiers based on structured records, to more complicated architectures based on
+EHR and time series data [1], [7], [23]. Imaging-based CKD approaches have also been reviewed [4],
+[12], but they are outside the scope of this tabular and wearable physiology framework. Current
+strategies are mostly based on only one data type and do not integrate complementary data provided
+by different types of wearable physiological sensors that are capable of providing continuous real-
+time measurements that are relevant for monitoring patient's chronic disease [32], [36]. Additionally,
+deep learning models have not been sufficiently discussed in terms of interpretability in the clinical
+practice [46], [49], which is the only criterion required to apply deep learning in practice despite their
+outstanding predictive power. The chapter covered literature on the above aspects and stated the
+limitations of existing system and the research gaps which trigger to develop the proposed system.
+2.2
+Literature Review
+The previous methods focused to handle structured clinical data and use the traditional classification
+algorithms of machine learning for prediction of CKD. Sawhney et al. [1] compared the performance
+of deep models and classical models using a UCI style CKD data composed of 400 patients and some
+clinical/laboratory attributes. They had used PyTorch with their deep MLP technique and the
+technique achieved 100% test accuracy, achieving a better performance compared to the SVM and
+Naive Bayes method. The results are only applicable to a small size, carefully designed tabular set,
+and cannot be directly applied to a more diverse set or extended to a more class balanced and missing
+EHR set. Almansour et al. [19] compared the performance of ANN with SVM for the same data set of
+400 patients with CKD and found that the accuracy of ANN (99.75%) is much better than that SVM
+(97.75%) while the most significant is creatinine (cr) and urea (urea). The latter three works [20], [21],
+[22] by Wang, Shih and Krishnamurthy respectively, employed other additional feature engineering
+approaches but were limited in their cross-sectional data from single acquisition sites and not taking
+into account temporal changes, which would be important to capture the true complexities of clinical
+CKD progression. Some attempts were made to indicate that selection of appropriate features is very
+crucial for achieving high classification accuracy in case of class imbalance condition [11] and
+Dashtban et al. [13] showed that one of the drawbacks of these classifiers when experimented on new
+cohorts other than the experimented cohorts is fragility at population shift. Khan et al. [10] compared
+several machine learning techniques—including tree-based methods such as J48 and NBTree—on a
+UCI CKD dataset and reported that CHIRP achieved the highest classification accuracy (99.75%)
+
+
+============================================================
+PAGE 16
+============================================================
+6
+among the evaluated models.
+Extremely robust predictive models were developed when deep learning was applied to EHR data.
+Developed by Miotto et al. [24] is a three-layer stacked denoising autoencoder (DeepPatient) trained
+on approximately 700,000 patient records given by Mount Sinai that achieved better AUC-ROC
+values, ranging from 0.659 for the unprocessed feature baseline to 0.773, demonstrating a 15%
+improvement along with better accuracy (15%) and F score (54%). Choi et al. [25] proposed Doctor
+AI, an attention-based recurrent neural network model that has a structure of two-level attention
+which was tested on 14 million clinical visits from 263,000 patients with the AUROC of heart failure
+prediction as 0.8705, 0.8256 for MLP and 0.7900 for logistic regression respectively. Lipton et al. [29]
+used a MIMIC clinical time series data to test the performance of LSTM networks against that of
+plain zero imputation for prediction of multiple labels associated with the diagnosis of the patient, and
+showed that it could outperform the MLP baselines when trained with hand-curated features with a
+best micro-averaged AUROC of 0.8730. A deep learning model by Rajkomar et al. [23] with over 46
+billion ESR data points from two hospital systems was able to achieve AUROC of 0.75–0.77 for the
+prediction of 30-day readmission; the model of 0.85–0.86 for the prediction of a long length of stay
+and 0.93–0.95 for the prediction of inpatient mortality outperformed the traditional clinical models
+and had a frequency-weighted AUROC of 0.90 for discharge diagnosis. Many of the challenges of
+utilizing clinical deep learning are still open and underscored by Shickel et al. [28] with the most
+obvious challenges being: temporal modelling of irregular longitudinal recording, handling
+missingness and generalizing across cohorts. Although all these improvements have been made, all
+the DL models presented here in this paper were found to be single-modality and no attempts were
+made to fuse extra-hospital physiological signals.
+Wearable health monitoring devices carry with them a qualitatively different type of data with regard
+to physiological information; the data is continuous, longitudinal and taken in real life. This study, by
+Dunn et al. [32] used more than 150 derived features of these vitals and trained two different models,
+random forest and LASSO, to achieve the following: a longitudinal study of 54 patients showed that
+these wearables can predict clinical lab measurements (e.g. hematocrit, hemoglobin, red blood cell
+count, and absolute monocyte count) with lower prediction error. Presently observed finding is
+pertinent to this area of CKD as anemia is quite common complication with renal insufficiency and
+hematocrit and hemoglobin are indicators of anemia. Banaee et al. [35] explored the existing data
+mining algorithms suitable to the data streams generated by the wearables sensors and how they can
+be adapted into useful algorithms to detect the anomalies in the physiological data to monitor chronic
+diseases. Steinhubl et al. [34] envisioned that usage of mobile health would be on-going and would
+provide detection of clinically relevant changes not captured during clinics visits. Consumer wearable
+modalities are signals that have been studied by Bent et al [33] who have pointed out that the
+physiology-state-estimation is best achieved on signals such as BVP, EDA and ST. Later on,
+Binsawad [9] did a research work on prediction of CKD using Optimized Forest model and compared
+it with several traditional machine learning models as baseline which showed sensitivity and
+specificity values more than several baseline models on the features extracted using the ECG signals.
+It shows that even non-WESAD signals like ECG, known as its inputs can be used for a renal risk
+model especially in absence of structured labels at the level of the sensor. A challenge that faced all
+the wearables studies of CKD analyzed was that there were no validated CKD labels that made use of
+the wearables technology, and researchers were forced to resort to proxy tasks, like stress or CVS
+detection.
+A capability that comes up as one of the identified opportunities is the one of combining multiple
+datasets using a multitude of modalities, when it comes to AI in healthcare context. A detailed
+taxonomy of multimodal machine learning was put forward by Baltrušaitis et al. [36] which
+categorizes approaches in three types such as approaches with a fusion in the representation space,
+approaches with translation, approaches with data alignment, and approaches with co-learning.
+Patient-level data alignment as a key practical challenge in the deployment of multimodal models.
+One of the earliest works to indicate that multi-modal training of the same model with still images,
+audio, and video can be useful to enhance feature representations was that provided by Ngiam et al.
+[37]. However, there are no such systems with a specific interest to combine structured clinical
+records present in EHRs with wearable physiological signals in prediction of risks of CKD, showing a
+clear problem that motivates the proposed work [1], [13].
+
+
+============================================================
+PAGE 17
+============================================================
+7
+For clinical applications the explainability of the AI systems are now an important prerequisite. In this
+paper, inspired by so called Shapley values from cooperative game theory, we present one approach
+called SHAP which was developed by Lundberg and Lee [15] that can be used for all types of models
+and give theoretically motivated locally consistent feature attributions. Recently, Ribeiro et al. [44]
+proposed LIME for providing surrogate explanation which is somehow trustworthy. For the
+convolutional models, Selvaraju et al. [45] have proposed to use gradient-weighted visual
+explanations named as Grad-CAM. Tree based model classes like the models in this thesis can be
+directly used in SHAP, or TreeSHAP [48] can be used to give exact polynomial time computation.
+According to Tonekaboni et al. [46] clinicians need to rely not only on uncertainty estimates but also
+on feature attributions; otherwise it is not clinically useful and relying on feature level attributions
+would not work during a high stake situation. Just as with any other model explanation editing, the
+goal of the model interpretation should be to understand how the model operates, so it could be used
+to inform a decision making process, and to ensure that the model has learned correct association,
+even an interpretable model can learn incorrect association in the clinical data context and this was
+illustrated by Caruana et al. [47]. There are two main problems, however, that impede the current AI
+prediction tools from their clinical use, miscalibration of the probability as identified by both
+Ghassemi et al. [49] and Vellido [50].
+Table 2.1: Summary of Literature Reviewed.
+Author (s)
+Year
+Title
+Methodology
+Key Findings
+Sawhney et
+al. [1]
+2023
+A comparative
+assessment of
+artificial
+intelligence
+models used for
+early prediction
+and evaluation
+of chronic
+kidney disease
+Deep neural network
+(multi-layer
+perceptron, PyTorch)
+on UCI-style CKD
+clinical dataset (400
+patients; age, blood
+sugar, RBC count,
+etc.)
+Reported 100% test
+accuracy for the
+proposed DNN;
+compared against
+SVM and Naive
+Bayes; small
+curated tabular
+dataset, not hospital
+EHR
+Almansour et
+al. [19]
+2019
+ANN and SVM
+for CKD
+prediction
+ANN, SVM; 400
+patients, 24 features
+ANN 99.75% vs
+SVM 97.75%;
+creatinine and urea
+most influential
+features
+Miotto et al.
+[24]
+2016
+Deep Patient:
+EHR
+representation
+learning
+Stacked denoising
+autoencoders; 700K
+patients
+AUC-ROC 0.773 vs
+0.659 baseline
+across 78 diseases;
+15% improvement
+over raw features
+Choi et al.
+[25]
+2016
+Doctor AI:
+Predicting
+clinical events
+via recurrent
+neural networks
+Attention-based RNN;
+263K patients, 14M
+visits
+Heart
+failure/clinical
+events focus; no
+wearable data; no
+calibration; not
+CKD-specific
+Lipton et al.
+[29]
+2016
+LSTM for
+clinical time
+series diagnosis
+LSTM on MIMIC;
+128 diagnoses
+Best micro-AUROC
+0.8730 with zero-
+imputation and
+missing indicators
+Rajkomar et
+al. [23]
+2018
+Deep learning
+for EHR at
+scale
+LSTM, Transformer;
+two hospital systems
+Mortality AUROC
+0.93–0.95;
+readmission 0.75–
+0.77; length of stay
+0.85–0.86
+
+
+============================================================
+PAGE 18
+============================================================
+8
+Author (s)
+Year
+Title
+Methodology
+Key Findings
+Shickel et al.
+[28]
+2018
+Deep EHR survey
+Survey of DL on EHR
+Temporal modelling,
+missing data,
+generalization
+challenges
+Dunn et al.
+[32]
+2021
+Wearables and the
+medical revolution
+RF, LASSO on smartwatch
+data; 54 patients
+Wearables predicted
+hematocrit, hemoglobin,
+RBC count
+Baltrušaitis et
+al. [36]
+2019
+Multimodal
+machine learning: A
+survey and
+taxonomy
+Fusion taxonomy
+Patient-level alignment
+is primary barrier
+Lundberg &
+Lee [15]
+2017
+A unified approach
+to interpreting
+model predictions
+SHAP or Shapley values
+Locally consistent
+feature attributions
+Lundberg et
+al. [48]
+2020
+From local
+explanations to
+global
+understanding with
+explainable AI for
+trees
+TreeSHAP
+Exact polynomial-time
+Shapley for tree models
+Tonekaboni
+et al. [46]
+2019
+What clinicians
+want:
+Contextualizing
+explainable ML for
+clinical end use
+Clinician survey
+Feature attributions
+alone insufficient;
+uncertainty needed
+2.2.1
+Similar Applications
+We examined some research systems and platforms, methodologically and in functionality both of
+these systems are more or less similar with the proposed research system with the purpose of the
+prediction of the CKD risk. Each System is analyzed with regard to its design and key areas of
+weakness and problems that must be overcome are discussed.
+
+
+============================================================
+PAGE 19
+============================================================
+9
+Table 2.2: Summary of Similar Applications and Their Limitations.
+Application
+Platform
+Description
+Methodology
+Limitation vs. Proposed
+System
+Sawhney et
+al. [1]
+Research
+Prototype
+A comparative
+assessment of
+artificial intelligence
+models used for
+early prediction and
+evaluation of
+chronic kidney
+disease
+Deep neural network
+(multi-layer
+perceptron, PyTorch)
+on UCI-style CKD
+clinical dataset (400
+patients; age, blood
+sugar, RBC count,
+etc.)
+No wearable, no hospital
+EHR, no calibration, small
+curated dataset, not
+findings repeated
+Almansour et
+al. [19]
+Research
+Prototype
+ANN vs SVM for
+CKD detection
+ANN 99.75%, SVM
+97.75%, 400 patients,
+24 features
+No wearable data, no
+explainability, not
+deployable
+Deep Patient
+[24]
+EHR
+Research
+System
+EHR representation
+learning for disease
+prediction
+Stacked
+autoencoders, 700K
+patients, AUC-ROC
+0.773
+No wearable input, not
+CKD-specific, no
+explainability
+Doctor AI
+[25]
+EHR
+Research
+System
+Interpretable RNN
+for heart failure risk
+from EHR
+Attention RNN,
+263K patients,
+AUROC 0.8705
+No wearable data, heart
+failure only, no calibration
+Rajkomar et
+al. [23]
+Hospital
+EHR
+System
+Large-scale deep
+learning on EHR for
+clinical outcomes
+LSTM/Transformer,
+mortality AUROC
+0.93–0.95
+No wearable data, not
+CKD-specific, no
+explainability
+Lipton et al.
+[29]
+ICU
+Research
+System
+LSTM for multilabel
+diagnosis prediction
+on clinical time
+series
+LSTM, MIMIC, 128
+diagnoses, micro-
+AUROC 0.8730
+No wearable data, not
+CKD-specific, no
+explainability, no
+calibration
+Dunn et al.
+[32]
+Wearable
+Research
+Platform
+Smartwatch signals
+predicting clinical
+lab values
+RF/LASSO, 54
+patients, 150+
+wearable features
+No EHR fusion, no CKD
+labels, no SHAP, small
+cohort
+AI Clinician
+[40]
+ICU
+Research
+System
+RL-based sepsis
+treatment
+recommendation
+Markov decision
+process, MIMIC-III +
+eICU
+Sepsis-specific, no CKD;
+no wearable, no
+calibration
+Caruana et al.
+[47]
+Research
+Prototype
+Intelligible ML for
+healthcare risk
+prediction with
+explainability
+analysis
+GAM, decision trees,
+pneumonia risk
+prediction, SHAP-
+inspired attribution
+Interpretable models only,
+no multimodal fusion, no
+wearable, no CKD focus
+2.3
+Gap Analysis
+While machine learning and deep learning algorithms have been used to create systems for forecasting
+CKD, building clinical outcome prediction models using EHRs and designing wearables health
+monitoring systems, several important aspects that influence the contribution of this project to address
+the world are lacking in the literature. All gaps were determined by a structured gap analysis as
+demonstrated in Table 2.3 which details the gap in the existing body of work and the proposed work
+and how it specifically addresses the gap.
+
+
+============================================================
+PAGE 20
+============================================================
+10
+Table 2.3: Gap Analysis — Identified Limitations and Proposed Solutions
+Gap
+ID
+Identified
+Gap
+Limitation in Existing
+Work
+Proposed Solution
+How This Work
+Addresses It
+G1
+Single-
+Modality
+CKD
+Prediction
+All reviewed CKD
+systems operate on a
+single data source —
+either structured
+clinical records [1],
+[19] or hospital EHR
+sequences [23], [24],
+[25] — without
+integrating
+complementary
+physiological data
+from wearable
+devices
+A multimodal pipeline
+combining NHANES
+population clinical data,
+MIMIC-IV hospital
+EHR data, and WESAD
+wearable physiological
+features across three
+independent branches
+Late-fusion framework
+combines branch-level
+probability outputs
+from NHANES under
+a documented
+protocol; proxy fusion
+evaluation did not
+show improved CKD
+detection because
+cohorts are not patient-
+aligned.
+G2
+Absence of
+Wearable
+Integration
+for CKD
+No existing CKD
+prediction system
+incorporates
+continuous wearable
+physiological signals.
+Wearable prediction
+research [32] targets
+general lab value
+prediction without
+CKD-specific labels
+or EHR fusion [36]
+A dedicated wearable
+branch using WESAD
+wrist BVP, EDA, skin
+temperature, and
+accelerometry window
+statistics as
+physiological proxy
+inputs
+WESAD wearable
+branch trained using
+Random Forest on 578
+windows from 15
+subjects with subject-
+level grouped split,
+establishing a
+reproducible wearable
+processing pipeline for
+future CKD-labeled
+wearable datasets
+G3
+Lack of
+Probability
+Calibration
+Most CKD classifiers
+report accuracy only
+[1], [19]; deep EHR
+models report
+AUROC without
+calibrated probability
+outputs [23], [24];
+miscalibration is
+identified as a primary
+barrier to clinical AI
+adoption [49]
+Sigmoid-calibrated
+logistic regression as
+the primary model,
+selected based on both
+discriminative
+performance and
+calibration quality
+Primary MIMIC model
+achieves ECE of
+0.0203 compared to
+ECE of 0.2486 for the
+uncalibrated baseline,
+producing reliable
+probability outputs
+suitable for clinical
+risk communication
+G4
+Insufficient
+Explainabilit
+y
+Doctor AI [25]
+provides attention
+weights; all other
+reviewed CKD and
+EHR systems [1],
+[19], [23], [24]
+provide no per-
+prediction feature
+attribution. Clinicians
+require feature-level
+explanations
+alongside uncertainty
+for decision support
+[46]
+SHAP-based feature
+attribution [15], [48]
+integrated into the
+primary clinical model
+to generate locally
+interpretable per-
+prediction explanations
+SHAP top-15 feature
+importance analysis
+identifies age,
+insurance type, race,
+admission type, and
+lab values as the
+primary contributors,
+providing clinician-
+reviewable explanation
+outputs for every
+prediction
+
+
+============================================================
+PAGE 21
+============================================================
+11
+Gap
+ID
+Identified
+Gap
+Limitation in Existing
+Work
+Proposed Solution
+How This Work
+Addresses It
+G5
+Data
+Imbalance
+and
+Generalizatio
+n
+Small curated datasets
+[1], [19] with
+balanced classes do
+not reflect real CKD
+positive rates of 6–
+15%. No reviewed
+system reports multi-
+seed robustness or
+temporal external
+validation
+Grouped train-
+validation-test splits
+preventing subject
+leakage, calibrated
+threshold selection via
+F1-maximization on the
+validation set (primary
+threshold 0.16)
+5-seed robustness
+evaluation yields
+AUROC 0.7690 ±
+0.0069; temporal
+external validation on
+first-admission
+MIMIC holdout yields
+AUROC 0.771,
+confirming model
+stability
+G6
+EHR and
+Population
+Data Fusion
+No reviewed system
+fuses hospital EHR
+data with population-
+level clinical survey
+data. Existing
+multimodal
+frameworks [36]
+identify patient-level
+alignment as an
+unresolved barrier
+Normalized AUROC
+and AUPRC-weighted
+late fusion combining
+NHANES population
+branch (weight 0.614)
+and MIMIC-IV EHR
+branch (weight 0.386)
+Proxy late-fusion
+protocol was
+documented across
+independently trained
+branches; patient-
+aligned validation was
+not possible with
+disjoint public cohorts.
+G7
+Clinical
+Deployment
+Gap
+All reviewed CKD
+research prototypes
+[1], [19], [24], [25]
+are offline classifiers
+with no clinical
+interface. No
+reviewed system
+presents risk scores
+and explanations
+together in a
+deployable format
+[42]
+A prototype Streamlit
+decision-support
+interface loading the
+frozen MIMIC
+checkpoint and
+presenting CKD risk
+probability with SHAP-
+based explanation
+outputs
+Prototype interface
+demonstrates how
+calibrated risk scores
+and feature attributions
+can be jointly
+presented to support
+clinician review,
+framing system output
+as decision support
+rather than
+autonomous diagnosis
+2.4
+Summary
+From literature scanned it has been predicted that prediction of CKD is shifted from conventional ML
+which only works on structured clinical data, use of wearables has been beneficial in terms of
+continuous monitoring of physiological parameters using deep learning with the use of huge datasets
+of EHR. There's no design, though, and things such as integrating EHR with wearables, adding a
+CKD label to wearables, explainability, and readiness for Clinical deployment, are not being
+addressed. These gaps inspire us to design the envisioned explainable multi-modal approach for CKD
+risk prediction with features derived from clinical data, hospital EHRs and features derived from
+wearables and lastly presenting the output and explanation using SHAP.
+
+
+============================================================
+PAGE 22
+============================================================
+12
+Chapter 3
+Research Methodology
+This chapter presents the research methodology adopted for the proposed CKD risk prediction
+framework, describing the datasets, preprocessing, feature extraction, model development, multimodal
+fusion, explainability, and evaluation design. It explains how each methodological stage connects to
+the overall goal of building an explainable, multimodal, decision-support system for early CKD risk
+prediction.
+3.1
+Methodology
+A structured research methodology was performed to develop the proposed CKD risk prediction
+framework, which clearly aids the research purpose. The methodology goes hand-in-hand with a
+multi-branch pipeline. Three types of data, population clinical, hospital EHR data and wearable
+physiological data, are all independently modelled and processed, and their respective predictions
+directly combined at the probability level. Goal is to get every stage of this pipeline clearly presented
+and reproducible from data acquisition through to preprocessing, feature extraction, model
+development, fusion, explainability and evaluation. One stage is then described in detail in each of the
+subsections. As far as possible, the same methodology is adhered to throughout with the code adopted
+and the experimental set-up locked, to represent the system as constructed, and to meet the
+requirement of an explainable multimodal decision support tool for early prediction of CKD.
+3.1.1
+Overview
+The research activity proposed is a stride towards the effort of early detection of patients who are
+prone to developing Chronic Kidney Disease (CKD) which has no symptom in the initial stage of the
+disease. For this purpose, the chapter builds upon three different, yet complementary health data types
+and processes them through an explainable and reproducible workflow to a prototype of an
+explainable decision support tool.
+Three kinds of data were utilized: Population clinical data (NHANES); hospital EHR data (MIMIC-
+IV); and portable wearable, physiological data (WESAD). These data-set are classified as individual
+branches and are preprocessed, feature preparation and predictive-models are found for each one of
+these data-sets. In each of the branches, machine learning and deep learning models were developed
+and compared with one another and discrimination and probabilistic calibration was performed, which
+might lead to the selection of models capable of giving reliable risk estimates.
+Finally all the branch outputs are fused via a performance weighted method, that is a calibrated risk
+probability of each branch is fused. To achieve the transparency, a complementary explainability
+modular component is added to the main model based on SHAP and it generates feature level
+explanations, implemented as a prototype decision support system instead of diagnostic tool [15].
+3.1.2
+Proposed Methodology
+This methodology we are proposing is a multi-branch workflow, that converts various types of health
+data that can be collected to calibrated explainable indexes of the risk of CKD as represented in
+Figure 3.1. The design process for each stage is briefly described here.
+
+
+============================================================
+PAGE 23
+============================================================
+13
+Figure 3.1: Overall architecture of the proposed multimodal CKD risk-prediction framework
+There are three kinds of public data sources that provide data: population-scale clinical data collected
+by NHANES [16] and hospital EHR data from MIMIC-IV [6] and wearable physiological data
+collected by WESAD public data sharing repository [5]. Given that they represent different
+populations and cannot be connected on an individual patient basis, each is considered a separate
+branch, and follows its own preprocessing steps which involves table merging, leakage removal,
+imputation, standardization and train – validation – test splitting to prevent subject leakage, using
+CKD-EPI eGFR and albuminuria thresholds [17], [18]. We then have modality specific features such
+as structure admitting, modality specific demographic features on the clinical branch, windowed
+statistical descriptors of BVP, EDA, temperature, and accelerometer features on the wearable branch,
+which we use as a proxy for a CKD labeled source.
+For each branch, there are a number of models, including logistic regression with calibration, Random
+Forest and XGBoost and deep tabular models; the locked model in the EHR branch is the logistic
+regression with calibration which is used to generate well calibrated probabilities [14]. These
+probabilities at the branches are then combined at the level of the probabilities as an integration
+protocol like that of the non-aligned data [36]. A SHAP-based-component reports feature attributions,
+discrimination and calibration metrics such as AUROC, AUPRC, F1, sensitivity, specificity, brier and
+ECE are employed to assess the system with a multi-seed and a temporal robustness check.
+The system is divided into four blocks, which are respectively input and pre-processing, model
+inference with the frozen primary model, SHAP explanation and explanation presentation interface
+from system design perspective. The data is only transmitted from the computer to the user only one
+way; the system returns a calibrated CKD risk estimate and supporting explanation outputs to the user;
+inputs are admission-level features entered or selected through the prototype interface.
+3.1.3
+Functional and Nonfunctional Requirements
+Functional requirements specify what the system to be designed must do, based on conditions. They
+detail the actions the system needs to take to collect health data, and subsequently, in the next phases
+of health data preprocessing, modelling, fusion, explainability and reporting to derive calibrated
+health risk outputs that may be presented to a decision-maker. These requirements for this project
+involve all the various branches of the multimodal research pipeline, the locked primary hospital EHR
+model, the probability calibration and the SHAP based explanation, in addition to the Streamlit
+prototype to showcase the results. System's functional requirements:
+
+
+============================================================
+PAGE 24
+============================================================
+14
+Table 3.1: Functional Requirements of the Proposed System.
+FR ID
+Requirement
+Name
+Description
+Priority
+FR-01
+Multimodal Data
+Ingestion
+The system shall ingest population clinical data
+from NHANES, hospital electronic health record
+data from MIMIC-IV, and wearable-related data
+from WESAD to support the three modality
+branches of the framework.
+High
+FR-02
+Data
+Preprocessing and
+Splitting
+For each dataset, the system shall apply branch-
+specific preprocessing, including missing-value
+handling, leakage elimination, subject-level
+grouped train–validation–test splitting, and
+feature normalization or standardization before
+model training.
+High
+FR-03
+CKD Label
+Construction
+The system shall construct CKD-related binary
+labels for the clinical branches using clinically
+accepted criteria, including eGFR-based
+population labelling and admission-level hospital
+proxy definitions consistent with the project
+methodology.
+High
+FR-04
+Modality Feature
+Extraction
+The system shall convert clinical, EHR, and
+wearable inputs into structured feature
+representations, including demographic and
+laboratory attributes, admission-level
+observations, and window-based physiological
+statistics, through separate feature pipelines for
+each modality.
+High
+FR-05
+Model Training
+and Comparison
+The system shall train and compare branch-
+appropriate models, including calibrated logistic
+regression, random forest, XGBoost, tabular
+MLP, and residual MLP for clinical and hospital
+branches, and random forest for the wearable
+branch, to select a primary model per branch
+under the available data constraints.
+High
+
+
+============================================================
+PAGE 25
+============================================================
+15
+FR ID
+Requirement
+Name
+Description
+Priority
+FR-06
+CKD Risk
+Prediction
+The system shall use the selected primary model
+to output CKD-related risk estimates for the
+supported clinical and hospital branches as the
+core decision-support function of the framework.
+High
+FR-07
+Probability
+Calibration
+The system shall apply post-hoc probability
+calibration, especially for the primary MIMIC-IV
+model, so that predicted risk values are suitable
+for interpretation as probabilities rather than
+uncalibrated classification scores.
+High
+FR-08
+Multimodal Late
+Fusion
+The system shall combine branch-level prediction
+probabilities through a late-fusion protocol when
+multimodal integration is evaluated, because the
+public cohorts are disjoint and same-patient raw-
+feature fusion is not available.
+Medium
+FR-09
+Explainability
+Generation
+The system shall generate prediction explanations
+and feature-importance summaries, including
+global and local attributions for the primary
+hospital model, to support transparent research-
+oriented clinical decision support.
+High
+FR-10
+Evaluation and
+Reporting
+The system shall evaluate models using
+discrimination, classification, and calibration
+metrics, including AUROC, AUPRC, F1-score,
+sensitivity, specificity, Brier score, and expected
+calibration error, to enable fair comparison
+beyond accuracy alone.
+High
+FR-11
+Prototype
+Visualization
+The system shall provide an interactive research
+prototype that presents calibrated risk output
+together with explanation views for stakeholder
+demonstration in a decision-support context; the
+implemented interface supports the primary
+MIMIC branch.
+High
+Non-functional requirements are the qualities that influence how the system operates, but are not
+really the work that it produces.
+Table 3.2: Non-Functional Requirements of the Proposed System
+NFR
+ID
+Requirement Name
+Description
+Priority
+NFR-
+01
+Reliability
+The system maintains consistent preprocessing
+rules, grouped data splits, and evaluation
+settings across training and reporting so that
+research results remain stable and auditable.
+High
+
+
+============================================================
+PAGE 26
+============================================================
+16
+NFR
+ID
+Requirement Name
+Description
+Priority
+NFR-
+02
+Interpretability
+The system presents predicted risk together with
+explanation outputs, including global and local
+feature attributions, so that model behaviour can
+be reviewed rather than treated as a black-box
+output.
+High
+NFR-
+03
+Maintainability
+The system is organized into separate modality
+branches and pipeline stages for data loading,
+preprocessing, modelling, fusion, evaluation,
+and application, allowing individual components
+to be updated without rebuilding the entire
+framework.
+High
+NFR-
+04
+Usability
+The research prototype interface presents
+predicted risk, threshold control, and
+explanation views in a clear and accessible form
+suitable for demonstration beyond command-
+line execution.
+High
+NFR-
+05
+Demonstration
+Performance
+The workflow supports prototype-level
+inference and stakeholder demonstration using
+frozen trained artifacts, without implying
+production-grade clinical deployment.
+Medium
+NFR-
+06
+Extensibility
+The modular branch design allows additional
+datasets, models, or fusion strategies to be
+incorporated in future work, including linked
+multimodal cohorts if clinically validated data
+become available.
+Medium
+NFR-
+07
+Privacy-Aware
+Data Use
+The system uses publicly available, de-identified
+research datasets under their respective access
+conditions, avoiding reliance on identifiable
+patient records in the implemented research
+pipeline.
+High
+NFR-
+08
+Clinical Safety
+The system provides decision-support
+information rather than autonomous diagnosis,
+requiring human interpretation of model outputs
+before any clinical action.
+High
+NFR-
+09
+Reproducibility
+The system preserves experimental
+configuration, locked primary models,
+evaluation outputs, and reporting artifacts so
+that reported results can be traced to the
+underlying runs.
+High
+NFR-
+10
+Transparency of
+Limitations
+The system and its documentation communicate
+known constraints, including disjoint public
+cohorts, wearable proxy evaluation without
+CKD labels, proxy multimodal fusion, and the
+need for prospective clinical validation.
+High
+
+
+============================================================
+PAGE 27
+============================================================
+17
+3.1.4
+Data Flow Diagram
+The Data Flow Diagram illustrates the flow of data from various external data sources into the
+proposed framework for CKD prediction with outputs for prediction, explanation, storage and
+reporting. The main external entities include the public datasets and system user. NHANES supplies
+population-level clinical information, MIMIC-IV supplies hospital EHR and laboratory information
+and WESAD supplies wearable physiological information. A user only interacts with the user
+interface of the prototype and asks for input features, and they will get prediction and explanation
+outputs.
+The inputs consist of mainly clinical and demographic features obtained from the NHANES,
+admission level EHR and laboratory features obtained from the MIMIC-IV, and wearable signal
+windows obtained from the WESAD. The inputs go through an additional layer of data ingestion, data
+preprocessing, and feature extraction, and then the branch-level prediction. Processed feature sets for
+modelling and also the model check points for the trained model for prediction. Because the data sets
+are not patient-aligned, the fusion process isn't patient-aligned either, meaning that in cases where
+there is a valid output, only branch-level probabilities are combined.
+Both processes, calibrated CKD risk prediction and SHAP-based explainability, return outputs:
+namely risk probabilities and feature-importance outputs and SHAP-based attributions. These results
+are saved along with evaluation and fusion results and displayed using a prototype interface. The
+results to be produced as the final outputs of the project are arrangement of CKD risk scores,
+explanation results, reporting outputs for the research evaluation and demonstration for the decision
+support, but not for autonomous diagnosis.
+Figure 3.2: Data Flow Diagram of the proposed CKD risk prediction system
+3.1.5
+UI Design
+It also has a research prototype built from the example platform Streamlit and ready to be used on the
+actual branch of the CKD risk prediction system, which is built to the primary clinical data base
+system MIMIC-IV. Helping the interface to comprehend the different calibration of risk estimate and
+the different explanation outputs at the admission level. It is designed to be used in demonstration and
+visualization for the purpose of decision support of the thesis, not in clinical diagnosis and direct
+medical decision making.
+
+
+============================================================
+PAGE 28
+============================================================
+18
+Basically, the web interface is broken up into the following topographic areas: a header area, sidebar
+area and three primary tabs. Header has a disclaimer not for clinical use and calls the prototype an
+admissions-risk decision-support interface. A description of the content of the prototype is provided in
+the about section, and information on repeatability for the frozen model setup in the sidebar, with a
+slider for the different models as a primary model to control the decision-threshold.
+The first tab is Example admission where you can select one of the admissions (from the MIMIC
+cohort) from the admission ID or the admission ID in the row index. After selection, an outline of the
+patient regarding age, sex, creatinine results, blood urea nitrogen results as well as type of admissions
+which is displayed in the interface. The prediction output features calibrated CKD related risk
+percentage, risk band, screening flag and decision threshold as metric cards. A progress bar is created
+to give insight into, whether a predicted probability is close to the selected threshold or not and an
+explanation chart is created which displays the top contributing features affecting this admission
+locally.
+Figure 3.3: UI Design Example Admission Tab
+The other tabular form Manual entry is a very simple information sheet for the input of admission
+details such as age, length of the stay, gender, admission type, type of insurance, race and marital
+status, some laboratory value (e.g. creatinine, urea nitrogen, potassium and sodium). This tab is a
+prototype only because there are unspecified model features with default values. Hence, for the sake
+of demonstration of cohort-based prediction, the example admission tab has been provided.
+Figure 3.4: UI Design Manual Entry Tab
+
+
+============================================================
+PAGE 29
+============================================================
+19
+The third tab, Global SHAP, shows a summary of feature-importance provided a fixed test-set, which
+was obtained from the primary model. This visualization of the explanation does not vary based on
+the individual admissions, but rather summarizes the most influential features when looking across the
+admissions in the held-out test set, unlike the local explanation chart in the prediction view. Case-
+level and population-level feature influence is represented in the both the local and the global
+explanation views, respectively, and both can be used to obtain interpretability.
+Figure 3.5: UI Design Global SHAP Tab
+The overall flow of users is straightforward. The user carefully goes through the same procedure as
+described above and chooses one of the example admissions, or manually enters admission data,
+clicks the risk estimation and can then see the navigation which is calibrated, as an explanatory factor,
+together with the CKD risk score. For now, the current branch of MIMIC displays the primary branch
+of MIMIC and not live interactive training index as seen in WESAD or multi-modal fusion.
+3.2
+Detailed Methodology and Design
+This section describes in detail methodology and design of the proposed multi modal CKD decision –
+support framework. Highlighted key design decisions with regards to the selection of datasets, pre-
+processing and leakage control, construction of labels, feature extraction, training of models and
+calibration of the probability, late fusion, explainability and the research prototype. For each area, a
+brief description of the selected approach, a description of any approaches considered but not selected,
+a justification for excluding those approaches and significant compromises that were made between
+validity of the approach, computational cost, usability and interpretability of results and suitability to
+the research in clinical decision support are provided.
+3.2.1
+Dataset Description
+The framework takes advantage of three datasets publicly available and consists of three modalities.
+The population level clinical and demographic data are derived from NHANES (2013-2014) which
+consists of 4702 model participants with 74 features, with 6.55% of participants labelled CKD-
+positive of kidney disease patients having eGFR<60 mL/min/1.73 m2, with the CKD-EPI 2021 race-
+free equation [16], [17], [18]. MIMIC-IV v3.1 contains the data in the hospital Electronic Health
+Record (EHR), which include ~30,000 hospital admissions with 68 features with a positive rate of
+~15.23%, including 8 measurements obtained from the hospitals laboratories in the window of
+hospital admission (bicarbonate, chloride, creatinine, hemoglobin, platelet, potassium, sodium, and
+urea nitrogen values [6]. WESAD is a dataset comprising of wrist worn data from 15 participants with
+
+
+============================================================
+PAGE 30
+============================================================
+20
+each time-series divided into 578 windows with features from blood volume pulse (BVP),
+electrodermal activity (EDA), skin temperature (TEMP), and accelerometer (ACC) [5].
+To this end three existing publicly available datasets around population, hospital and physiological
+modalities will be leveraged. The only other alternative considered was obtaining a collection of a
+single, proprietary cohort of the three modalities for the same patients, but this was not selected
+because there was no publicly available cohort and, because of the time frame and ethical concerns of
+a final year design project, it was deemed impractical to collect such a cohort. A second alternative,
+which was MIMIC only, was discarded as it would drown out wearing populations and sizes of
+interest that motivated the multimodal research question, but were substantially only MIMIC, even
+though MIMIC was not the main branch of the prototype for reporting and decision support built with
+the lock. The good news about the public data sets is that they are reproducible, large and have an
+ethical approval; the bad news and critical limitation is that the three types of data sets are from
+different types of populations and cannot be connected at an individual patient level. All of these data
+are fit for a relatively small computer. Clinically, the data sets assembled are for a population
+screening as well as an inpatient risk and a chronic physiology for monitoring, but with no patient
+overlap, only a multimodal methodology and integration protocol are apparent, as is the open
+reporting style throughout.
+The data of each cohort is divided into three sets a training set, a validation set, and a test set, and the
+ratio of splitting is dependent on the cohort; NHANES split 60:20:20; WESAD split 75:25, because
+it's a proxy branch for physiology without CKD labels.
+Table 3.3: Summary of datasets used in the multimodal framework.
+Branch
+Dataset
+Unit
+Total N
+Features
+Label definition
+Population
+clinical
+NHANES
+2013–
+2014 [16]
+Participant
+4,702
+74
+eGFR < 60 mL/min/1.73
+m² (CKD-
+EPI 2021) [17], [18]
+Hospital
+EHR
+(primary)
+MIMIC-
+IV v3.1 hosp
+[6]
+Admission
+30,000
+68
+Admission-
+level CKD composite
+Wearable
+physiology
+(proxy)
+WESAD [5]
+Window
+578 (15
+subjects)
+16 window
+statistics
+Stress vs baseline (not C
+KD)
+3.2.2
+Data Preparation
+A separate pipeline is used to process each of the datasets. In NHANES, the race-free CKD-EPI 2021
+equation is used to calculate outcomes, with eGFR thresholds used to construct labels, outcome
+highly-leaking columns such as raw creatinine and identifier columns that are used to create the label
+are removed, values are median imputed, and a grouped train:validation:testing split of 60:20:20 is
+used. The records for MIMIC-IV are merged on the basis of subject and admission id; for each of the
+eight laboratory features, processing is done on the admission window, the processing transformations
+are fit on the training partition of the data, and then applied to the validation and test data [6]. For
+WESAD, the window size is set to 1920 samples, the stride is set to 960 samples, no more than 120
+windows per subject will be segmented and the windows will be split using a 75/25 train–test partition.
+The chosen method is grouped splitting which is labelling using a clinical approach. Random splitting
+was also considered but rejected as it can give optimistic and clinically unrealistic performance
+estimates due to the presence of records of the same subject or participant in multiple splits; The
+problem of grouped splitting reduces the flexibility in the balance of the rare positive classes across
+the splits but in the context of assessing a decision-support tool it is salient that the performance be
+judged on unseen individuals [27]. The imputation method selected was chosen to be median
+imputation as it is stable, transparent, and less likely to have information leakage between validation
+portions and imputation models; however, it does not model feature correlations. In addition, the
+NHANES targets are based on the creatinine cutoffs of the guideline-based staging logic and the
+CKD-EPI labelling system was selected to avoid the use of arbitrary creatinine cutoffs. In the
+
+
+============================================================
+PAGE 31
+============================================================
+21
+NHANES cycles when the primary rule is applied, the availability of albuminuria in merged
+NHANES tables was limited to consider an alternative rule of eGFR alone, or eGFR and albuminuria
+thresholds. These steps are very inexpensive and can be repeated in the computer. Determinate
+processing with explicit rules to be checked and audited during deployment can be helpful as every
+transformation can be versioned and replayed on new admissions without being re-derived because of
+missing documentation of the rules.
+3.2.3
+Feature Engineering
+Engineering of features is modality specific. All the fields in the clinical use and EHR feature parts
+are structured, including demographic, admission, insurance, race, gender, length of stay, and
+laboratory; the categorical variables are one-hot, the numerical variables are train-only fitted and
+standardized. The wearable branch window process is to transform raw signal data into statistical
+information that is mean, standard deviation, minimum and maximum values of data in each window
+separately extracted from BVP, EDA, TEMP and Accelerometer magnitude signals.
+Selected approach prefer interpretable features, structured features and hand-summarized, wearable
+windows. An end-to-end convolutional or recurrent signal encoder was considered for modelling the
+wearable branch, but was rejected due to the small size of the WESAD dataset and lack of CKD labels,
+which would lead to an encoder overfitting and being unable to be validated against a renal outcome
+[5], [29]. Even another idea, which was to pass the raw sequence whose length is fixed directly to the
+deep network was rejected for the same reasons of amount of data and mismatch of effects of different
+labels. The benefits of the statistical window features are both their robustness and the fact that they
+only have a few parameters; the drawback is that subtle temporal evolutions and cross channel
+interactions in the window may be washed out. Windowed is lightweight computation and
+programmer-friendly for the deployment of prototypes on typical hardware. On a clinical level, the
+structured and interpretable features are consistent with practitioners understanding and reasoning
+about laboratory information and summary vital signs, and the features on the wearable are a proxy
+for physiological stress, but not a labelled predictor of CKD.
+Figure 3.6: Sample WESAD Wrist Signal Window
+
+
+============================================================
+PAGE 32
+============================================================
+22
+3.2.4
+Multimodal Fusion Strategy
+A late fusion of the outputs of the branches is made at probability level. Each branch makes a class
+prediction, and the aggregated branch predictions are done using weights based on normalized
+AUROC and AUPRC statistics; an alternative combiner, called a logistic-regression meta-learner on
+branch probabilities, is also evaluated.
+The approach selected is late fusion and the reason for this is that the datasets are not patient-aligned.
+There were other options considered, early feature-level fusion and joint end-to-end fusion networks
+for multiple modalities, which could in principle learn the modalities' interaction in principle on the
+row level but were rejected because these would require creating patient equivalences in the data that
+were used for fusion, and would be fabricated, in violation of the no-fabrication principle of this study.
+A single-model alternative in which only the features of the MIMIC EHR was put into consideration,
+and serves as the backbone of the locked hospital model and Streamlit prototype, but because of its
+inability to address the multimodal integration objective, it was not selected as a separate research
+design. The positive side of late fusion is that it works without loss of functionality under a structural
+constraint of independent cohorts, it is independently trainable, auditable and replaceable and also has
+very low inference cost as fusion is taking place in the probability space. The downside is that, like, if
+you have aligned data, then there could be cross-modal feature interactions that a joint representation
+could learn but it can't learn here due to late fusion, this is explicitly stated. These modularities are
+clinically and deployable beneficial: the hospital, the population and the wearable branches can
+independently be improved when new data occurs, but due to the lack of an aligned cohort, it is not a
+clinically validated multimodal renal diagnosis system, but rather a deployable fusion protocol
+reported under proxy conditions.
+3.2.5
+Model Architecture and Selection
+Several models were explored for each of the tabular branches: calibrated logistic regression, Random
+Forest (400 trees, max depth 16, weighted 0.5 subsample for each class), XGBoost (400 estimators,
+max depth 5, learning rate 0.05, histogram method, positive class weighted), tabular MLP (128/64
+hidden units, ReLU, dropout 0.2, AdamW 1 × 10-3), and tabular Residual Network (128-dim
+projection, three layer-normalized residual blocks, AdamW 8 × 10-4, 50 epochs). Random Forest
+window-level statistics on wearable branch. The locked primary model for the hospital EHR branch
+was logistic regression with Platt (sigmoid) calibration of the validation prediction.
+The downside of the selected approach would be the training of deep tabular networks as opposed to
+good tree ensembles and the linear model as the main deep MIMIC classifier that is always calibrated.
+Recurrent and transformer-based EHR sequence models were considered, but end to end sequence
+models were not since EHR sequence modelling has been successfully applied in longitudinal studies
+[25], [28] but were felt to be very susceptible to over-fitting in this small cohort with a tabular
+admission-level representation where laboratories were already aggregated within the admission
+window, and do not substantially improve upon strong tabular baselines [23], [24]. The tree
+ensembles and deep networks that comprised the trained tabular models however gave slightly better
+ranking on the MIMIC test partition while calibrated logistic regression was much better, especially
+with regard to the most important criterion of ECE which is essential for a risk oriented decision
+support [14], [47]. For the wearable branch, Random Forest was the better algorithm as it can learn
+nonlinear patterns from low-dimensional window statistics without requiring large CKD-labelled
+wearable cohorts. The advantage of the main model selected is the low serving time, low and stable
+probabilities and easy understandable; the disadvantage is the slightly lower ranking results as
+compared with the optimal nonlinear models. Going on the positive side, the linear primary model is
+very cheap to train and deploy, which helps in the prototyping of Streamlit, and any batch-scoring
+pipeline generated at the end of the model trainings. Clinically calibrated (not just "good rank")
+probabilities are the appropriate way to prioritize for decision support, since the clinician's goal is to
+have a good estimate of the risk – see [14] for details.
+
+
+============================================================
+PAGE 33
+============================================================
+23
+Table 3.4: Branch models and key hyperparameters.
+Branch
+Model role
+Algorithm
+Key settings
+MIMIC (primary)
+Locked classifier
+Calibrated logistic regression
+(logreg_sigmoid_cal)
+Sigmoid (Platt) calibration
+on validation data
+MIMIC &
+NHANES
+Baselines
+Random Forest
+400 trees, max depth
+16, balanced_subsample
+MIMIC &
+NHANES
+Baselines
+XGBoost
+400 estimators, max depth
+5, lr 0.05, hist, positive-
+class weighting
+MIMIC &
+NHANES
+Deep tabular
+Tabular MLP
+128→64, ReLU, dropout
+0.2, AdamW 1×10⁻³, 40
+epochs
+MIMIC &
+NHANES
+Deep tabular
+Tabular ResMLP
+Projection to 128 + 3×
+residual blocks, AdamW 8
+×10⁻⁴, 50 epochs
+WESAD (proxy)
+Wearable branch
+Random Forest
+Window statistics input;
+subject-grouped holdout
+evaluation
+3.2.6
+Explainable AI Integration
+With the help of SHAP, the prototype introduces explainability and, per case, the user can view its
+linear contribution of the features displayed on the admission [15] [48].
+SHAP (SHapley Additive exPlanations) is the approach selected. The other main local explanation
+methods that were considered here were LIME (Local Interpretable Model-agnostic Explanations) [44]
+which introduces local surrogate sampling that can lead to flaky behavior when sampling different
+perturbations and simulation runs, but that was not desired when implementing the pipeline for the
+linear and tree based models explored here one can compute exact or semi-exact SHAP [15], [48] that
+provide locally consistent attributions based on a common additive feature-attribution framework.
+Although features level SHAP was discussed for tabular deep models by comparing against feature-
+level Grad-CAM and attention level visualization, it was deprioritized due to the linear nature of the
+locked primary model as well as the structured nature and nameability of the clinical features from
+imaging. The most appealing aspect of SHAP is that it provides faithful, comparable explanations at
+both the individual and global level which can be easily used for auditing individual admissions and
+for the drivers at the cohort level in the MIMIC branch. Unfortunately, it comes at the price of more
+computation compared to the single surrogate fit, but is well tolerated for the number and size of
+features and models. Feature-level attributions are used flexibly, in conjunction with domain
+knowledge, which is important to achieve successful adoption of decision-support systems [39], [49],
+[50]; in the prototype interface, the attributions are precomputed on the global level and light on a
+local level, meaning that they are quickly generated when the interface is displayed. One disadvantage
+is that explanations only tell of relationships present in the training distribution, and they are not
+inherently causal mechanisms and do not replace the medical doctors' judgment [49].
+3.2.7
+Training Procedure
+After training one time on each of the grouped training partitions with each model, hyperparameters
+and model parameters are selected on the validation partition(s) and the performance is measured. The
+models are calibrated with a sigmoid
+transformation fitted on the model ’ s predictions on the
+validation partitions: calibrated main hospital model, class-balancing is used for training tree
+ensembles to deal with the small number of samples in the positive class, training deep tabular models
+with adamW optimizer for a fixed number of epochs and monitoring validation.
+Subjects or participants are split in cohorts and no subject or participant exists in more than one cohort
+as it is showed in Table 3.5. NHANES and MIMIC data are further divided in a 60:20:20 stratification
+
+
+============================================================
+PAGE 34
+============================================================
+24
+of train (SEQN), validation and test (subject_id).WESAD (without CKD labels) is a 75/25 train–test
+split with groups of subjects. Positive rates are shown per partition – not as a result of any forced
+rebalancing from one fold to another to create the course balance.
+Table 3.5: Grouped train, validation, test partition by branch.
+Branch
+Dataset
+Split policy
+Train
+Validation
+Test
+Population
+clinical
+NHANES
+2013–2014
+[16]
+Grouped
+by SEQN;
+60/20/20
+2,822 (6.1%)
+940 (7.0%)
+940 (7.3%)
+Hospital
+EHR
+(primary)
+MIMIC-IV
+v3.1 hosp [6]
+Grouped
+by subject_id;
+60/20/20
+17,994
+(15.1%)
+6,009 (14.8%)
+5,997
+(16.2%)
+Wearable
+physiology
+(proxy)
+WESAD [5]
+Grouped by
+subject; 75/25
+train/test
+429 (36.6%)
+—
+149 (35.6%)
+In the end, the chosen approach has provided the necessary rigorous train–validation–test split, which
+has split the subjects or participants in groups based on their levels. Random splitting was considered,
+since it would result in all the optimistic, clinically unrealistic estimates of performance given by
+having multiple records of the same person on multiple partitions [27]. In particular, Sigmoid
+calibration was favoured over isotonic calibration, since the isotonic method is more flexible but has a
+greater tendency to over-fit on smaller validation sets, and has a more simpler calibration curve [14].
+In this study, class balancing (class_weight) and the ensemble was also tested and used to prevent the
+naive unweighted training of the models, although the proportion of CKD was low in NHANES and
+MIMIC, a naive unweighted training would bias the model towards the majority negative class,
+decreasing the sensitivity for screening use [47]. On top of that, it was suggested to do the extensive
+experimental auto search but this was not done due to the time and the computation involved.
+Reproducibility was maintained through fixed, documented experimental configurations rather than
+extensive automated hyperparameter search. The upside of this approach is less optimism and no
+reporting artifacts and reality based probability of threshold policies; the down side of this approach is
+some loss of performance due to the limited search. Easy on the calculations; can be repeated using
+the same workstation. Finally, the frozen calibrated model and the objects to be pre-processed are
+loaded directly for inference to ensure the same results for the entire notebook pipeline and Streamlit
+prototype.
+3.3
+Project Plan
+There were 5 stages of the project from proposal to final submission. As it became clear what these
+datasets were possible to access, what did not fit well in the modelling and what was possible to
+complete with disjoint-cohort multimodal fusion, the plan was tweaked accordingly.
+Phase 1 Research and planning, (Week 12 – 20) includes literature review, gap analysis, requirements
+specification. CKD staging, EHR-based risk modelling, and wearable health monitoring were
+reviewed [1]–[5], [16]–[18], [23], [33], [34]. The system architecture, data-flow design, as well as the
+use of predefined public datasets with protocol level late fusion was defined.
+Weeks 18-26: Phase 2, Data engineering, NHANES, MIMIC-IV, and WESAD data was acquired and
+preprocessed. CKD labels, leakage-safe properties, splits groups and branch specific feature pipelines
+were set up. To obtain more reliable imputation of train-only and scaling were applied before
+validation and testing.
+During Phase 3 (Weeks 24-36), logistic regression, RF, XGBoost, MLP, and ResMLP models were
+trained and compared based on the branch models. The hyperparameters and sigmoid calibration were
+done using validation data. The same model MIMIC was locked, as calibrated logistic regression,
+with frozen checkpoints for reporting and prototype use.
+Phase 4 Evaluation and testing (Weeks 34 – 42), During the held-out test, we evaluated discrimination,
+
+
+============================================================
+PAGE 35
+============================================================
+25
+the selection of the threshold, and calibration. The Robustness and temporal checks, SHAP analysis
+and Streamlit prototype testing have been done. Metrics, confusion matrices and calibration plots as
+well as UI screenshots were created.
+Phase 5 Integration and submission (Weeks 40 - 48), created Streamlit decision-support prototype,
+created and formatted thesis, and prepared defence. Final products were the complete report,
+presentation deck and research package for reproduction.
+Clearly, there were biases at each of the phases, preprocessing-splitting feeds training, training-
+calibration feeds explainability (locked models), prototype integration (primary-model-freeze) and the
+evaluation feeds writing up the result.
+Table 3.6: Project Plan Summary.
+Phase
+Phase Name
+Objectives
+Key Deliverable
+Weeks
+P1
+Research and
+Planning
+Systematic literature
+review; gap analysis;
+requirements
+specification;
+architecture and
+dataset strategy;
+Literature review (Ch. 2); gap
+analysis table; FR/NFR
+specification
+12–20
+P2
+Data
+Engineering
+NHANES, MIMIC-
+IV, and WESAD
+acquisition and
+verification; leakage-
+safe labelling;
+grouped splits; train-
+only imputation and
+scaling
+Clean branch datasets;
+preprocessing notebook; split
+integrity checks; Table 3.3 cohort
+summary
+18–26
+P3
+Model
+Development
+Tabular baselines
+and deep models per
+branch; wearable RF
+proxy; late-fusion
+protocol; primary
+model lock
+Trained models; frozen
+checkpoints; branch probability
+exports; final_reporting_lock.json
+24–36
+P4
+Evaluation &
+Testing
+Held-out test
+metrics; calibration
+analysis; SHAP
+integration;
+robustness and
+temporal validation;
+prototype functional
+testing
+Metric and calibration tables;
+confusion matrix; SHAP
+rankings; UI screenshots (Figs.
+3.3–3.5); evaluation report
+34–42
+
+
+============================================================
+PAGE 36
+============================================================
+26
+P5
+Integration &
+Submission
+Streamlit CDS
+integration; thesis
+writing and
+formatting; defence
+preparation; final
+submission
+demo_app.py prototype;
+complete FYDP thesis;
+presentation deck
+40–48
+3.4
+Task Allocation
+This table depicts the timeline of the principal activities in each period of the project, from week 12 to
+week 48.
+Table 3.7: Task Allocation summary
+Tasks
+Weeks
+12
+14
+16
+18
+20
+22
+24
+26
+28
+30
+32
+34
+36
+38
+40
+42
+44
+46
+48
+Research &
+Planning
+Data
+Engineering
+Model
+Developme
+nt
+Evaluation
+& Testing
+Integration
+&
+Submission
+3.5
+Summary
+In this chapter the whole methodology of this research has been described. We gave a description of
+the multimodal framework design, clinical cohort description of the data, description of the
+physiological data captured in WESAD, steps in processing, splitting the data into groups and feature-
+engineering for the hospital admission EHR (MIMIC) since the day of admission to MIMIC. The
+description of each of the architectures and models built in each branch such as calibrated logistic
+regression, tree ensembles, tabular deep network, wearable Random Forest and probability level late
+fusion model have been discussed and design justification to the locked primary hospital design and
+explainability integration using SHAP has been discussed. Details like functional, non-functional
+requirements, a data-flow diagram and the presentation of risk estimates and explanations in a
+research demonstration environment were also specialized. The different technical aspects of the
+project, such as the project timeline, human resources, and the deliverables schedule were documented.
+This Chapter provides the bases and a framework of methodology used and how it was carried out.
+
+
+============================================================
+PAGE 37
+============================================================
+27
+Chapter 4
+Implementation and Results
+This chapter presents the implementation environment, testing and evaluation procedures, and
+empirical results of the proposed multimodal CKD risk prediction framework. It reports branch-wise
+model performance, calibration and explainability analysis, supplementary validation outcomes, and
+the research decision-support prototype demonstration.
+4.1
+Environment Setup
+This section outlines the hardware, software setup, experimental setup, detailed results of the
+proposed framework, the performance of the models, the confusion matrix results, the explainable
+SHAP approach, the robustness test results, and finally, the clinical decision support-prototype
+demonstration. All outcomes are presented as research decision support evidence and are not evidence
+of clinically validated outcomes of deployment.
+4.1.1
+Hardware and Software Environment
+Development and evaluation have been done on a local workstation with Python 3.12, in an isolated
+virtual environment and used a Jupyter Notebook tool as a reproducible experimentation environment
+for development. The implementation stack consisted of pandas and NumPy for data manipulation;
+scikit-learn for data-preprocessing, classical models and calibration; PyTorch for tabular deep
+networks and baseline methods using gradient-boosted models (XGBoost); and Streamlit for the
+prototype of the decision-support system. Often tabular deep models were found to be useful and were
+deployed with a specific GPU, but if one didn't exist these models ran on CPU, hence the locked
+primary hospital classifier is a calibrated logistic regression, which means it isn't sensitive to this.
+Primary MIMIC admission model has been analysed to check for explainability of the result using the
+tool SHAP. All models were trained and the entire data sequence was exported to a serialized format
+for later use for reporting and loading into a prototype.
+4.1.2
+Hyperparameter Configuration
+The same experimental protocol was performed in all the branches, for comparability. Categorical
+was one-hot encoded while numeric variables were median imputed and standardized based on mean
+and standard deviation data from the training partition only. Grouped 60:20:20 train–validation–test
+splits of NHANES and MIMIC-IV on participant and subject identifier, respectively, and with random
+seed set to 42 were used for evaluation, with a subject-grouped 75:25 train–test holdout applied to the
+wearable proxy branch. The F1-maximization policy was used for choosing the classification
+threshold on the validation partition for the locked primary model (threshold = 0.16).
+The baseline and primary hospital model was logistic regression, balanced class weighting, and a
+higher iteration limit and was then calibrated using sigmoid on the validation predictions to get the
+locked model logreg_sigmoid_cal. Random Forest and XGBoost were trained with 400 estimators,
+max_depths 16 and 5 and imbalance aware weighting. For Tabular multilayer perceptron models 128
+and 64 sized hidden layers were used with Dropout of 0.2, AdamW optimization with learning rate 1×
+10-3, batchsize 64 and CrossEntropyLoss with 40 training epochs on NHANES and 35 training
+epochs in the end MIMIC run. We obtained the model of the residual tabular network with 128 units,
+3 layer-norm residual blocks, 0.1 dropout, 8×10-4 learning rate with AdamW, and 50 epochs. The
+wearable branch classified window-level BVP, EDA, temperature, and accelerometer statistics, using
+a stress versus baseline proxy label, using the Random Forest algorithm. A total of 30,000 admissions
+
+
+============================================================
+PAGE 38
+============================================================
+28
+went towards the final MIMIC experimental cohort.
+Table 4.1: Hyperparameter configuration summary
+Item
+Setting
+Preprocessing
+One-hot (categorical); median impute + standardize (numeric, train-only)
+Splits
+NHANES & MIMIC: grouped 60/20/20; WESAD: grouped 75/25; seed =
+42
+Primary threshold
+F1-max on validation; 0.16 (MIMIC)
+Primary model
+Logistic regression + sigmoid calibration →logreg_sigmoid_cal
+RF / XGBoost
+400 estimators; max_depth 16 / 5; imbalance-aware weighting
+Tabular MLP
+128 →64; dropout 0.2; AdamW 1 × 10 ⁻ ³ ; 40 epochs (NHANES), 35
+(MIMIC)
+Tabular ResMLP
+128-dim; 3 residual blocks; AdamW 8×10⁻⁴; 50 epochs
+Wearable
+(WESAD)
+Random Forest; stress vs baseline proxy
+MIMIC cohort
+30,000 admissions
+4.1.3
+Experiment Parameters Summary
+The principal configuration settings are summarized in Table 4.2.
+Table 4.2: Summary of experiment configuration.
+Parameter
+Configuration
+Programming language
+Python 3.12
+Development interface
+Jupyter Notebook
+Core libraries
+scikit-learn, PyTorch, XGBoost
+MIMIC cohort (final run)
+30,000 admissions
+Random seed
+42
+NHANES / MIMIC partition
+Grouped 60% / 20% / 20%
+WESAD partition
+Subject-grouped 75% / 25%
+Optimizer (deep tabular models)
+AdamW
+Learning rate (MLP / ResMLP)
+1×10⁻³ / 8×10⁻⁴
+Batch size
+64
+Loss function
+CrossEntropyLoss
+Threshold selection
+F1-maximization on validation (locked
+primary: 0.16)
+Locked primary model
+Calibrated logistic regression
+(logreg_sigmoid_cal)
+Explainability method
+SHAP
+4.1.4
+Clinical Decision-Support Prototype Setup
+The main branch artefacts from MIMIC admissions were used to create a clinical decision support
+
+
+============================================================
+PAGE 39
+============================================================
+29
+prototype, namely a Streamlit web application. The interface features a calibrated CKD risk prediction,
+user-specified thresholding, rich examples of patient admissions in the MIMIC cohort, manual entry
+of risk factors, and a Global SHAP Summary tab for the held-out test set. This prototype does not
+feature NHANES, WESAD, or live multimodal fusion, and the hospital model is read-locked to
+support an auditable decision-support workflow. Throughout a research-only disclaimer is displayed,
+the system is meant for risk-states presentation and explanation purposes, not self-diagnosis and
+therapeutic suggestions.
+4.2
+Testing and Evaluation
+4.2.1
+Validation Strategy
+The model validation process was designed and developed on a staged approach, in order to provide
+to a certain extent a level of independence and to reduce potential optimism bias in the process and
+ultimately in provision of decision support reports. The methodological approach that was used was
+grouped holdout evaluation with these separation performed as disjoint(user level grouping) and
+disjoint(subject level grouping), respectively between NHANES and MIMIC-IV. The training and
+validation data were used for pre-processing the data, fitting the model, calibration and setting
+thresholds while the held out test partition was used for a final evaluation.
+3 different validation designs were added to the main branch of the hospital. With repeating the
+experiments some times each time with different random-seeds for the subject-groups, the stability of
+the performance with the resampled subject-groups was investigated. For temporal external validation,
+the subjects were divided into training,validation and test groups according to the first admission and
+models of the training group were used for the prediction of the test admission to approximate the
+temporal generalization. From the inability to perform the experiments at the patient-level between
+NHANES, MIMIC-IV, and WESAD, the multimodal integration path was assessed using a branch
+level proxy, and as such the multimodal integration results represent a demonstration of integration
+protocol, rather than proof of multimodal CKD detection in a prospective setting.
+To study the window records of the WESAD, a proxy label was adopted and used separately in the
+wearable branch. The NHANES and MIMIC databases were independent; therefore, the patient level
+testing was carried out separately for the two databases.
+4.2.2
+Evaluation Metrics
+The performance of models were evaluated in a combination of discrimination, classification and
+calibration aspects. To take the imbalanced CKD related labels into account, discrimination was
+assessed based on area under the receiver operating characteristic curve (AUROC) and the area under
+the precision, recall curve (AUPRC). The accuracy, F1-score, sensitivity and specificity at the
+selected operating points in the validation were used to classify the threshold. The quality of
+calibration was assessed using the expected calibration error (ECE) and brier score since it is
+important that probabilities are trustworthy in order to make decisions based on risks [14], [47]. For
+locked primary hospital model, the number of items counted is from the held out test set which is
+shown in the confusion matrix. Explainability was measured with the help of the SHAP of the main
+classifier [15], [48].
+4.2.3
+Testing Procedures
+Testing was set up at 5 steps of the procedure. Data-integrity testing was conducted and integrity of
+the split and collective grouping, along with the integrity of imputation/scaling being applied only to
+the training data, was confirmed. In this model-comparison test all the candidate classifiers were
+trained in the same manner with same pre-processing method and a comparison of classifiers was
+done on the validation data before reporting the test-set results. All three of the models – the
+uncalibrated hospital logistic regression model, the model calibrated by sigmoid function, and the
+model calibrated by isotonic method were compared and locked the primary reporting model. Various
+
+
+============================================================
+PAGE 40
+============================================================
+30
+threshold policies were examined using operating point testing including the maximising F1 selection
+policy, the maximising recall policy and thresholding based on validation predictions according to
+Youden's method. Explainability and prototype testing assessed global SHAP consistency of locked
+model and functional behavior of Streamlit decision-support prototype for calibrated risk display,
+threshold adjustment and for providing explanations on the MIMIC branch only.
+All the above results were determined numerically by the model and provided branch-wise,
+performances of the main model, robust validation, temporal validation, proxy on the wearable, fusion
+protocol assessment, SHAP rankings.
+4.3
+Results and Discussion
+4.3.1
+Individual Model Performance
+Performance of the main classifiers in the hospital on the held out MIMIC test set of 5,997 admissions,
+summarized in table 4.3. There was no significant differences between model families as
+discrimination was fairly consistent AUROC 0.761 to 0.768. The highest AUROC 0.768 was obtained
+for the XGBoost model, followed closely by random Forest model 0.768 and Tabular MLP model
+0.766. Random Forest achieved the best accuracy 0.684 and F1 score 0.423 among the models, that
+have not been calibrated. In fact, logistic regression achieved a similar performance in ranking
+AUROC 0.761 but significantly higher calibration error ECE 0.249, whereas Tabular MLP exhibited
+competitive ranking AUROC 0.766 as well as a relatively low calibration error ECE 0.028.
+The results here suggest that while raising the capacity of the models did not lead to a clear
+discrimination in favour of the candidates, the certainty of the probability of being predicted was an
+important factor in candidating more than just the ranking by itself [14], [47].
+Table 4.3: MIMIC admission branch held-out test performance (uncalibrated models).
+Model
+Accuracy
+F1
+AUROC
+AUPRC
+ECE
+XGBoost
+0.649
+0.409
+0.768
+0.382
+0.207
+Random Forest
+0.684
+0.423
+0.768
+0.367
+0.198
+Tabular MLP
+0.645
+0.406
+0.766
+0.386
+0.028
+Logistic
+Regression
+0.702
+0.417
+0.761
+0.380
+0.249
+4.3.2
+Evaluation of the Locked Primary Model
+Model selection prioritized sigmoid-calibrated logistic regression over uncalibrated baselines and tree
+ensembles because it offered similar discrimination (AUROC 0.761) with substantially better
+probability reliability (ECE 0.020).
+On the test set, using a threshold of 0.16, the model achieved an accuracy of 0.692, F1-score of 0.415,
+sensitivity of 0.674, specificity of 0.696, AUROC of 0.761, and AUPRC of 0.379. Moreover, the
+scores on the calibration were quite satisfactory as can be seen from the score of ECE of 0.020 and the
+score of Brier of 0.119.
+The AUROC value for the uncalibrated logistic regression model with the cutoff of 0.52 was similar
+to this proposed model 0.761, however the uncalibrated logistic regression model showed
+substantially worse calibration (ECE = 0.249) than the sigmoid-calibrated primary model (ECE =
+0.020), while both retained similar AUROC (0.761) and also the F1-score for the proposed model was
+nearly equal to the uncalibrated logistic regression model which was 0.417 vs. 0.422. On the other
+hand, isotonic calibration further decreased the ECE = 0.014 but with a compromise on the values of
+accuracy = 0.630 and F1 = 0.404 at a threshold value of 0.12.
+Overall, the calibrated model, which is of sigmoid form would be the best compromise to be used for
+decision support applications. We found it to be clinically interpretable with linear structure, with
+stable ranking performance, as well as being well calibrated probabilities, a feature that has been
+typically used for threshold based risk communication [42], [49].
+
+
+============================================================
+PAGE 41
+============================================================
+31
+Table 4.4: Locked primary model results
+Metric
+Value
+Accuracy
+0.692
+F1-score
+0.415
+Sensitivity (recall)
+0.674
+Specificity
+0.696
+AUROC
+0.761
+AUPRC
+0.379
+ECE
+0.020
+Brier score
+0.119
+True negatives
+3,560
+False positives
+1,468
+False negatives
+330
+True positives
+639
+Test admissions (n)
+5,997
+Reliability curves (Figure 4.1) are plotted for the performance of these two model uncalibrated and
+calibrated by sigmoid – on MIMIC test set. The calibrated model has better diagonal, the fit between
+the probability predicted by the model and the observed to the cell probability, it is better and this is
+correlated with decrease in ECE from 0.249 to 0.020 without compromising the AUROC (0.761).
+Figure 4.1: MIMIC Calibration Reliability Diagram
+The primary model therefore offers the most defensible balance for decision-support reporting:
+clinically interpretable linear structure, stable ranking performance, and low calibration error suitable
+for threshold-based risk communication [42], [49].
+4.3.3
+Confusion Matrix Analysis
+To appreciate the behaviour of the classification for locked Primary model a Confusion Matrix
+(Figure 4.2) of test-set was checked. Finally, the model showed good accuracy with 639 cases as true
+positive and 3560 cases as true negative after running the model with threshold value of 0.16, with
+
+
+============================================================
+PAGE 42
+============================================================
+32
+330 false negatives (5.5% of test admissions) and 1,468 false positives (24.5% of test admissions).
+Figure 4.2: MIMIC Confusion Matrix
+The operating points picked from the matrix will represent a screening type frame in deciding whether
+or not to flag the patient for further CKD follow-up and emphasising missed opportunity of the
+treatment when the patient is falsely not flagged compared to inconvenience in clinic. This however
+does not occur to a high extent and they should be marketed as risk stratification support and not as
+sole diagnosis [49].
+4.3.4
+Robustness and Temporal Validation
+The results of the supplementary validations are given in Table 4.5. There were no inconsistencies in
+discriminating the resampled groups of subjects for the logistic regression classifier with AUROC of
+0.769 ± 0.007 (95% CI: [0.764, 0.774]) and an F1 score of 0.401 ± 0.015 from grouped-split
+experiments with five different seeds. The results from the temporal external validation including
+6126 admissions of subjects who first came in contact with the hospital after the 80th percentile
+hospital-to-hospital admission time, were AUROC 0.771, F1 0.442, recall 0.715, specificity 0.680,
+and ECE 0.022, with an improvement of +0.010 AUROC compared to AUROC in the grouped-split
+test AUROC 0.761.
+These results show that there was not significant loss of the discrimination at the level of admission
+under either random partitions of the subjects or forward-in-time holds out, which involved subjects in
+the same hospital database. They do not, however, stand in for the external institutional validations
+which happen in another institution [6].
+Table 4.5: Supplementary MIMIC validation results.
+Validation type
+AUROC
+F1
+Recall
+Specificity
+ECE
+Repeated grouped
+split (mean ± std,
+5 seeds)
+0.769 ±
+0.007
+0.401 ± 0.015
+0.742 ± 0.061
+0.649 ± 0.061
+0.261 ±
+0.008
+Temporal external
+holdout
+0.771
+0.442
+0.715
+0.680
+0.022
+Note: repeated-seed robustness rows report the uncalibrated logistic regression configuration; the
+locked primary model retains ECE = 0.020 on the standard held-out test partition (Table 4.4).
+
+
+============================================================
+PAGE 43
+============================================================
+33
+4.3.5
+NHANES Population Branch Results
+The test-set for the NHANES is an independent study population and their test-set results are
+presented in the NHANES Table 4.6. XGBoost achieved the strongest overall results, accuracy 0.966,
+F1 0.798, AUROC 0.992, ECE 0.014. Logistic regression without change of AUROC 0.982 and F1
+0.692 was very discriminative and there was no significant change in sensitivity and specificity which
+were 0.928 and 0.940. The calibration error ECE 0.053 was the only one that was small. ResMLP had
+the best accuracy score of all classifiers which was 0.962, had the highest specificity 0.984 and the
+lowest sensitivity 0.681 among all the classifiers when considering with logistic regression.
+In summary, the results indicate that four features are built-in to NHANES population and lab, but
+they can be appropriately used independently and in combination to successfully separate NHANES
+CKD-risk into varying levels. Limiting this branch to reflect hospital admission or the average of
+MIMIC metrics should be avoided since the cohorts are different, as are the setting, label construction
+and features available [16], [17].
+Table 4.6: NHANES test-set performance.
+Model
+Accuracy
+F1
+Sensitivity
+Specificity
+AUROC
+AUPRC
+ECE
+XGBoost
+0.966
+0.798
+0.913
+0.970
+0.992
+0.932
+0.014
+Logistic
+Regression
+0.939
+0.692
+0.928
+0.940
+0.982
+0.852
+0.053
+Random
+Forest
+0.948
+0.714
+0.884
+0.953
+0.979
+0.832
+0.027
+Tabular MLP
+0.946
+0.687
+0.812
+0.956
+0.978
+0.826
+0.022
+ResMLP
+0.962
+0.723
+0.681
+0.984
+0.971
+0.816
+0.032
+4.3.6
+Wearable Proxy Branch Results
+A wearable Random Forest classifier with stress versus base line proxy task was tested, with 578
+windows, 15 subjects and was found to have AUROC 0.764, F1 0.667, Accuracy 0.812, Sensitivity
+0.528 and Specificity 0.969 with ECE of 0.123. This was low sensitivity, high specificity which is
+typically observed in stress-vs-baseline proxy task.
+This branch was included to evaluate the processing and classification capability of this type of
+Window in a reproducible manner in the multimodal approach. Not only, it's not just the one that does
+not classify the patient as CKD, it's not the measure of kidney outcome. It has not been tested on
+branch level yet and in the bigger study can only be measured as a methodological test and provide
+probabilities if tested in the branch level using a late fusion protocol.
+4.3.7
+Multimodal Fusion Protocol Evaluation
+Branch-level late fusion was not reported as a primary outcome because NHANES, MIMIC-IV, and
+WESAD are disjoint public cohorts without shared patient identifiers. Under proxy conditions, fusion
+performance is not interpretable as multimodal CKD detection.
+4.3.8
+Explainability Analysis
+The drivers of the predicted risk of CKD at each of the above levels of the admissions were extracted
+via global SHAP analysis on the locked primary model. Figure 4.3 shows that the top global
+attributions were patient age, Medicare insurance status, race, admission type, gender and length of
+stay and private insurance such as by an employer. Age 0.562, insurance_Medicare 0.275, and
+race_BLACK AFRICAN AMERICAN 0.199 were the top three features in terms of mean|SHAP.
+Other frequently used context variables for admission purpose like EU OBSERVATION and
+OBSERVATION ADMIT types were the other prominent features. Laboratory urea nitrogen
+contributed relatively little at the cohort level mean SHAP 0.047 and demographic and administrative
+
+
+============================================================
+PAGE 44
+============================================================
+34
+factors had seemed to play a greater role in the explanation of the model at the global level.
+Case level further tests of local behaviour are illustrated: A true positive was tested at calibrated
+probability 0.957 at threshold value 0.16, and a true negative was tested at calibrated probability 0.001
+at the same threshold value. These are association-based and for discussion and audit, not causal
+mechanism or for replacing expert opinion in the context of hospital training distribution.
+Figure 4.3: Global SHAP Feature Attribution for MIMIC model
+4.3.9
+Clinical Decision-Support Prototype Demonstration
+A Streamlit prototype was used to assess the locked MIMIC branch, as a research demonstration. The
+calibrated admission risk, the threshold customization and the review of example-cases are part of the
+interface, as well as the hand entry of features, and the global SHAP summary tab based on a frozen
+test-set analysis. The NHANES, WESAD and live fusion combination is not integrated since it was
+obvious that it wasn't within the model's range of evidence and scope in the prototype.
+This demonstration shows that offline model outputs can be presented in an inspectable decision-
+support workflow with explicit disclaimers and no therapeutic recommendations. It is not clinical
+deployment, live EHR integration, or prospective validation [39], [42].
+4.3.10
+Discussion
+However, the findings, when combined, suggest three conclusions in terms of this study.
+Firstly, sigmoid-calibrated logistic regression, on the primary branch of admission to MIMIC,
+achieved a sensible trade-off between discrimination and reliability. It attained AUROC 0.761 with
+ECE 0.020, while similar results were obtained with logistic regression with AUROC 0.761 and ECE
+0.249 (no calibration), and AUROC ~0.768 with ECE ~0.20 with the tree-based models. So,
+calibrated probabilities should be used instead of only ranking performance to support decisions.
+Second, the NHANES branch demonstrated very high population discrimination (0.992) which should
+not be assumed as hospital admission discrimination. There are differences in setting, in definition of
+label, in features available and their rates of use, and results from the branches should not be averaged
+or merely applied to the inpatient setting.
+Third, the wearable and fusion components remain methodological rather than clinically validated
+CKD detectors. WESAD was evaluated using a stress-versus-baseline proxy because CKD labels
+were unavailable in that cohort, while NHANES and MIMIC-IV used branch-specific CKD-related
+labels under different settings. Late fusion across disjoint public cohorts also did not show patient-
+level multimodal CKD benefit. These parts therefore describe a reproducible multimodal design under
+
+
+============================================================
+PAGE 45
+============================================================
+35
+structural data constraints, not a deployed diagnostic system.
+Overall, the project is best thought of as a research framework for branch-level leakage-aware,
+calibrated and explainable hospital admission risk-stratification, in view of branch-level evidence,
+SHAP review, and a Streamlit decision-support prototype. Before deployment to the real world, there
+would be need for prospective clinical validation as well as same patient multimodal data.
+4.4
+Summary
+A testing and evaluation infrastructure was introduced as a stepping stone to the implementation of
+the proposed multimodal CKD risk prediction framework and empirical results as part of the proposed
+framework was introduced in this chapter. This software stack, defensive design grouping and
+discrimination metrics, model calibration metrics and a phased testing process were also experimented
+with prior to reporting. Last, and certainly not least, a model, the sigmoid calibrated logistic
+regression, is a locked model that might have been applied in the main MIMIC cohort of admissions
+and these models are able to provide just as good, and indeed far better, baselines with much better
+probability reliability level. A more intensive patient-level validations of the multimodal approach
+were required, however, as well as limited usage of the proxy which is worn by patients with the
+WESAD system. Using SHAP analysis and Streamlit prototype, the explanation of the decision
+support was presented and visualised. The chapter emphasizes and illustrates and explains the case of:
+risk stratification evidence not necessarily used in patients, but based on the fact that a set of markers
+is present in the public data sets.
+
+
+============================================================
+PAGE 46
+============================================================
+36
+Chapter 5
+Engineering Standards and Design
+Challenges
+For the proposed CKD risk prediction framework, the engineering standard as well as the
+societal,ethical issues are discussed here, along with the project management and financial analysis of
+the project. Complex engineering mapping of the project is also discussed.
+5.1
+Compliance with the Standards
+Not all standards are listed, only those relevant to this CKD risk prediction research project are
+discussed. The section introduces software tools, computing environment and data-handling practices
+that actually exist in the implemented system. If applicable, the alternatives are identified and why the
+chosen alternative is preferred is provided. The decision support system to take place in the
+production hospital is defined as a reproducible research system instead of a validated medical-device
+and should not be bound by regulatory standards of medical-device hospital deployment; those
+standards are not addressed in this final-year design project.
+5.1.1
+Software Standards
+With Python 3.12 and PEP 8 conventions, most processing, logistic regression, and tree baselines,
+calibration, and evaluation are written within the main MIMIC branch; PyTorch provides the ability to
+add tabular MLP and ResMLP baselines and XGBoost provides the ability to add gradient-boosted
+baselines. All metrics, SHAP outputs and any frozen model artifacts are stored in CSV, JSON and
+pickle. The locked primary is explainable using SHAP. Fixed random seeds, grouped splits, modular
+pipelines of branches and a fixed reporting lock ensure that the reproducibility is maintained. There
+was no use of any proprietary tools or LIME, or R-only stacks.
+5.1.2
+Hardware Standards
+The system was designed, and tested on a regularly used undergraduate research workstation. The
+main hospitals classifier is a simple tabular classifier, dependent upon no specialised accelerator
+equipment. The main pipeline can still be implemented on the central processing unit as heavier
+neural baselines would benefit from the use of graphics processing if available. The need for
+computation mainly comes from the support of big data collected locally from various public or
+research clinical and wearable devices. No special cardiac sensor or dedicated clinical or hospital
+computers were used.
+5.1.3
+Communication Standards
+Data flows through as abstract research products in the form of structured data from preprocessing
+through modelling, evaluation and demonstration. Clinical and wearable inputs are sourced from
+public datasets to tabular feature representations, multimodal integration is done at branch probability
+level and not by a shared patient record system. The decision-support prototype is a local research
+interface that loads the precomputed model outputs for demonstration. No live hospital interface with
+the application programming interfaces or full interoperability with the electronic health records has
+been undertaken yet and will be incorporated into future work.
+
+
+============================================================
+PAGE 47
+============================================================
+37
+5.2
+Impact on Society, Environment and Sustainability
+5.2.1
+Impact on Life
+The clinicians can use the framework to reflect on the CKD risk at the time of an admission using the
+calibrated probabilities and provide an explanation why using the SHAP explanation that may be
+helpful in implementing earlier follow-up testing if demonstrated in the future. It is not designed for
+the diagnostic of CKD nor is it a substitute for either eGFR-based or guidance-based assessment
+either, but of course indirectly helpful to patients by better informed clinical review and care [2],[18].
+However, there is no package deployed to healthcare providers as it is only a research prototype for
+explainer presentation of risks. The remote monitoring user is not directly served, as the wearable
+branch is not a WESAD stress test branch, and has not been validated to detect renal stress [5].
+5.2.2
+Impact on Society & Environment
+While it can be evidence-based for digital-health research to gauge early awareness of CKD or
+investigate potential opportunities for leveraging routine hospital data as a tool to understand
+outcomes or broaden access for those with the disease, it does not move the needle necessarily on
+improved outcomes or broadened access to health care. At this time, MIMIC-IV can only be used by
+credentialed researchers [6].
+If there is impact, then the computer work, process the data set, train and report was mostly done
+locally, on the workstation. In comparison to large deep models, the locked primary model has a low
+energy. The cost for resources is for the storage of large clinical files. No need for deployment either
+in-lab or on-site was necessary.
+5.2.3
+Ethical Aspects
+No patient records were specifically collected for this project and any datasets used are publicly
+available and have been de-identified, in compliance to the requirements of research access [6], [16].
+Bias can occur due to the strong effect on age, insurance, race and way of admission. SHAP and a
+calibration reporting as proposed in [15] and [48] provides explainability. A disclaimer, ‘Research
+Only' is included in the prototype and should not be used for the purposes of providing treatment
+advice. The tool is for decision support only and clinical accountability is with the clinician [42], [49].
+5.2.4
+Sustainability Plan
+Modular branches and frozen artifacts enable the independent update of data, models and explanations.
+The main model is not very costly to operate for research purposes; some other required things for
+EHR use in a hospital would not be performed here such as security, governance, and live EHR use.
+Future: any iteration of MIMIC, new surveys, or new cohorts of wearable and EHR could be added in
+a way that is repeatedly validated, recalibrated, and SHAP reviewed.
+5.3
+Project Management and Financial Analysis
+The project was divided into five different part entitled with phase 1 research and planning, phase 2
+data engineering, phase 3 model development, phase 4 explainability and evaluation and Phase 5
+integration and thesis submission. It included the pipelines with the verified datasets, full evaluation
+artifacts and the Streamlit research prototype for the locked primary model (logreg_sigmoid_cal).
+Two members of a team and the team supervisor faculty were responsible for implementing and
+analyzing and writing the report. Coordination was done through regular meetings, versioning of the
+code and through placing the reporting outputs into a frozen state. The main problems encountered
+were delayed access to the data set, data size limitations for large hospital data set, missing
+multimodal alignments at patient level in the primary branch and inaccuracies in the probabilities
+generated by uncalibrated models in the wearable proxy and fusion branches, which was solved by
+early verification of the data set, group the validation, sigmoid calibration for primary branch (hospital
+
+
+============================================================
+PAGE 48
+============================================================
+38
+branch) and scope limits definition for wearable proxy and fusion branches.
+The cost of money was low. No new hardware was purchased, and the software used were all free
+open-source such as Python, scikit-learn, PyTorch, XGBoost and Streamlit, as well as the free public
+research data such as NHANES and WESAD, with a credentialed MIMIC-IV access. No cloud
+service, production deployment fees.
+Table 5.1: Project budget summary.
+Cost item
+Estimated cost
+(BDT)
+Notes
+Hardware
+0
+Existing laptop/workstation
+Software
+0
+Open-source stack
+Cloud
+0
+Not required for locked results
+Data
+0
+Public / credentialed research datasets
+Deployment
+0
+Localhost research prototype only
+Maintenance
+0
+No production system
+Electricity / internet
+1,500–3,000
+Local runs and downloads
+Printing / binding
+2,000–4,000
+Thesis submission
+Total
+3,500–7,000
+Incidental student costs only
+Table 5.2: Alternate budget summary.
+Cost item
+Estimated cost
+(BDT)
+Rationale
+External SSD (1–2 TB)
+~6,000–10,000
+Faster local storage for large MIMIC
+tables
+Optional cloud GPU credits
+~3,000–8,000
+Speed up PyTorch tabular training only
+Cloud backup storage
+~1,000–2,000
+Artifact backup and team sharing
+Deployment (pilot server)
+~5,000–15,000 /
+year
+Not implemented; hypothetical hospital
+pilot only
+Total (alternate academic path)
+~10,000–20,000
+Still far below production clinical
+deployment cost
+5.4
+Complex Engineering Problem
+5.4.1
+Complex Problem Solving
+This section discusses how the project is related to problems of complex engineering. Using Table5.3
+the reason behind each mapping is given below.
+Table 5.3: Mapping with Complex Engineering Problem.
+EP1
+Dept of
+Knowled
+ge
+EP2
+Range
+Of
+Conflicting
+Requirements
+EP3
+Depth of
+Analysis
+EP4
+Familiarity
+of Issues
+EP5
+Extent of
+Applicabl
+e Codes
+EP6
+Extent
+Of Stake-
+holder
+Involvement
+EP7
+Interdependenc
+e
+✓
+✓
+✓
+✓
+✓
+✓
+
+
+============================================================
+PAGE 49
+============================================================
+39
+
+EP1 (Depth of Knowledge): we needed to use integrated expertise and knowledge in machine
+learning, biomedical informatics, and wearable physiology in the course of the project. Modelling
+hospital admission required knowledge of the structure of MIMIC, use of ICD-based CKD-proxy
+labels, and of features of the laboratory window throughout the admission window. NHANES
+had to be merged, labelled by eGFR and care taken to be leakage free for population modelling.
+Additionally, there was the need for the interpretation of the data collected from the wearable
+branch to be done through a windowing method and using the stress proxy, a common method
+for autonomic stress-proxy labelling. Additionally, explainability and calibration were provided,
+providing added depth not only to the classification itself. A single undergraduate topic was not
+sufficient to cover all layers and synthesis between the two areas of computing and clinical data
+was needed.
+
+EP2 (Range of conflicting requirements): A number of engineering tensions were addressed
+and bounded. Discrimination and calibration were in conflict with those tree models and
+uncalibrated logistic regression showing similar AUROC ~0.77 to 0.76, but poor ECE ~0.25 to
+0.20,
+and
+those
+sigmoid
+calibrated
+showing
+poor
+AUROC
+0.76
+and
+ECE
+0.020.
+Selected threshold 0.16 conflicted most screening specificity 0.696 with most recall 0.674.
+Multimodal were at odds with data reality as NHANES, MIMIC and WESAD were not patient
+aligned and late fusion had to be done on a protocol level. Trade-offs were found between model
+fidelity of models and readability, and the least-verbose model which was calibrated logistic
+regression was chosen over more intricate ones.
+
+EP3 (Depth of analysis): Evaluation was not limited to check for right-or-wrong. The study
+reported AUROC, AUPRC, F1, sensitivity, specificity, ECE and Brier scores and compared
+calibrated with uncalibrated models, considered the behaviour of confusion matrices and
+evaluated the repeated grouped-split stability; and performed temporal external validation using
+later admissions. Explainability was done using SHAP and permutation importance. There have
+been no reports of incompatible cohorts, except for branch-specific limitations, meaning that
+different cohorts have not been mixed together.
+
+EP4 (Familiarity of Issues): This was not performed using a typical tabular benchmark. There
+are differences between the staging of CKD according to KDIGO and ICD proxy labels at
+admission. There is limited coverage of creatinine in the MIMIC window of admission in MIMIC.
+For physiology, please refer to WESAD, applicable CKD labels are not included. Fusion cannot
+be regarded as the multimodal validation at the patient level in the absence of records being
+aligned. To avoid exaggerating clinical utility, it was necessary for the doctors to be familiar with
+the domain from the onset.
+
+EP6 (Stakeholder involvement): The system is targeting stakeholders in the provision of
+chronic kidney disease (CKD) services and hospital risk review: people at risk of developing
+CKD, nephrologists and general physicians, nurses, admission teams, hospital quality and
+population-health staff, and health informatics teams who would be using any future tool for
+making decisions. For their needs, they were solved indirectly, with clinical content in literature,
+design of the labels following guidelines, calibrated risk outputs and user presentations that could
+happen during the hospital visit, but not in the form of live trials in the hospital or formal
+stakeholder workshops. The Streamlit prototype is a way of showing how risk and explanations
+might be displayed in the clinical context, but not necessarily deployed stakeholder validation.
+
+EP7 (Interdependence): Subsystems were coupled. This is a dependent chain of processes
+ranging from the construction of MIMIC features to training the model, calibration, selection of
+thresholds, SHAP analysis and the decision-support prototype. Only exported probabilities can be
+used as input for fusion from NHANES and WESAD branches. Reported metrics and prototype
+behaviour is impacted by any changes in labelling,splitting,calibration. A consistent primary
+model was maintained throughout the evaluation, figures and demonstration with the use of a
+reporting lock.
+Mapping with Knowledge Profile
+This section will be used to link the overall problem and EP1 (multiple times for attaining EP1: K3,
+K4, K5, K6 & K8) to our Knowledge Profile.
+
+
+============================================================
+PAGE 50
+============================================================
+40
+Table 5.4: Mapping with knowledge Profile.
+K1
+K2
+K3
+K4
+K5
+K6
+K7
+K8
+Natur
+al
+Scien
+ce
+Mathem
+atics
+Engineering
+Fundamenta
+ls
+Specialis
+t
+Knowled
+ge
+Engineeri
+ng Design
+Engineeri
+ng
+Practice
+Comprehens
+ion
+Research
+Literature
+✓
+✓
+✓
+✓
+✓
+✓
+✓
+
+K1 Natural science: This included the application of CKD phenomena and renal physiology to
+feature labelling and interpretation and the writing of limitations for the labels [2], [17], [18].
+
+K2 Mathematics: These models were all built with logistic regression, sigmoid calibration,
+tabular deep models with crossentropy training along with knowledge of statistics and
+optimization techniques such as AUROC,AUPRC, ECE and Brier [14], [15].
+
+K3 Engineering fundamentals: The pipeline has been preprocessed with the branches and has
+been trained only the grouped validation, and the explicit failure handling for the missing
+laboratory values have been applied too.
+
+K4 Specialist knowledge: The knowledge of the admissions recorded in MIMIC hospital
+admission tables, the NHANES overlays on the table, the modality of the WESAD wrist window
+and the leakage grouping of the subject or participants played an important role.
+
+K5 Engineering design: The original contribution consists of 100% new multimodal CKD-risk
+framework, completely new branch pipelines, complete late fusion from disjoint cohorts and
+calibrated primary modelling and decisions supporting interface.
+
+K6 Engineering practice: Some of the implementation methods used were: experimental staged
+process, frozen checkpoints, exported CSV and JSON outputs, and locally prototype generation
+and testing.
+
+K8 Research literature: The literature that inspired the development of gap analysis and
+methodological decision was from fields of CKD prediction, machine learning based on EHR,
+Explainable Clinical AI, multimodal fusion, and etc. [1], [3], [39], [49].
+5.4.2
+Engineering Activities
+Table 5.3 maps the project to the complex engineering problem criteria. Table 5.5 maps the project to
+the related engineering activities.
+Mapping with Complex Engineering Activities
+This section is designed to map the overall problem and EA’s.
+Table 5.5: Mapping with Complex Engineering Activities.
+EA1
+Range
+of
+re-
+sources
+EA2
+Level of
+Interaction
+EA3
+Innovation
+EA4
+Consequences
+for society and
+environment
+EA5
+Familiarity
+✓
+✓
+✓
+✓
+
+EA1 Range of resources: In particular, the project involved using various and different
+resources: the three public repositories containing the data, the access to the data in the hospitals,
+the very extensive table like clinical files, the Python based machine learning libraries as well as
+the artefacts used for evaluation, the figures and the web based demonstration interface. Resource
+Management involved the following storage plan and control of the reproducible artifacts and no
+
+
+============================================================
+PAGE 51
+============================================================
+41
+specific hardware purchases.
+
+EA2 Level of interaction: Both at a low level and at a higher level there was interaction.
+Human-system level considerations of thresholds and explanations of the risks can be given in
+the prototype, allowing room for experimentation. The demonstration interface uses the training
+results. Data access for data collected from these hospitals and the survey was controlled by
+PhysioNet's and CDC's terms of data use. Implementation of live EHR exchange was not done.
+
+EA3 Innovation: The project offers a multi-modal CKD framework with non-aligned public
+cohorts as research innovation along with a Decision-Support Demonstration whose outcome of
+the evaluations is connected by a reproducible Artifacts Chain as primary research innovation.
+
+EA4 Consequences for society and environment: The findings might be utilized to suggest
+guidelines for future research on learning of clinical awareness of AI and early-risk of CKD. If it
+solely affected the use of electrical energy in computing or storage of data sets then there would
+be no environmental effects. The reason is that as yet, the system has not been applied to clinical
+practice, but just as a potential benefit, years of time are still to come until the society can reap
+the benefits. An ethical framing, calibration, and explainability reduces risk of misusage of the
+black box which may lead to wrong use [49].
+5.5
+Summary
+Standards in engineering, social and ethical aspects, project management, cost considerations, and
+being able to map to complex engineering criteria, were all discussed in this chapter. It is built as a
+system with open-source software, local execution of software, and serialized communication of
+artifacts between the system viewed as a support for research decisions not as a clinical deployment.
+In total, there is the potential of societal benefit, computational environmental impact, personal ethical
+comfort through use of public data, calibration, SHAP transparency, and explicit prototype limits.
+Branches and the freezes of outputs are modular, enabling sustainability. Low project cost as all of the
+necessary hardware, software and datasets were available or free. This multidisciplinary design, with
+firm calibration and multimodal scope trade-offs, evaluation of multiple constraints, intimate
+knowledge of clinical data, and a presentation tailored for the stakeholder and coupled pipeline
+elements all meet the purpose of fulfilling complex engineering and activity requirements. These all
+contribute to making the platform a reproducibly, responsibly bounded CKD risk research platform.
+
+
+============================================================
+PAGE 52
+============================================================
+42
+Chapter 6
+Conclusion
+This chapter gives a summary of the work done in this research, discusses the limitations of the
+proposed CKD risk prediction framework and points the way for future work. It is proposed to be a
+research framework to be used as a tool to help with a decision and not a separate clinical diagnostic
+system.
+6.1
+Summary
+Combining population clinical data (NHANES) with multimodal, wrist wearable physiological data
+(WESAD stress proxy) as well as multimodal data late fusion via probability level and SHAP
+explainability were explored as ancillary research decision support to the multimodal CKD risk
+prediction system. The Primary locked model which was sigmoid calibrated logistic regression
+classifier for MIMIC admission had a test AUROC of 0.761, F1 accuracy metric value of 0.415,
+sensitivity of 0.674, specificity of 0.696 and ECE value of 0.020 when threshold value was set at 0.16.
+This provided a similar level of discrimination to uncalibrated and treelike approaches as above, but
+with significantly better probability reliability measures; uncalibrated logistic regression discriminated
+about as well AUROC ~0.761, ECE 0.249 while treelike approaches of about the same quality
+achieved a somewhat higher AUROC ~0.768 but much lower probability reliability measures. test
+discrimination was high for NHANES logistic regression in separate cohorts and the AUROC value
+for proxy task was 0.764 for WESAD cohort. This was because it was considered to be a late fusion,
+and with no evidence of patient level multimodal CKD benefit proxy AUROC ~0.50. Temporal
+validation and grouping was done but MIMIC discrimination was not affected. Key risk drivers were
+found to be: age, insurance, race and admission context
+by the global SHAP Analysis. The risk
+values that were calculated were plotted in streamlit for MIMIC branch. Rather the project overall
+results is an explainable pipeline risk-modelling for admission calibrated for public research data for
+research decision support not in actual clinical practice.
+6.2
+Limitation
+While the framework exhibits valuable research evidence, there are some limitations of the framework.
+
+Dataset limitations: The evidence for the primary hospitals is obtained from only one centre
+(MIMIC-IV). Public datasets such as NHANES, MIMIC-IV and WESAD are not overlapping,
+meaning that no same patient multimodal fusion can be validated. WESAD does not have any
+CKD labelling, and only has a stress-versus-baseline physiology proxy. NHANES is based on a
+single cycle survey design and a single visit for the labelling of CKD instead of confirmed
+longitudinal disease. The laboratory coverage in the admission window is less with restrictions
+on availability of creatinine in MIMIC.
+
+Model limitations: MIMIC discrimination is moderate, but the screening operating point is at
+the cost of a high number of false positive cases. Limited search for hyperparameters was
+performed and there was no external benchmark run on the same splits with published CKD
+systems. Late fusion does not support acquisition of cross-modal processing of features. The
+wearable and fusion limbs do not yield renal outcome prediction benefit for individual patients.
+
+Computational limitations: The tables in the bigger hospital are voluminous and need a lot of
+local storage and processing. Primary model is CPU-feasible, optional GPUs are used for mainly
+neural baselines and for branch training. No production level serving or monitoring system was
+provided.
+
+Clinical limitations: The system was never deployed or prospective evaluated and not expertly
+
+
+============================================================
+PAGE 53
+============================================================
+43
+reviewed in practice. MIMIC labels are based on ICD proxies, and not KDIGO staging and
+follow-up. Outputs will be limited to risk estimates in the assistance of research decision making
+and should not be used as a single source for diagnosis or treatment suggestions.
+
+Explainability limitations: SHAP attributions do not include the mechanics of any association,
+just only statistical. There can be coding and socioeconomic bias in the explanations, which rely
+on the manner in which information is documented in the sending hospital. The fitted linear
+model refers to the local distribution of data from clinical settings, and local explanations are
+only valid for this case.
+6.3
+Future Work
+Future work should be continued down realistic lines existing and based on evidence; with expansion
+of the current implementation.
+
+Aligned multimodal cohorts: Collect or synthesize datasets in which the clinical records and
+wearable sensors are the same patients, with the sole idea being that of exploring the usefulness
+of early fusion of data and multimodal benefit at the patient level.
+
+Prospective and external clinical validation: Test the hospital (admission) model on external
+databases, future workflows, as well as on separate hospitals, while at the same time get familiar
+with the temporal checking able within MIMIC.
+
+Richer hospital modalities: Add other physiological and time series information other than the
+many tabular data at the admission level like the waveform data available in the extended
+versions of MIMIC.
+
+Fairness and bias mitigation: Do auditing from the various the sub-populations with varying
+demographic features, insurance coverage and documentation and investigate fairness-aware
+training and threshold-based policies.
+
+Clinical integration: Set up interoperability and workflow integration with standards-based
+approach with nephrology and hospital stakeholders and try out clinician in the loop.
+
+Operational deployment research: Avoid conducting any pilot outside of the research context
+not featuring the calibration drift monitoring, model governance and versioning.
+These directions taken together may take the framework from a research prototype into one that is
+responsibly designed and calibrated as a decision-support tool.
+
+
+============================================================
+PAGE 54
+============================================================
+44
+References
+[1]
+R. Sawhney, A. Malik, S. Sharma, and V. Narayan, “A comparative assessment of artificial
+intelligence models used for early prediction and evaluation of chronic kidney disease,”
+Decision Analytics J., vol. 7, Art. no. 100169, 2023, doi: 10.1016/j.dajour.2023.100169.
+[2]
+National Kidney Foundation, "K/DOQI clinical practice guidelines for chronic kidney disease:
+evaluation, classification, and stratification," Am. J. Kidney Dis., vol. 39, suppl. 1, pp. S1–
+S266, 2002.
+[3]
+K. Kapur, M. Freidank, and M. Rebhan, “Understanding the chronic kidney disease landscape
+using patient representation learning from electronic health records,” medRxiv, Oct. 26, 2022,
+doi: 10.1101/2022.10.25.22280440.
+[4]
+Y. Li et al., "Deep learning for kidney disease diagnosis and classification from medical
+imaging: A review," IEEE Trans. Med. Imaging, vol. 39, no. 11, pp. 3452–3463, 2020.
+[5]
+P. Schmidt et al., "Introducing WESAD, a multimodal dataset for wearable stress and affect
+detection," in Proc. 20th ACM Int. Conf. Multimodal Interaction (ICMI), 2018, pp. 400–408,
+doi: 10.1145/3242969.3242985.
+[6]
+A. E. W. Johnson et al., "MIMIC-IV, a freely accessible electronic health record dataset," Sci.
+Data, vol. 10, no. 1, p. 1, 2023, doi: 10.1038/s41597-023-02114-9.
+[7]
+J. Ma, J. Wang, L. Lu, Y. Sun, M. Feng, F. Zhang, P. Shen, Z. Jiang, S. Hong, and L. Zhang,
+“Development and validation of a dynamic kidney failure prediction model based on deep
+learning: A real-world study with external validation,” arXiv preprint arXiv:2501.16388,
+2025, doi: 10.48550/arxiv.2501.16388.
+[8]
+A. Moore, B. Orset, A. Yassaee, B. Irving, and D. Morelli, “HEalthRecordBERT
+(HERBERT): Leveraging transformers on electronic health records for chronic kidney disease
+risk stratification,” ACM Trans. Comput. Healthcare, vol. 5, no. 3, pp. 1–18, 2024, doi:
+10.1145/3665899.
+[9]
+M. Binsawad, "Enhancing kidney disease prediction with optimized forest and ECG signals
+data," Heliyon, vol. 10, no. 10, Art. no. e30792, May 2024, doi:
+10.1016/j.heliyon.2024.e30792.
+[10]
+B. Khan, R. Naseem, F. Muhammad, G. Abbas, and S. Kim, “An empirical evaluation of
+machine learning techniques for chronic kidney disease prophecy,” IEEE Access, vol. 8, pp.
+55012–55022, 2020, doi: 10.1109/ACCESS.2020.2981689.
+[11]
+S. A. Alsuhibany et al., “Ensemble of deep learning based clinical decision support system for
+chronic kidney disease diagnosis in medical Internet of Things environment,” Comput. Intell.
+Neurosci., vol. 2021, Art. no. 4931450, 2021, doi: 10.1155/2021/4931450.
+[12]
+R. L. Galloway et al., "Image-guided methods for kidney assessment and clinical decision
+support," IEEE Trans. Biomed. Eng., vol. 68, no. 5, pp. 1442–1452, 2021.
+[13]
+A. Dashtban et al., “Identifying subtypes of chronic kidney disease with machine learning:
+development, internal validation and prognostic validation using linked electronic health
+records in 350,067 individuals,” EBioMedicine, vol. 89, Art. no. 104489, 2023, doi:
+10.1016/j.ebiom.2023.104489.
+[14]
+C. Guo et al., "On calibration of modern neural networks," in Proc. 34th Int. Conf. Mach.
+Learn. (ICML), 2017, pp. 1321–1330.
+[15]
+S. M. Lundberg and S.-I. Lee, "A unified approach to interpreting model predictions," in Proc.
+Adv. Neural Inf. Process. Syst. (NeurIPS), vol. 30, 2017, pp. 4765–4774.
+[16]
+Centers for Disease Control and Prevention (CDC), "National Health and Nutrition
+Examination Survey (NHANES)." [Online]. Available: https://www.cdc.gov/nchs/nhanes/
+[17]
+A. S. Levey et al., "A new equation to estimate glomerular filtration rate," Ann. Intern. Med.,
+vol. 150, no. 9, pp. 604–612, 2009, doi: 10.7326/0003-4819-150-9-200905050-00006.
+[18]
+KDIGO CKD Work Group, "KDIGO 2012 clinical practice guideline for the evaluation and
+management of chronic kidney disease," Kidney Int. Suppl., vol. 3, pp. 1–150, 2013.
+[19]
+N. A. Almansour et al., "Neural network and support vector machine for the prediction of
+chronic kidney disease: A comparative study," Comput. Biol. Med., vol. 109, pp. 101–111,
+2019, doi: 10.1016/j.compbiomed.2019.04.017.
+
+
+============================================================
+PAGE 55
+============================================================
+45
+[20]
+W. Wang, G. Chakraborty, and B. Chakraborty, "Predicting the risk of chronic kidney disease
+(CKD) using machine learning algorithm," Appl. Sci., vol. 11, no. 1, p. 202, 2021, doi:
+10.3390/app11010202.
+[21]
+C.-C. Shih et al., "Risk prediction for early chronic kidney disease: Results from an adult
+health examination program of 19,270 individuals," Int. J. Environ. Res. Public Health, vol.
+17, no. 14, p. 4973, 2020, doi: 10.3390/ijerph17144973.
+[22]
+S. Krishnamurthy et al., "Machine learning prediction models for chronic kidney disease
+using national health insurance claim data in Taiwan," Healthcare, vol. 9, no. 5, p. 546, 2021,
+doi: 10.3390/healthcare9050546.
+[23]
+A. Rajkomar et al., "Scalable and accurate deep learning with electronic health records," npj
+Digit. Med., vol. 1, p. 18, 2018, doi: 10.1038/s41746-018-0029-1.
+[24]
+R. Miotto et al., "Deep learning to predict patient health status from electronic health
+records," Sci. Rep., vol. 6, p. 26094, 2016, doi: 10.1038/srep26094.
+[25]
+E. Choi et al., "Doctor AI: Predicting clinical events via recurrent neural networks," in Proc.
+Mach. Learn. Healthcare (MLHC), PMLR, vol. 56, 2016, pp. 301–318.
+[26]
+H. Harutyunyan et al., "Multitask learning and benchmarking with clinical time series
+data," Sci. Data, vol. 6, p. 96, 2019, doi: 10.1038/s41597-019-0103-9.
+[27]
+T. A. Lasko et al., "Computational phenotype discovery using unsupervised feature learning
+over noisy, sparse, and irregular clinical data," PLoS ONE, vol. 8, no. 6, p. e66341, 2013, doi:
+10.1371/journal.pone.0066341.
+[28]
+B. Shickel et al., "Deep EHR: A survey of recent advances in deep learning techniques for
+electronic health record (EHR) analysis," IEEE J. Biomed. Health Inform., vol. 22, no. 5, pp.
+1589–1604, 2018, doi: 10.1109/JBHI.2017.2767063.
+[29]
+Z. C. Lipton et al., "Learning to diagnose with LSTM recurrent neural networks," in Proc. Int.
+Conf. Learn. Representations (ICLR), 2016.
+[30]
+A. E. W. Johnson et al., "MIMIC-III, a freely accessible critical care database," Sci. Data, vol.
+3, p. 160035, 2016, doi: 10.1038/sdata.2016.35.
+[31]
+A. L. Goldberger et al., "PhysioBank, PhysioToolkit, and PhysioNet: Components of a new
+research resource for complex physiologic signals," Circulation, vol. 101, no. 23, pp. e215–
+e220, 2000, doi: 10.1161/01.CIR.101.23.e215.
+[32]
+J. Dunn et al., "Wearables and the medical revolution," Nat. Med., vol. 27, pp. 1105–1112,
+2021, doi: 10.1038/s41591-021-01392-z.
+[33]
+B. Bent et al., "Investigating sources of inaccurate data in wearable devices," npj Digit. Med.,
+vol. 3, p. 18, 2020, doi: 10.1038/s41746-020-0222-6.
+[34]
+S. R. Steinhubl et al., "Can mobile health technologies accelerate progress in cardiovascular
+disease prevention?" JAMA, vol. 310, no. 22, pp. 2395–2396, 2013, doi:
+10.1001/jama.2013.281078.
+[35]
+M. Banaee et al., "A wearable physiological monitoring system for chronic disease
+management and wellness," Sensors, vol. 13, no. 12, pp. 17472–17500, 2013, doi:
+10.3390/s131217472.
+[36]
+T. Baltrušaitis et al., "Multimodal machine learning: A survey and taxonomy," IEEE Trans.
+Pattern Anal. Mach. Intell., vol. 41, no. 2, pp. 423–443, 2019, doi:
+10.1109/TPAMI.2018.2798607.
+[37]
+J. Ngiam et al., "Multimodal deep learning," in Proc. 28th Int. Conf. Mach. Learn. (ICML),
+2011, pp. 689–696.
+[38]
+A. Esteva et al., "Dermatologist-level classification of skin cancer with deep neural
+networks," Nature, vol. 542, pp. 115–118, 2017, doi: 10.1038/nature21056.
+[39]
+E. J. Topol, "High-performance medicine: The convergence of human and artificial
+intelligence," Nat. Med., vol. 25, pp. 44–56, 2019, doi: 10.1038/s41591-018-0300-7.
+[40]
+M. Komorowski et al., "The Artificial Intelligence Clinician learns optimal treatment
+strategies for sepsis in intensive care," Nat. Med., vol. 24, pp. 1716–1720, 2018, doi:
+10.1038/s41591-018-0213-5.
+[41]
+D. W. Bates et al., "Care transformation through health information technology and health
+care reform," Health Aff., vol. 33, no. 7, pp. 1123–1131, 2014, doi:
+10.1377/hlthaff.2014.0300.
+
+
+============================================================
+PAGE 56
+============================================================
+46
+[42]
+E. H. Shortliffe and M. J. Sepúlveda, "Clinical decision support in the era of artificial
+intelligence," JAMA, vol. 320, no. 21, pp. 2199–2200, 2018, doi: 10.1001/jama.2018.17163.
+[43]
+K.-H. Yu et al., "Artificial intelligence in healthcare," Nat. Biomed. Eng., vol. 2, no. 10, pp.
+719–731, 2018, doi: 10.1038/s41551-018-0305-z.
+[44]
+M. T. Ribeiro et al., "'Why should I trust you?': Explaining the predictions of any classifier,"
+in Proc. 22nd ACM SIGKDD Int. Conf. Knowl. Discovery Data Mining (KDD), 2016, pp.
+1135–1144, doi: 10.1145/2939672.2939778.
+[45]
+R. R. Selvaraju et al., "Grad-CAM: Visual explanations from deep networks via gradient-
+based localization," in Proc. IEEE Int. Conf. Comput. Vis. (ICCV), 2017, pp. 618–626, doi:
+10.1109/ICCV.2017.74.
+[46]
+S. Tonekaboni et al., "What clinicians want: Contextualizing explainable machine learning for
+clinical end use," in Proc. Mach. Learn. Healthcare (MLHC), PMLR, vol. 106, 2019, pp. 359–
+380.
+[47]
+R. Caruana et al., "Intelligible models for healthcare: Predicting pneumonia risk and hospital
+30-day readmission," in Proc. 21st ACM SIGKDD Int. Conf. Knowl. Discovery Data Mining
+(KDD), 2015, pp. 1721–1730, doi: 10.1145/2783258.2788613.
+[48]
+S. M. Lundberg et al., "From local explanations to global understanding with explainable AI
+for trees," Nat. Mach. Intell., vol. 2, pp. 56–67, 2020, doi: 10.1038/s42256-019-0138-9.
+[49]
+M. Ghassemi et al., "A review of challenges and opportunities in machine learning for
+health," Lancet Digit. Health, vol. 3, no. 11, pp. e745–e750, 2021, doi: 10.1016/S2589-
+7500(21)00184-6.
+[50]
+A. Vellido, "The importance of interpretability and visualization in machine learning for
+applications in medicine and health care," Neural Comput. Appl., vol. 32, no. 24, pp. 18069–
+18083, 2020, doi: 10.1007/s00521-019-04051-w.

@@ -1,0 +1,27 @@
+III
+ACKNOWLEDGEMENTS
+This work would not have been possible without the support and contributions of many
+individuals over the past two semesters. We are deeply grateful to everyone who has assisted us
+in one way or another.
+First, we express our heartfelt thanks and gratefulness to the almighty for His divine blessing,
+making it possible for us to complete the Final Year Design Project(FYDP) successfully.
+We are grateful and wish our profound indebtedness to Dr. Naznin Sultana, Associate
+Professor, Department of Computer Science and Engineering, Daffodil International University,
+Dhaka, Bangladesh. Deep knowledge and keen interest of our supervisor in the field of Deep
+learning to
+carry
+out
+this
+project. Her
+endless
+patience, scholarly guidance, continual
+encouragement, constant and energetic supervision, constructive criticism, valuable advice,
+reading many inferior drafts, and correcting them at all stages have made it possible to complete
+this project.
+We would like to express our heartfelt gratitude to the Head of the Department of Computer
+Science and Engineering, for his kind help in finishing our project and also to other faculty
+members and the staff of the Department of Computer Science and Engineering, Daffodil
+International University.
+We would like to thank our entire course-mates at Daffodil International University, who took
+part in this discussion while completing the coursework.
+Finally, we must acknowledge with due respect the constant support and patience of our parents.

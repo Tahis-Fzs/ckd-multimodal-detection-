@@ -1,0 +1,74 @@
+8
+Author (s)
+Year
+Title
+Methodology
+Key Findings
+Shickel et al.
+[28]
+2018
+Deep EHR survey
+Survey of DL on EHR
+Temporal modelling,
+missing data,
+generalization
+challenges
+Dunn et al.
+[32]
+2021
+Wearables and the
+medical revolution
+RF, LASSO on smartwatch
+data; 54 patients
+Wearables predicted
+hematocrit, hemoglobin,
+RBC count
+Baltrušaitis et
+al. [36]
+2019
+Multimodal
+machine learning: A
+survey and
+taxonomy
+Fusion taxonomy
+Patient-level alignment
+is primary barrier
+Lundberg &
+Lee [15]
+2017
+A unified approach
+to interpreting
+model predictions
+SHAP or Shapley values
+Locally consistent
+feature attributions
+Lundberg et
+al. [48]
+2020
+From local
+explanations to
+global
+understanding with
+explainable AI for
+trees
+TreeSHAP
+Exact polynomial-time
+Shapley for tree models
+Tonekaboni
+et al. [46]
+2019
+What clinicians
+want:
+Contextualizing
+explainable ML for
+clinical end use
+Clinician survey
+Feature attributions
+alone insufficient;
+uncertainty needed
+2.2.1
+Similar Applications
+We examined some research systems and platforms, methodologically and in functionality both of
+these systems are more or less similar with the proposed research system with the purpose of the
+prediction of the CKD risk. Each System is analyzed with regard to its design and key areas of
+weakness and problems that must be overcome are discussed.

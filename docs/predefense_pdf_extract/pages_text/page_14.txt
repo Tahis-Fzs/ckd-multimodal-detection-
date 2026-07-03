@@ -1,0 +1,18 @@
+4
+1.6
+Organization of the Report
+There are six chapters in this report.
+Chapter 1 provides an introduction to CKD, reasons for developing a method for early risk prediction,
+research goals, methodology, primary outcomes, and the structure of the report.
+Existing research works related to CKD prediction, deep learning in healthcare, the EHR/wearable
+system, multimodal fusion techniques, clinical decision-support systems and explainable AI are
+reviewed in chapter 2 and a gap analysis is presented for the proposed framework.
+The research methodology, datasets (NHANES, MIMIC-IV, WESAD), preprocessing, feature
+engineering, model development, Late-Fusion protocol, explainability using SHAP values, and
+evaluation design, and the project plan are discussed in Chapter 3.
+Chapter 4 contains the implementation details, experimental setup, results for each branch,
+explainability and calibration analysis and the Streamlit decision-support prototype.
+Chapter 5 covers engineering standards, ethical and societal issues, project management and
+engineering of projects with complex mapping.
+Results are summarized and limitation is given in chapter 6, which also includes the directions for
+work to be continued which includes the clinical validation and aligned Multimodal data collection.

@@ -1,0 +1,78 @@
+45
+[20]
+W. Wang, G. Chakraborty, and B. Chakraborty, "Predicting the risk of chronic kidney disease
+(CKD) using machine learning algorithm," Appl. Sci., vol. 11, no. 1, p. 202, 2021, doi:
+10.3390/app11010202.
+[21]
+C.-C. Shih et al., "Risk prediction for early chronic kidney disease: Results from an adult
+health examination program of 19,270 individuals," Int. J. Environ. Res. Public Health, vol.
+17, no. 14, p. 4973, 2020, doi: 10.3390/ijerph17144973.
+[22]
+S. Krishnamurthy et al., "Machine learning prediction models for chronic kidney disease
+using national health insurance claim data in Taiwan," Healthcare, vol. 9, no. 5, p. 546, 2021,
+doi: 10.3390/healthcare9050546.
+[23]
+A. Rajkomar et al., "Scalable and accurate deep learning with electronic health records," npj
+Digit. Med., vol. 1, p. 18, 2018, doi: 10.1038/s41746-018-0029-1.
+[24]
+R. Miotto et al., "Deep learning to predict patient health status from electronic health
+records," Sci. Rep., vol. 6, p. 26094, 2016, doi: 10.1038/srep26094.
+[25]
+E. Choi et al., "Doctor AI: Predicting clinical events via recurrent neural networks," in Proc.
+Mach. Learn. Healthcare (MLHC), PMLR, vol. 56, 2016, pp. 301–318.
+[26]
+H. Harutyunyan et al., "Multitask learning and benchmarking with clinical time series
+data," Sci. Data, vol. 6, p. 96, 2019, doi: 10.1038/s41597-019-0103-9.
+[27]
+T. A. Lasko et al., "Computational phenotype discovery using unsupervised feature learning
+over noisy, sparse, and irregular clinical data," PLoS ONE, vol. 8, no. 6, p. e66341, 2013, doi:
+10.1371/journal.pone.0066341.
+[28]
+B. Shickel et al., "Deep EHR: A survey of recent advances in deep learning techniques for
+electronic health record (EHR) analysis," IEEE J. Biomed. Health Inform., vol. 22, no. 5, pp.
+1589–1604, 2018, doi: 10.1109/JBHI.2017.2767063.
+[29]
+Z. C. Lipton et al., "Learning to diagnose with LSTM recurrent neural networks," in Proc. Int.
+Conf. Learn. Representations (ICLR), 2016.
+[30]
+A. E. W. Johnson et al., "MIMIC-III, a freely accessible critical care database," Sci. Data, vol.
+3, p. 160035, 2016, doi: 10.1038/sdata.2016.35.
+[31]
+A. L. Goldberger et al., "PhysioBank, PhysioToolkit, and PhysioNet: Components of a new
+research resource for complex physiologic signals," Circulation, vol. 101, no. 23, pp. e215–
+e220, 2000, doi: 10.1161/01.CIR.101.23.e215.
+[32]
+J. Dunn et al., "Wearables and the medical revolution," Nat. Med., vol. 27, pp. 1105–1112,
+2021, doi: 10.1038/s41591-021-01392-z.
+[33]
+B. Bent et al., "Investigating sources of inaccurate data in wearable devices," npj Digit. Med.,
+vol. 3, p. 18, 2020, doi: 10.1038/s41746-020-0222-6.
+[34]
+S. R. Steinhubl et al., "Can mobile health technologies accelerate progress in cardiovascular
+disease prevention?" JAMA, vol. 310, no. 22, pp. 2395–2396, 2013, doi:
+10.1001/jama.2013.281078.
+[35]
+M. Banaee et al., "A wearable physiological monitoring system for chronic disease
+management and wellness," Sensors, vol. 13, no. 12, pp. 17472–17500, 2013, doi:
+10.3390/s131217472.
+[36]
+T. Baltrušaitis et al., "Multimodal machine learning: A survey and taxonomy," IEEE Trans.
+Pattern Anal. Mach. Intell., vol. 41, no. 2, pp. 423–443, 2019, doi:
+10.1109/TPAMI.2018.2798607.
+[37]
+J. Ngiam et al., "Multimodal deep learning," in Proc. 28th Int. Conf. Mach. Learn. (ICML),
+2011, pp. 689–696.
+[38]
+A. Esteva et al., "Dermatologist-level classification of skin cancer with deep neural
+networks," Nature, vol. 542, pp. 115–118, 2017, doi: 10.1038/nature21056.
+[39]
+E. J. Topol, "High-performance medicine: The convergence of human and artificial
+intelligence," Nat. Med., vol. 25, pp. 44–56, 2019, doi: 10.1038/s41591-018-0300-7.
+[40]
+M. Komorowski et al., "The Artificial Intelligence Clinician learns optimal treatment
+strategies for sepsis in intensive care," Nat. Med., vol. 24, pp. 1716–1720, 2018, doi:
+10.1038/s41591-018-0213-5.
+[41]
+D. W. Bates et al., "Care transformation through health information technology and health
+care reform," Health Aff., vol. 33, no. 7, pp. 1123–1131, 2014, doi:
+10.1377/hlthaff.2014.0300.

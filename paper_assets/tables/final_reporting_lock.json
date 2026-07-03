@@ -1,0 +1,6 @@
+{
+  "mimic_model": "logreg_sigmoid_cal",
+  "threshold_policy_primary": "f1",
+  "threshold_policy_screening": "target_recall",
+  "fusion_status": "protocol_ready_final_eval_pending"
+}

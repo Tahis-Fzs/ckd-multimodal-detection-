@@ -1,0 +1,34 @@
+41
+specific hardware purchases.
+
+EA2 Level of interaction: Both at a low level and at a higher level there was interaction.
+Human-system level considerations of thresholds and explanations of the risks can be given in
+the prototype, allowing room for experimentation. The demonstration interface uses the training
+results. Data access for data collected from these hospitals and the survey was controlled by
+PhysioNet's and CDC's terms of data use. Implementation of live EHR exchange was not done.
+
+EA3 Innovation: The project offers a multi-modal CKD framework with non-aligned public
+cohorts as research innovation along with a Decision-Support Demonstration whose outcome of
+the evaluations is connected by a reproducible Artifacts Chain as primary research innovation.
+
+EA4 Consequences for society and environment: The findings might be utilized to suggest
+guidelines for future research on learning of clinical awareness of AI and early-risk of CKD. If it
+solely affected the use of electrical energy in computing or storage of data sets then there would
+be no environmental effects. The reason is that as yet, the system has not been applied to clinical
+practice, but just as a potential benefit, years of time are still to come until the society can reap
+the benefits. An ethical framing, calibration, and explainability reduces risk of misusage of the
+black box which may lead to wrong use [49].
+5.5
+Summary
+Standards in engineering, social and ethical aspects, project management, cost considerations, and
+being able to map to complex engineering criteria, were all discussed in this chapter. It is built as a
+system with open-source software, local execution of software, and serialized communication of
+artifacts between the system viewed as a support for research decisions not as a clinical deployment.
+In total, there is the potential of societal benefit, computational environmental impact, personal ethical
+comfort through use of public data, calibration, SHAP transparency, and explicit prototype limits.
+Branches and the freezes of outputs are modular, enabling sustainability. Low project cost as all of the
+necessary hardware, software and datasets were available or free. This multidisciplinary design, with
+firm calibration and multimodal scope trade-offs, evaluation of multiple constraints, intimate
+knowledge of clinical data, and a presentation tailored for the stakeholder and coupled pipeline
+elements all meet the purpose of fulfilling complex engineering and activity requirements. These all
+contribute to making the platform a reproducibly, responsibly bounded CKD risk research platform.

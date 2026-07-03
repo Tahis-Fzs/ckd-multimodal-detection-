@@ -1,0 +1,79 @@
+23
+Table 3.4: Branch models and key hyperparameters.
+Branch
+Model role
+Algorithm
+Key settings
+MIMIC (primary)
+Locked classifier
+Calibrated logistic regression
+(logreg_sigmoid_cal)
+Sigmoid (Platt) calibration
+on validation data
+MIMIC &
+NHANES
+Baselines
+Random Forest
+400 trees, max depth
+16, balanced_subsample
+MIMIC &
+NHANES
+Baselines
+XGBoost
+400 estimators, max depth
+5, lr 0.05, hist, positive-
+class weighting
+MIMIC &
+NHANES
+Deep tabular
+Tabular MLP
+128→64, ReLU, dropout
+0.2, AdamW 1×10⁻³, 40
+epochs
+MIMIC &
+NHANES
+Deep tabular
+Tabular ResMLP
+Projection to 128 + 3×
+residual blocks, AdamW 8
+×10⁻⁴, 50 epochs
+WESAD (proxy)
+Wearable branch
+Random Forest
+Window statistics input;
+subject-grouped holdout
+evaluation
+3.2.6
+Explainable AI Integration
+With the help of SHAP, the prototype introduces explainability and, per case, the user can view its
+linear contribution of the features displayed on the admission [15] [48].
+SHAP (SHapley Additive exPlanations) is the approach selected. The other main local explanation
+methods that were considered here were LIME (Local Interpretable Model-agnostic Explanations) [44]
+which introduces local surrogate sampling that can lead to flaky behavior when sampling different
+perturbations and simulation runs, but that was not desired when implementing the pipeline for the
+linear and tree based models explored here one can compute exact or semi-exact SHAP [15], [48] that
+provide locally consistent attributions based on a common additive feature-attribution framework.
+Although features level SHAP was discussed for tabular deep models by comparing against feature-
+level Grad-CAM and attention level visualization, it was deprioritized due to the linear nature of the
+locked primary model as well as the structured nature and nameability of the clinical features from
+imaging. The most appealing aspect of SHAP is that it provides faithful, comparable explanations at
+both the individual and global level which can be easily used for auditing individual admissions and
+for the drivers at the cohort level in the MIMIC branch. Unfortunately, it comes at the price of more
+computation compared to the single surrogate fit, but is well tolerated for the number and size of
+features and models. Feature-level attributions are used flexibly, in conjunction with domain
+knowledge, which is important to achieve successful adoption of decision-support systems [39], [49],
+[50]; in the prototype interface, the attributions are precomputed on the global level and light on a
+local level, meaning that they are quickly generated when the interface is displayed. One disadvantage
+is that explanations only tell of relationships present in the training distribution, and they are not
+inherently causal mechanisms and do not replace the medical doctors' judgment [49].
+3.2.7
+Training Procedure
+After training one time on each of the grouped training partitions with each model, hyperparameters
+and model parameters are selected on the validation partition(s) and the performance is measured. The
+models are calibrated with a sigmoid
+transformation fitted on the model ’ s predictions on the
+validation partitions: calibrated main hospital model, class-balancing is used for training tree
+ensembles to deal with the small number of samples in the positive class, training deep tabular models
+with adamW optimizer for a fixed number of epochs and monitoring validation.
+Subjects or participants are split in cohorts and no subject or participant exists in more than one cohort
+as it is showed in Table 3.5. NHANES and MIMIC data are further divided in a 60:20:20 stratification

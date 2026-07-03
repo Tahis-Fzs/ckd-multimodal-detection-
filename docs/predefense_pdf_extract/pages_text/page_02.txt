@@ -1,0 +1,26 @@
+I
+APPROVAL
+This Project titled “A Deep Learning Framework for Early Detection of Chronic Kidney
+Disease: Integrating Multi-Modal Data from Wearable Devices and Clinical Records with
+Explainable AI, ” submitted by Md. Shadman Tahsin, ID: 0242220005101461 and Md.
+Shadman Hasin, ID: 0242220005101462 to the Department of Computer Science and
+Engineering, Daffodil International University, has been accepted as satisfactory for the partial
+fulfillment of the requirements for the degree of B.Sc. in Computer Science and Engineering
+and approved as to its style and contents. The presentation has been held on 06-07-2026.
+BOARD OF EXAMINERS
+Dr. Sheak Rashed Haider Noori
+Board Chairman
+Professor & Head, Department of CSE,
+FSIT Daffodil International University
+Name
+Internal Examiner 1
+Designation, Department of CSE, FSIT
+Daffodil International University
+Name
+Internal Examiner 2
+Designation, Department of CSE, FSIT
+Daffodil International University
+Name
+External Examiner
+Designation, Department of CSE, FSIT
+Daffodil International University

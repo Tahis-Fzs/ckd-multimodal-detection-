@@ -1,0 +1,32 @@
+17
+3.1.4
+Data Flow Diagram
+The Data Flow Diagram illustrates the flow of data from various external data sources into the
+proposed framework for CKD prediction with outputs for prediction, explanation, storage and
+reporting. The main external entities include the public datasets and system user. NHANES supplies
+population-level clinical information, MIMIC-IV supplies hospital EHR and laboratory information
+and WESAD supplies wearable physiological information. A user only interacts with the user
+interface of the prototype and asks for input features, and they will get prediction and explanation
+outputs.
+The inputs consist of mainly clinical and demographic features obtained from the NHANES,
+admission level EHR and laboratory features obtained from the MIMIC-IV, and wearable signal
+windows obtained from the WESAD. The inputs go through an additional layer of data ingestion, data
+preprocessing, and feature extraction, and then the branch-level prediction. Processed feature sets for
+modelling and also the model check points for the trained model for prediction. Because the data sets
+are not patient-aligned, the fusion process isn't patient-aligned either, meaning that in cases where
+there is a valid output, only branch-level probabilities are combined.
+Both processes, calibrated CKD risk prediction and SHAP-based explainability, return outputs:
+namely risk probabilities and feature-importance outputs and SHAP-based attributions. These results
+are saved along with evaluation and fusion results and displayed using a prototype interface. The
+results to be produced as the final outputs of the project are arrangement of CKD risk scores,
+explanation results, reporting outputs for the research evaluation and demonstration for the decision
+support, but not for autonomous diagnosis.
+Figure 3.2: Data Flow Diagram of the proposed CKD risk prediction system
+3.1.5
+UI Design
+It also has a research prototype built from the example platform Streamlit and ready to be used on the
+actual branch of the CKD risk prediction system, which is built to the primary clinical data base
+system MIMIC-IV. Helping the interface to comprehend the different calibration of risk estimate and
+the different explanation outputs at the admission level. It is designed to be used in demonstration and
+visualization for the purpose of decision support of the thesis, not in clinical diagnosis and direct
+medical decision making.

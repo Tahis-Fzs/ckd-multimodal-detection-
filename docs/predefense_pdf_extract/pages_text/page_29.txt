@@ -1,0 +1,34 @@
+19
+The third tab, Global SHAP, shows a summary of feature-importance provided a fixed test-set, which
+was obtained from the primary model. This visualization of the explanation does not vary based on
+the individual admissions, but rather summarizes the most influential features when looking across the
+admissions in the held-out test set, unlike the local explanation chart in the prediction view. Case-
+level and population-level feature influence is represented in the both the local and the global
+explanation views, respectively, and both can be used to obtain interpretability.
+Figure 3.5: UI Design Global SHAP Tab
+The overall flow of users is straightforward. The user carefully goes through the same procedure as
+described above and chooses one of the example admissions, or manually enters admission data,
+clicks the risk estimation and can then see the navigation which is calibrated, as an explanatory factor,
+together with the CKD risk score. For now, the current branch of MIMIC displays the primary branch
+of MIMIC and not live interactive training index as seen in WESAD or multi-modal fusion.
+3.2
+Detailed Methodology and Design
+This section describes in detail methodology and design of the proposed multi modal CKD decision –
+support framework. Highlighted key design decisions with regards to the selection of datasets, pre-
+processing and leakage control, construction of labels, feature extraction, training of models and
+calibration of the probability, late fusion, explainability and the research prototype. For each area, a
+brief description of the selected approach, a description of any approaches considered but not selected,
+a justification for excluding those approaches and significant compromises that were made between
+validity of the approach, computational cost, usability and interpretability of results and suitability to
+the research in clinical decision support are provided.
+3.2.1
+Dataset Description
+The framework takes advantage of three datasets publicly available and consists of three modalities.
+The population level clinical and demographic data are derived from NHANES (2013-2014) which
+consists of 4702 model participants with 74 features, with 6.55% of participants labelled CKD-
+positive of kidney disease patients having eGFR<60 mL/min/1.73 m2, with the CKD-EPI 2021 race-
+free equation [16], [17], [18]. MIMIC-IV v3.1 contains the data in the hospital Electronic Health
+Record (EHR), which include ~30,000 hospital admissions with 68 features with a positive rate of
+~15.23%, including 8 measurements obtained from the hospitals laboratories in the window of
+hospital admission (bicarbonate, chloride, creatinine, hemoglobin, platelet, potassium, sodium, and
+urea nitrogen values [6]. WESAD is a dataset comprising of wrist worn data from 15 participants with

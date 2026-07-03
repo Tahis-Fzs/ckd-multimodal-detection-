@@ -1,0 +1,89 @@
+16
+NFR
+ID
+Requirement Name
+Description
+Priority
+NFR-
+02
+Interpretability
+The system presents predicted risk together with
+explanation outputs, including global and local
+feature attributions, so that model behaviour can
+be reviewed rather than treated as a black-box
+output.
+High
+NFR-
+03
+Maintainability
+The system is organized into separate modality
+branches and pipeline stages for data loading,
+preprocessing, modelling, fusion, evaluation,
+and application, allowing individual components
+to be updated without rebuilding the entire
+framework.
+High
+NFR-
+04
+Usability
+The research prototype interface presents
+predicted risk, threshold control, and
+explanation views in a clear and accessible form
+suitable for demonstration beyond command-
+line execution.
+High
+NFR-
+05
+Demonstration
+Performance
+The workflow supports prototype-level
+inference and stakeholder demonstration using
+frozen trained artifacts, without implying
+production-grade clinical deployment.
+Medium
+NFR-
+06
+Extensibility
+The modular branch design allows additional
+datasets, models, or fusion strategies to be
+incorporated in future work, including linked
+multimodal cohorts if clinically validated data
+become available.
+Medium
+NFR-
+07
+Privacy-Aware
+Data Use
+The system uses publicly available, de-identified
+research datasets under their respective access
+conditions, avoiding reliance on identifiable
+patient records in the implemented research
+pipeline.
+High
+NFR-
+08
+Clinical Safety
+The system provides decision-support
+information rather than autonomous diagnosis,
+requiring human interpretation of model outputs
+before any clinical action.
+High
+NFR-
+09
+Reproducibility
+The system preserves experimental
+configuration, locked primary models,
+evaluation outputs, and reporting artifacts so
+that reported results can be traced to the
+underlying runs.
+High
+NFR-
+10
+Transparency of
+Limitations
+The system and its documentation communicate
+known constraints, including disjoint public
+cohorts, wearable proxy evaluation without
+CKD labels, proxy multimodal fusion, and the
+need for prospective clinical validation.
+High

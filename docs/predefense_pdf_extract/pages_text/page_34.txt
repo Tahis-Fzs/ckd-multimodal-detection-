@@ -1,0 +1,81 @@
+24
+of train (SEQN), validation and test (subject_id).WESAD (without CKD labels) is a 75/25 train–test
+split with groups of subjects. Positive rates are shown per partition – not as a result of any forced
+rebalancing from one fold to another to create the course balance.
+Table 3.5: Grouped train, validation, test partition by branch.
+Branch
+Dataset
+Split policy
+Train
+Validation
+Test
+Population
+clinical
+NHANES
+2013–2014
+[16]
+Grouped
+by SEQN;
+60/20/20
+2,822 (6.1%)
+940 (7.0%)
+940 (7.3%)
+Hospital
+EHR
+(primary)
+MIMIC-IV
+v3.1 hosp [6]
+Grouped
+by subject_id;
+60/20/20
+17,994
+(15.1%)
+6,009 (14.8%)
+5,997
+(16.2%)
+Wearable
+physiology
+(proxy)
+WESAD [5]
+Grouped by
+subject; 75/25
+train/test
+429 (36.6%)
+—
+149 (35.6%)
+In the end, the chosen approach has provided the necessary rigorous train–validation–test split, which
+has split the subjects or participants in groups based on their levels. Random splitting was considered,
+since it would result in all the optimistic, clinically unrealistic estimates of performance given by
+having multiple records of the same person on multiple partitions [27]. In particular, Sigmoid
+calibration was favoured over isotonic calibration, since the isotonic method is more flexible but has a
+greater tendency to over-fit on smaller validation sets, and has a more simpler calibration curve [14].
+In this study, class balancing (class_weight) and the ensemble was also tested and used to prevent the
+naive unweighted training of the models, although the proportion of CKD was low in NHANES and
+MIMIC, a naive unweighted training would bias the model towards the majority negative class,
+decreasing the sensitivity for screening use [47]. On top of that, it was suggested to do the extensive
+experimental auto search but this was not done due to the time and the computation involved.
+Reproducibility was maintained through fixed, documented experimental configurations rather than
+extensive automated hyperparameter search. The upside of this approach is less optimism and no
+reporting artifacts and reality based probability of threshold policies; the down side of this approach is
+some loss of performance due to the limited search. Easy on the calculations; can be repeated using
+the same workstation. Finally, the frozen calibrated model and the objects to be pre-processed are
+loaded directly for inference to ensure the same results for the entire notebook pipeline and Streamlit
+prototype.
+3.3
+Project Plan
+There were 5 stages of the project from proposal to final submission. As it became clear what these
+datasets were possible to access, what did not fit well in the modelling and what was possible to
+complete with disjoint-cohort multimodal fusion, the plan was tweaked accordingly.
+Phase 1 Research and planning, (Week 12 – 20) includes literature review, gap analysis, requirements
+specification. CKD staging, EHR-based risk modelling, and wearable health monitoring were
+reviewed [1]–[5], [16]–[18], [23], [33], [34]. The system architecture, data-flow design, as well as the
+use of predefined public datasets with protocol level late fusion was defined.
+Weeks 18-26: Phase 2, Data engineering, NHANES, MIMIC-IV, and WESAD data was acquired and
+preprocessed. CKD labels, leakage-safe properties, splits groups and branch specific feature pipelines
+were set up. To obtain more reliable imputation of train-only and scaling were applied before
+validation and testing.
+During Phase 3 (Weeks 24-36), logistic regression, RF, XGBoost, MLP, and ResMLP models were
+trained and compared based on the branch models. The hyperparameters and sigmoid calibration were
+done using validation data. The same model MIMIC was locked, as calibrated logistic regression,
+with frozen checkpoints for reporting and prototype use.
+Phase 4 Evaluation and testing (Weeks 34 – 42), During the held-out test, we evaluated discrimination,

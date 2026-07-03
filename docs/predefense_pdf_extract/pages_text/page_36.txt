@@ -1,0 +1,66 @@
+26
+P5
+Integration &
+Submission
+Streamlit CDS
+integration; thesis
+writing and
+formatting; defence
+preparation; final
+submission
+demo_app.py prototype;
+complete FYDP thesis;
+presentation deck
+40–48
+3.4
+Task Allocation
+This table depicts the timeline of the principal activities in each period of the project, from week 12 to
+week 48.
+Table 3.7: Task Allocation summary
+Tasks
+Weeks
+12
+14
+16
+18
+20
+22
+24
+26
+28
+30
+32
+34
+36
+38
+40
+42
+44
+46
+48
+Research &
+Planning
+Data
+Engineering
+Model
+Developme
+nt
+Evaluation
+& Testing
+Integration
+&
+Submission
+3.5
+Summary
+In this chapter the whole methodology of this research has been described. We gave a description of
+the multimodal framework design, clinical cohort description of the data, description of the
+physiological data captured in WESAD, steps in processing, splitting the data into groups and feature-
+engineering for the hospital admission EHR (MIMIC) since the day of admission to MIMIC. The
+description of each of the architectures and models built in each branch such as calibrated logistic
+regression, tree ensembles, tabular deep network, wearable Random Forest and probability level late
+fusion model have been discussed and design justification to the locked primary hospital design and
+explainability integration using SHAP has been discussed. Details like functional, non-functional
+requirements, a data-flow diagram and the presentation of risk estimates and explanations in a
+research demonstration environment were also specialized. The different technical aspects of the
+project, such as the project timeline, human resources, and the deliverables schedule were documented.
+This Chapter provides the bases and a framework of methodology used and how it was carried out.

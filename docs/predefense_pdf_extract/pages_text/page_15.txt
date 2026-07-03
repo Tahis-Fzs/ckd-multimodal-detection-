@@ -1,0 +1,47 @@
+5
+Chapter 2
+Background
+The key area of focus of the chapter is the literature background and context investigation where
+important literature work that will form a vital base for the proposed CKD risk prediction framework
+is explored. It covers the cutting edge prediction of CKD, AI in health care from EHR (Electronic
+Health Records), Wearables to monitor in health care, Multimodal learning, explainable AI and
+related prior works and not yet explored research gaps in this project.
+2.1
+Introduction
+Because it is not easily diagnosed and only picked up in later stages of the condition, there are many
+people around the world who suffer from Chronic Kidney Disease, in particular those living with
+moderate to severe kidney damage. Chronic kidney disease is under-diagnosed in the early phases of
+the condition due to the limitations of time on time laboratory based screening, although it affects a
+significant proportion of adults around the world. Much research has been devoted to the application
+of machine learning and deep learning approaches to clinical data to predict the risk of CKD, with a
+pattern from basic classifiers based on structured records, to more complicated architectures based on
+EHR and time series data [1], [7], [23]. Imaging-based CKD approaches have also been reviewed [4],
+[12], but they are outside the scope of this tabular and wearable physiology framework. Current
+strategies are mostly based on only one data type and do not integrate complementary data provided
+by different types of wearable physiological sensors that are capable of providing continuous real-
+time measurements that are relevant for monitoring patient's chronic disease [32], [36]. Additionally,
+deep learning models have not been sufficiently discussed in terms of interpretability in the clinical
+practice [46], [49], which is the only criterion required to apply deep learning in practice despite their
+outstanding predictive power. The chapter covered literature on the above aspects and stated the
+limitations of existing system and the research gaps which trigger to develop the proposed system.
+2.2
+Literature Review
+The previous methods focused to handle structured clinical data and use the traditional classification
+algorithms of machine learning for prediction of CKD. Sawhney et al. [1] compared the performance
+of deep models and classical models using a UCI style CKD data composed of 400 patients and some
+clinical/laboratory attributes. They had used PyTorch with their deep MLP technique and the
+technique achieved 100% test accuracy, achieving a better performance compared to the SVM and
+Naive Bayes method. The results are only applicable to a small size, carefully designed tabular set,
+and cannot be directly applied to a more diverse set or extended to a more class balanced and missing
+EHR set. Almansour et al. [19] compared the performance of ANN with SVM for the same data set of
+400 patients with CKD and found that the accuracy of ANN (99.75%) is much better than that SVM
+(97.75%) while the most significant is creatinine (cr) and urea (urea). The latter three works [20], [21],
+[22] by Wang, Shih and Krishnamurthy respectively, employed other additional feature engineering
+approaches but were limited in their cross-sectional data from single acquisition sites and not taking
+into account temporal changes, which would be important to capture the true complexities of clinical
+CKD progression. Some attempts were made to indicate that selection of appropriate features is very
+crucial for achieving high classification accuracy in case of class imbalance condition [11] and
+Dashtban et al. [13] showed that one of the drawbacks of these classifiers when experimented on new
+cohorts other than the experimented cohorts is fragility at population shift. Khan et al. [10] compared
+several machine learning techniques—including tree-based methods such as J48 and NBTree—on a
+UCI CKD dataset and reported that CHIRP achieved the highest classification accuracy (99.75%)

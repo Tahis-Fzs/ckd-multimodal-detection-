@@ -1,0 +1,26 @@
+VIII
+List of Figures
+3.1
+System Architecture Diagram
+13
+3.2
+Data Flow Diagram
+17
+3.3
+UI Design Example Admission
+18
+3.4
+UI Design Manual Entry
+18
+3.5
+UI Design Global SHAP
+19
+3.6
+Sample WESAD Wrist Signal Window
+21
+4.1 MIMIC Calibration Reliability Diagram
+31
+4.2 MIMIC Confusion Matrix
+32
+4.3 Global SHAP Feature Attribution
+34

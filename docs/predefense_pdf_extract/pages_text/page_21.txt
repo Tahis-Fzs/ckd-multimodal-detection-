@@ -1,0 +1,119 @@
+11
+Gap
+ID
+Identified
+Gap
+Limitation in Existing
+Work
+Proposed Solution
+How This Work
+Addresses It
+G5
+Data
+Imbalance
+and
+Generalizatio
+n
+Small curated datasets
+[1], [19] with
+balanced classes do
+not reflect real CKD
+positive rates of 6–
+15%. No reviewed
+system reports multi-
+seed robustness or
+temporal external
+validation
+Grouped train-
+validation-test splits
+preventing subject
+leakage, calibrated
+threshold selection via
+F1-maximization on the
+validation set (primary
+threshold 0.16)
+5-seed robustness
+evaluation yields
+AUROC 0.7690 ±
+0.0069; temporal
+external validation on
+first-admission
+MIMIC holdout yields
+AUROC 0.771,
+confirming model
+stability
+G6
+EHR and
+Population
+Data Fusion
+No reviewed system
+fuses hospital EHR
+data with population-
+level clinical survey
+data. Existing
+multimodal
+frameworks [36]
+identify patient-level
+alignment as an
+unresolved barrier
+Normalized AUROC
+and AUPRC-weighted
+late fusion combining
+NHANES population
+branch (weight 0.614)
+and MIMIC-IV EHR
+branch (weight 0.386)
+Proxy late-fusion
+protocol was
+documented across
+independently trained
+branches; patient-
+aligned validation was
+not possible with
+disjoint public cohorts.
+G7
+Clinical
+Deployment
+Gap
+All reviewed CKD
+research prototypes
+[1], [19], [24], [25]
+are offline classifiers
+with no clinical
+interface. No
+reviewed system
+presents risk scores
+and explanations
+together in a
+deployable format
+[42]
+A prototype Streamlit
+decision-support
+interface loading the
+frozen MIMIC
+checkpoint and
+presenting CKD risk
+probability with SHAP-
+based explanation
+outputs
+Prototype interface
+demonstrates how
+calibrated risk scores
+and feature attributions
+can be jointly
+presented to support
+clinician review,
+framing system output
+as decision support
+rather than
+autonomous diagnosis
+2.4
+Summary
+From literature scanned it has been predicted that prediction of CKD is shifted from conventional ML
+which only works on structured clinical data, use of wearables has been beneficial in terms of
+continuous monitoring of physiological parameters using deep learning with the use of huge datasets
+of EHR. There's no design, though, and things such as integrating EHR with wearables, adding a
+CKD label to wearables, explainability, and readiness for Clinical deployment, are not being
+addressed. These gaps inspire us to design the envisioned explainable multi-modal approach for CKD
+risk prediction with features derived from clinical data, hospital EHRs and features derived from
+wearables and lastly presenting the output and explanation using SHAP.

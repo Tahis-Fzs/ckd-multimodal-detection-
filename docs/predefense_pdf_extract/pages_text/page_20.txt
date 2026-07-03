@@ -1,0 +1,150 @@
+10
+Table 2.3: Gap Analysis — Identified Limitations and Proposed Solutions
+Gap
+ID
+Identified
+Gap
+Limitation in Existing
+Work
+Proposed Solution
+How This Work
+Addresses It
+G1
+Single-
+Modality
+CKD
+Prediction
+All reviewed CKD
+systems operate on a
+single data source —
+either structured
+clinical records [1],
+[19] or hospital EHR
+sequences [23], [24],
+[25] — without
+integrating
+complementary
+physiological data
+from wearable
+devices
+A multimodal pipeline
+combining NHANES
+population clinical data,
+MIMIC-IV hospital
+EHR data, and WESAD
+wearable physiological
+features across three
+independent branches
+Late-fusion framework
+combines branch-level
+probability outputs
+from NHANES under
+a documented
+protocol; proxy fusion
+evaluation did not
+show improved CKD
+detection because
+cohorts are not patient-
+aligned.
+G2
+Absence of
+Wearable
+Integration
+for CKD
+No existing CKD
+prediction system
+incorporates
+continuous wearable
+physiological signals.
+Wearable prediction
+research [32] targets
+general lab value
+prediction without
+CKD-specific labels
+or EHR fusion [36]
+A dedicated wearable
+branch using WESAD
+wrist BVP, EDA, skin
+temperature, and
+accelerometry window
+statistics as
+physiological proxy
+inputs
+WESAD wearable
+branch trained using
+Random Forest on 578
+windows from 15
+subjects with subject-
+level grouped split,
+establishing a
+reproducible wearable
+processing pipeline for
+future CKD-labeled
+wearable datasets
+G3
+Lack of
+Probability
+Calibration
+Most CKD classifiers
+report accuracy only
+[1], [19]; deep EHR
+models report
+AUROC without
+calibrated probability
+outputs [23], [24];
+miscalibration is
+identified as a primary
+barrier to clinical AI
+adoption [49]
+Sigmoid-calibrated
+logistic regression as
+the primary model,
+selected based on both
+discriminative
+performance and
+calibration quality
+Primary MIMIC model
+achieves ECE of
+0.0203 compared to
+ECE of 0.2486 for the
+uncalibrated baseline,
+producing reliable
+probability outputs
+suitable for clinical
+risk communication
+G4
+Insufficient
+Explainabilit
+y
+Doctor AI [25]
+provides attention
+weights; all other
+reviewed CKD and
+EHR systems [1],
+[19], [23], [24]
+provide no per-
+prediction feature
+attribution. Clinicians
+require feature-level
+explanations
+alongside uncertainty
+for decision support
+[46]
+SHAP-based feature
+attribution [15], [48]
+integrated into the
+primary clinical model
+to generate locally
+interpretable per-
+prediction explanations
+SHAP top-15 feature
+importance analysis
+identifies age,
+insurance type, race,
+admission type, and
+lab values as the
+primary contributors,
+providing clinician-
+reviewable explanation
+outputs for every
+prediction

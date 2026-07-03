@@ -1,0 +1,82 @@
+20
+each time-series divided into 578 windows with features from blood volume pulse (BVP),
+electrodermal activity (EDA), skin temperature (TEMP), and accelerometer (ACC) [5].
+To this end three existing publicly available datasets around population, hospital and physiological
+modalities will be leveraged. The only other alternative considered was obtaining a collection of a
+single, proprietary cohort of the three modalities for the same patients, but this was not selected
+because there was no publicly available cohort and, because of the time frame and ethical concerns of
+a final year design project, it was deemed impractical to collect such a cohort. A second alternative,
+which was MIMIC only, was discarded as it would drown out wearing populations and sizes of
+interest that motivated the multimodal research question, but were substantially only MIMIC, even
+though MIMIC was not the main branch of the prototype for reporting and decision support built with
+the lock. The good news about the public data sets is that they are reproducible, large and have an
+ethical approval; the bad news and critical limitation is that the three types of data sets are from
+different types of populations and cannot be connected at an individual patient level. All of these data
+are fit for a relatively small computer. Clinically, the data sets assembled are for a population
+screening as well as an inpatient risk and a chronic physiology for monitoring, but with no patient
+overlap, only a multimodal methodology and integration protocol are apparent, as is the open
+reporting style throughout.
+The data of each cohort is divided into three sets a training set, a validation set, and a test set, and the
+ratio of splitting is dependent on the cohort; NHANES split 60:20:20; WESAD split 75:25, because
+it's a proxy branch for physiology without CKD labels.
+Table 3.3: Summary of datasets used in the multimodal framework.
+Branch
+Dataset
+Unit
+Total N
+Features
+Label definition
+Population
+clinical
+NHANES
+2013–
+2014 [16]
+Participant
+4,702
+74
+eGFR < 60 mL/min/1.73
+m² (CKD-
+EPI 2021) [17], [18]
+Hospital
+EHR
+(primary)
+MIMIC-
+IV v3.1 hosp
+[6]
+Admission
+30,000
+68
+Admission-
+level CKD composite
+Wearable
+physiology
+(proxy)
+WESAD [5]
+Window
+578 (15
+subjects)
+16 window
+statistics
+Stress vs baseline (not C
+KD)
+3.2.2
+Data Preparation
+A separate pipeline is used to process each of the datasets. In NHANES, the race-free CKD-EPI 2021
+equation is used to calculate outcomes, with eGFR thresholds used to construct labels, outcome
+highly-leaking columns such as raw creatinine and identifier columns that are used to create the label
+are removed, values are median imputed, and a grouped train:validation:testing split of 60:20:20 is
+used. The records for MIMIC-IV are merged on the basis of subject and admission id; for each of the
+eight laboratory features, processing is done on the admission window, the processing transformations
+are fit on the training partition of the data, and then applied to the validation and test data [6]. For
+WESAD, the window size is set to 1920 samples, the stride is set to 960 samples, no more than 120
+windows per subject will be segmented and the windows will be split using a 75/25 train–test partition.
+The chosen method is grouped splitting which is labelling using a clinical approach. Random splitting
+was also considered but rejected as it can give optimistic and clinically unrealistic performance
+estimates due to the presence of records of the same subject or participant in multiple splits; The
+problem of grouped splitting reduces the flexibility in the balance of the rare positive classes across
+the splits but in the context of assessing a decision-support tool it is salient that the performance be
+judged on unseen individuals [27]. The imputation method selected was chosen to be median
+imputation as it is stable, transparent, and less likely to have information leakage between validation
+portions and imputation models; however, it does not model feature correlations. In addition, the
+NHANES targets are based on the creatinine cutoffs of the guideline-based staging logic and the
+CKD-EPI labelling system was selected to avoid the use of arbitrary creatinine cutoffs. In the

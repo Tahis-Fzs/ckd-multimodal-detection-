@@ -1,0 +1,46 @@
+27
+Chapter 4
+Implementation and Results
+This chapter presents the implementation environment, testing and evaluation procedures, and
+empirical results of the proposed multimodal CKD risk prediction framework. It reports branch-wise
+model performance, calibration and explainability analysis, supplementary validation outcomes, and
+the research decision-support prototype demonstration.
+4.1
+Environment Setup
+This section outlines the hardware, software setup, experimental setup, detailed results of the
+proposed framework, the performance of the models, the confusion matrix results, the explainable
+SHAP approach, the robustness test results, and finally, the clinical decision support-prototype
+demonstration. All outcomes are presented as research decision support evidence and are not evidence
+of clinically validated outcomes of deployment.
+4.1.1
+Hardware and Software Environment
+Development and evaluation have been done on a local workstation with Python 3.12, in an isolated
+virtual environment and used a Jupyter Notebook tool as a reproducible experimentation environment
+for development. The implementation stack consisted of pandas and NumPy for data manipulation;
+scikit-learn for data-preprocessing, classical models and calibration; PyTorch for tabular deep
+networks and baseline methods using gradient-boosted models (XGBoost); and Streamlit for the
+prototype of the decision-support system. Often tabular deep models were found to be useful and were
+deployed with a specific GPU, but if one didn't exist these models ran on CPU, hence the locked
+primary hospital classifier is a calibrated logistic regression, which means it isn't sensitive to this.
+Primary MIMIC admission model has been analysed to check for explainability of the result using the
+tool SHAP. All models were trained and the entire data sequence was exported to a serialized format
+for later use for reporting and loading into a prototype.
+4.1.2
+Hyperparameter Configuration
+The same experimental protocol was performed in all the branches, for comparability. Categorical
+was one-hot encoded while numeric variables were median imputed and standardized based on mean
+and standard deviation data from the training partition only. Grouped 60:20:20 train–validation–test
+splits of NHANES and MIMIC-IV on participant and subject identifier, respectively, and with random
+seed set to 42 were used for evaluation, with a subject-grouped 75:25 train–test holdout applied to the
+wearable proxy branch. The F1-maximization policy was used for choosing the classification
+threshold on the validation partition for the locked primary model (threshold = 0.16).
+The baseline and primary hospital model was logistic regression, balanced class weighting, and a
+higher iteration limit and was then calibrated using sigmoid on the validation predictions to get the
+locked model logreg_sigmoid_cal. Random Forest and XGBoost were trained with 400 estimators,
+max_depths 16 and 5 and imbalance aware weighting. For Tabular multilayer perceptron models 128
+and 64 sized hidden layers were used with Dropout of 0.2, AdamW optimization with learning rate 1×
+10-3, batchsize 64 and CrossEntropyLoss with 40 training epochs on NHANES and 35 training
+epochs in the end MIMIC run. We obtained the model of the residual tabular network with 128 units,
+3 layer-norm residual blocks, 0.1 dropout, 8×10-4 learning rate with AdamW, and 50 epochs. The
+wearable branch classified window-level BVP, EDA, temperature, and accelerometer statistics, using
+a stress versus baseline proxy label, using the Random Forest algorithm. A total of 30,000 admissions

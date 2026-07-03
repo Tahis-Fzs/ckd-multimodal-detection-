@@ -1,0 +1,154 @@
+9
+Table 2.2: Summary of Similar Applications and Their Limitations.
+Application
+Platform
+Description
+Methodology
+Limitation vs. Proposed
+System
+Sawhney et
+al. [1]
+Research
+Prototype
+A comparative
+assessment of
+artificial intelligence
+models used for
+early prediction and
+evaluation of
+chronic kidney
+disease
+Deep neural network
+(multi-layer
+perceptron, PyTorch)
+on UCI-style CKD
+clinical dataset (400
+patients; age, blood
+sugar, RBC count,
+etc.)
+No wearable, no hospital
+EHR, no calibration, small
+curated dataset, not
+findings repeated
+Almansour et
+al. [19]
+Research
+Prototype
+ANN vs SVM for
+CKD detection
+ANN 99.75%, SVM
+97.75%, 400 patients,
+24 features
+No wearable data, no
+explainability, not
+deployable
+Deep Patient
+[24]
+EHR
+Research
+System
+EHR representation
+learning for disease
+prediction
+Stacked
+autoencoders, 700K
+patients, AUC-ROC
+0.773
+No wearable input, not
+CKD-specific, no
+explainability
+Doctor AI
+[25]
+EHR
+Research
+System
+Interpretable RNN
+for heart failure risk
+from EHR
+Attention RNN,
+263K patients,
+AUROC 0.8705
+No wearable data, heart
+failure only, no calibration
+Rajkomar et
+al. [23]
+Hospital
+EHR
+System
+Large-scale deep
+learning on EHR for
+clinical outcomes
+LSTM/Transformer,
+mortality AUROC
+0.93–0.95
+No wearable data, not
+CKD-specific, no
+explainability
+Lipton et al.
+[29]
+ICU
+Research
+System
+LSTM for multilabel
+diagnosis prediction
+on clinical time
+series
+LSTM, MIMIC, 128
+diagnoses, micro-
+AUROC 0.8730
+No wearable data, not
+CKD-specific, no
+explainability, no
+calibration
+Dunn et al.
+[32]
+Wearable
+Research
+Platform
+Smartwatch signals
+predicting clinical
+lab values
+RF/LASSO, 54
+patients, 150+
+wearable features
+No EHR fusion, no CKD
+labels, no SHAP, small
+cohort
+AI Clinician
+[40]
+ICU
+Research
+System
+RL-based sepsis
+treatment
+recommendation
+Markov decision
+process, MIMIC-III +
+eICU
+Sepsis-specific, no CKD;
+no wearable, no
+calibration
+Caruana et al.
+[47]
+Research
+Prototype
+Intelligible ML for
+healthcare risk
+prediction with
+explainability
+analysis
+GAM, decision trees,
+pneumonia risk
+prediction, SHAP-
+inspired attribution
+Interpretable models only,
+no multimodal fusion, no
+wearable, no CKD focus
+2.3
+Gap Analysis
+While machine learning and deep learning algorithms have been used to create systems for forecasting
+CKD, building clinical outcome prediction models using EHRs and designing wearables health
+monitoring systems, several important aspects that influence the contribution of this project to address
+the world are lacking in the literature. All gaps were determined by a structured gap analysis as
+demonstrated in Table 2.3 which details the gap in the existing body of work and the proposed work
+and how it specifically addresses the gap.

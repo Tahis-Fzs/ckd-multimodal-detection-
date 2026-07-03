@@ -1,0 +1,43 @@
+36
+Chapter 5
+Engineering Standards and Design
+Challenges
+For the proposed CKD risk prediction framework, the engineering standard as well as the
+societal,ethical issues are discussed here, along with the project management and financial analysis of
+the project. Complex engineering mapping of the project is also discussed.
+5.1
+Compliance with the Standards
+Not all standards are listed, only those relevant to this CKD risk prediction research project are
+discussed. The section introduces software tools, computing environment and data-handling practices
+that actually exist in the implemented system. If applicable, the alternatives are identified and why the
+chosen alternative is preferred is provided. The decision support system to take place in the
+production hospital is defined as a reproducible research system instead of a validated medical-device
+and should not be bound by regulatory standards of medical-device hospital deployment; those
+standards are not addressed in this final-year design project.
+5.1.1
+Software Standards
+With Python 3.12 and PEP 8 conventions, most processing, logistic regression, and tree baselines,
+calibration, and evaluation are written within the main MIMIC branch; PyTorch provides the ability to
+add tabular MLP and ResMLP baselines and XGBoost provides the ability to add gradient-boosted
+baselines. All metrics, SHAP outputs and any frozen model artifacts are stored in CSV, JSON and
+pickle. The locked primary is explainable using SHAP. Fixed random seeds, grouped splits, modular
+pipelines of branches and a fixed reporting lock ensure that the reproducibility is maintained. There
+was no use of any proprietary tools or LIME, or R-only stacks.
+5.1.2
+Hardware Standards
+The system was designed, and tested on a regularly used undergraduate research workstation. The
+main hospitals classifier is a simple tabular classifier, dependent upon no specialised accelerator
+equipment. The main pipeline can still be implemented on the central processing unit as heavier
+neural baselines would benefit from the use of graphics processing if available. The need for
+computation mainly comes from the support of big data collected locally from various public or
+research clinical and wearable devices. No special cardiac sensor or dedicated clinical or hospital
+computers were used.
+5.1.3
+Communication Standards
+Data flows through as abstract research products in the form of structured data from preprocessing
+through modelling, evaluation and demonstration. Clinical and wearable inputs are sourced from
+public datasets to tabular feature representations, multimodal integration is done at branch probability
+level and not by a shared patient record system. The decision-support prototype is a local research
+interface that loads the precomputed model outputs for demonstration. No live hospital interface with
+the application programming interfaces or full interoperability with the electronic health records has
+been undertaken yet and will be incorporated into future work.

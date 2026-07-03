@@ -1,0 +1,71 @@
+39
+
+EP1 (Depth of Knowledge): we needed to use integrated expertise and knowledge in machine
+learning, biomedical informatics, and wearable physiology in the course of the project. Modelling
+hospital admission required knowledge of the structure of MIMIC, use of ICD-based CKD-proxy
+labels, and of features of the laboratory window throughout the admission window. NHANES
+had to be merged, labelled by eGFR and care taken to be leakage free for population modelling.
+Additionally, there was the need for the interpretation of the data collected from the wearable
+branch to be done through a windowing method and using the stress proxy, a common method
+for autonomic stress-proxy labelling. Additionally, explainability and calibration were provided,
+providing added depth not only to the classification itself. A single undergraduate topic was not
+sufficient to cover all layers and synthesis between the two areas of computing and clinical data
+was needed.
+
+EP2 (Range of conflicting requirements): A number of engineering tensions were addressed
+and bounded. Discrimination and calibration were in conflict with those tree models and
+uncalibrated logistic regression showing similar AUROC ~0.77 to 0.76, but poor ECE ~0.25 to
+0.20,
+and
+those
+sigmoid
+calibrated
+showing
+poor
+AUROC
+0.76
+and
+ECE
+0.020.
+Selected threshold 0.16 conflicted most screening specificity 0.696 with most recall 0.674.
+Multimodal were at odds with data reality as NHANES, MIMIC and WESAD were not patient
+aligned and late fusion had to be done on a protocol level. Trade-offs were found between model
+fidelity of models and readability, and the least-verbose model which was calibrated logistic
+regression was chosen over more intricate ones.
+
+EP3 (Depth of analysis): Evaluation was not limited to check for right-or-wrong. The study
+reported AUROC, AUPRC, F1, sensitivity, specificity, ECE and Brier scores and compared
+calibrated with uncalibrated models, considered the behaviour of confusion matrices and
+evaluated the repeated grouped-split stability; and performed temporal external validation using
+later admissions. Explainability was done using SHAP and permutation importance. There have
+been no reports of incompatible cohorts, except for branch-specific limitations, meaning that
+different cohorts have not been mixed together.
+
+EP4 (Familiarity of Issues): This was not performed using a typical tabular benchmark. There
+are differences between the staging of CKD according to KDIGO and ICD proxy labels at
+admission. There is limited coverage of creatinine in the MIMIC window of admission in MIMIC.
+For physiology, please refer to WESAD, applicable CKD labels are not included. Fusion cannot
+be regarded as the multimodal validation at the patient level in the absence of records being
+aligned. To avoid exaggerating clinical utility, it was necessary for the doctors to be familiar with
+the domain from the onset.
+
+EP6 (Stakeholder involvement): The system is targeting stakeholders in the provision of
+chronic kidney disease (CKD) services and hospital risk review: people at risk of developing
+CKD, nephrologists and general physicians, nurses, admission teams, hospital quality and
+population-health staff, and health informatics teams who would be using any future tool for
+making decisions. For their needs, they were solved indirectly, with clinical content in literature,
+design of the labels following guidelines, calibrated risk outputs and user presentations that could
+happen during the hospital visit, but not in the form of live trials in the hospital or formal
+stakeholder workshops. The Streamlit prototype is a way of showing how risk and explanations
+might be displayed in the clinical context, but not necessarily deployed stakeholder validation.
+
+EP7 (Interdependence): Subsystems were coupled. This is a dependent chain of processes
+ranging from the construction of MIMIC features to training the model, calibration, selection of
+thresholds, SHAP analysis and the decision-support prototype. Only exported probabilities can be
+used as input for fusion from NHANES and WESAD branches. Reported metrics and prototype
+behaviour is impacted by any changes in labelling,splitting,calibration. A consistent primary
+model was maintained throughout the evaluation, figures and demonstration with the use of a
+reporting lock.
+Mapping with Knowledge Profile
+This section will be used to link the overall problem and EP1 (multiple times for attaining EP1: K3,
+K4, K5, K6 & K8) to our Knowledge Profile.

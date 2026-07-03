@@ -1,0 +1,59 @@
+14
+Table 3.1: Functional Requirements of the Proposed System.
+FR ID
+Requirement
+Name
+Description
+Priority
+FR-01
+Multimodal Data
+Ingestion
+The system shall ingest population clinical data
+from NHANES, hospital electronic health record
+data from MIMIC-IV, and wearable-related data
+from WESAD to support the three modality
+branches of the framework.
+High
+FR-02
+Data
+Preprocessing and
+Splitting
+For each dataset, the system shall apply branch-
+specific preprocessing, including missing-value
+handling, leakage elimination, subject-level
+grouped train–validation–test splitting, and
+feature normalization or standardization before
+model training.
+High
+FR-03
+CKD Label
+Construction
+The system shall construct CKD-related binary
+labels for the clinical branches using clinically
+accepted criteria, including eGFR-based
+population labelling and admission-level hospital
+proxy definitions consistent with the project
+methodology.
+High
+FR-04
+Modality Feature
+Extraction
+The system shall convert clinical, EHR, and
+wearable inputs into structured feature
+representations, including demographic and
+laboratory attributes, admission-level
+observations, and window-based physiological
+statistics, through separate feature pipelines for
+each modality.
+High
+FR-05
+Model Training
+and Comparison
+The system shall train and compare branch-
+appropriate models, including calibrated logistic
+regression, random forest, XGBoost, tabular
+MLP, and residual MLP for clinical and hospital
+branches, and random forest for the wearable
+branch, to select a primary model per branch
+under the available data constraints.
+High

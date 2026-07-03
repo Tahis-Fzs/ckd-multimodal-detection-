@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "CKD Dataset",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "explorer.sortOrder": "foldersNestsFiles",
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/.DS_Store": true,
+      "**/.mplconfig": true,
+      "**/.jupyter": true
+    }
+  }
+}

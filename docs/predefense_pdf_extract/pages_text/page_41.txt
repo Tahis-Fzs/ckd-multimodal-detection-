@@ -1,0 +1,43 @@
+31
+Table 4.4: Locked primary model results
+Metric
+Value
+Accuracy
+0.692
+F1-score
+0.415
+Sensitivity (recall)
+0.674
+Specificity
+0.696
+AUROC
+0.761
+AUPRC
+0.379
+ECE
+0.020
+Brier score
+0.119
+True negatives
+3,560
+False positives
+1,468
+False negatives
+330
+True positives
+639
+Test admissions (n)
+5,997
+Reliability curves (Figure 4.1) are plotted for the performance of these two model uncalibrated and
+calibrated by sigmoid – on MIMIC test set. The calibrated model has better diagonal, the fit between
+the probability predicted by the model and the observed to the cell probability, it is better and this is
+correlated with decrease in ECE from 0.249 to 0.020 without compromising the AUROC (0.761).
+Figure 4.1: MIMIC Calibration Reliability Diagram
+The primary model therefore offers the most defensible balance for decision-support reporting:
+clinically interpretable linear structure, stable ranking performance, and low calibration error suitable
+for threshold-based risk communication [42], [49].
+4.3.3
+Confusion Matrix Analysis
+To appreciate the behaviour of the classification for locked Primary model a Confusion Matrix
+(Figure 4.2) of test-set was checked. Finally, the model showed good accuracy with 639 cases as true
+positive and 3560 cases as true negative after running the model with threshold value of 0.16, with

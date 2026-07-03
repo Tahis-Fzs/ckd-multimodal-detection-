@@ -1,0 +1,99 @@
+40
+Table 5.4: Mapping with knowledge Profile.
+K1
+K2
+K3
+K4
+K5
+K6
+K7
+K8
+Natur
+al
+Scien
+ce
+Mathem
+atics
+Engineering
+Fundamenta
+ls
+Specialis
+t
+Knowled
+ge
+Engineeri
+ng Design
+Engineeri
+ng
+Practice
+Comprehens
+ion
+Research
+Literature
+✓
+✓
+✓
+✓
+✓
+✓
+✓
+
+K1 Natural science: This included the application of CKD phenomena and renal physiology to
+feature labelling and interpretation and the writing of limitations for the labels [2], [17], [18].
+
+K2 Mathematics: These models were all built with logistic regression, sigmoid calibration,
+tabular deep models with crossentropy training along with knowledge of statistics and
+optimization techniques such as AUROC,AUPRC, ECE and Brier [14], [15].
+
+K3 Engineering fundamentals: The pipeline has been preprocessed with the branches and has
+been trained only the grouped validation, and the explicit failure handling for the missing
+laboratory values have been applied too.
+
+K4 Specialist knowledge: The knowledge of the admissions recorded in MIMIC hospital
+admission tables, the NHANES overlays on the table, the modality of the WESAD wrist window
+and the leakage grouping of the subject or participants played an important role.
+
+K5 Engineering design: The original contribution consists of 100% new multimodal CKD-risk
+framework, completely new branch pipelines, complete late fusion from disjoint cohorts and
+calibrated primary modelling and decisions supporting interface.
+
+K6 Engineering practice: Some of the implementation methods used were: experimental staged
+process, frozen checkpoints, exported CSV and JSON outputs, and locally prototype generation
+and testing.
+
+K8 Research literature: The literature that inspired the development of gap analysis and
+methodological decision was from fields of CKD prediction, machine learning based on EHR,
+Explainable Clinical AI, multimodal fusion, and etc. [1], [3], [39], [49].
+5.4.2
+Engineering Activities
+Table 5.3 maps the project to the complex engineering problem criteria. Table 5.5 maps the project to
+the related engineering activities.
+Mapping with Complex Engineering Activities
+This section is designed to map the overall problem and EA’s.
+Table 5.5: Mapping with Complex Engineering Activities.
+EA1
+Range
+of
+re-
+sources
+EA2
+Level of
+Interaction
+EA3
+Innovation
+EA4
+Consequences
+for society and
+environment
+EA5
+Familiarity
+✓
+✓
+✓
+✓
+
+EA1 Range of resources: In particular, the project involved using various and different
+resources: the three public repositories containing the data, the access to the data in the hospitals,
+the very extensive table like clinical files, the Python based machine learning libraries as well as
+the artefacts used for evaluation, the figures and the web based demonstration interface. Resource
+Management involved the following storage plan and control of the reproducible artifacts and no

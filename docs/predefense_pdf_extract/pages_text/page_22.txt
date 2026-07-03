@@ -1,0 +1,42 @@
+12
+Chapter 3
+Research Methodology
+This chapter presents the research methodology adopted for the proposed CKD risk prediction
+framework, describing the datasets, preprocessing, feature extraction, model development, multimodal
+fusion, explainability, and evaluation design. It explains how each methodological stage connects to
+the overall goal of building an explainable, multimodal, decision-support system for early CKD risk
+prediction.
+3.1
+Methodology
+A structured research methodology was performed to develop the proposed CKD risk prediction
+framework, which clearly aids the research purpose. The methodology goes hand-in-hand with a
+multi-branch pipeline. Three types of data, population clinical, hospital EHR data and wearable
+physiological data, are all independently modelled and processed, and their respective predictions
+directly combined at the probability level. Goal is to get every stage of this pipeline clearly presented
+and reproducible from data acquisition through to preprocessing, feature extraction, model
+development, fusion, explainability and evaluation. One stage is then described in detail in each of the
+subsections. As far as possible, the same methodology is adhered to throughout with the code adopted
+and the experimental set-up locked, to represent the system as constructed, and to meet the
+requirement of an explainable multimodal decision support tool for early prediction of CKD.
+3.1.1
+Overview
+The research activity proposed is a stride towards the effort of early detection of patients who are
+prone to developing Chronic Kidney Disease (CKD) which has no symptom in the initial stage of the
+disease. For this purpose, the chapter builds upon three different, yet complementary health data types
+and processes them through an explainable and reproducible workflow to a prototype of an
+explainable decision support tool.
+Three kinds of data were utilized: Population clinical data (NHANES); hospital EHR data (MIMIC-
+IV); and portable wearable, physiological data (WESAD). These data-set are classified as individual
+branches and are preprocessed, feature preparation and predictive-models are found for each one of
+these data-sets. In each of the branches, machine learning and deep learning models were developed
+and compared with one another and discrimination and probabilistic calibration was performed, which
+might lead to the selection of models capable of giving reliable risk estimates.
+Finally all the branch outputs are fused via a performance weighted method, that is a calibrated risk
+probability of each branch is fused. To achieve the transparency, a complementary explainability
+modular component is added to the main model based on SHAP and it generates feature level
+explanations, implemented as a prototype decision support system instead of diagnostic tool [15].
+3.1.2
+Proposed Methodology
+This methodology we are proposing is a multi-branch workflow, that converts various types of health
+data that can be collected to calibrated explainable indexes of the risk of CKD as represented in
+Figure 3.1. The design process for each stage is briefly described here.

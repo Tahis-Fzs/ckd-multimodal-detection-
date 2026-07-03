@@ -1,0 +1,2 @@
+model,split,threshold,tn,fp,fn,tp,n,prevalence
+logreg_sigmoid_cal,test,0.16,3560,1468,330,639,5997,0.1615807903951976

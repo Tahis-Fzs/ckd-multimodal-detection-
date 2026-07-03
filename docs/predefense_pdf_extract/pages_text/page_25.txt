@@ -1,0 +1,77 @@
+15
+FR ID
+Requirement
+Name
+Description
+Priority
+FR-06
+CKD Risk
+Prediction
+The system shall use the selected primary model
+to output CKD-related risk estimates for the
+supported clinical and hospital branches as the
+core decision-support function of the framework.
+High
+FR-07
+Probability
+Calibration
+The system shall apply post-hoc probability
+calibration, especially for the primary MIMIC-IV
+model, so that predicted risk values are suitable
+for interpretation as probabilities rather than
+uncalibrated classification scores.
+High
+FR-08
+Multimodal Late
+Fusion
+The system shall combine branch-level prediction
+probabilities through a late-fusion protocol when
+multimodal integration is evaluated, because the
+public cohorts are disjoint and same-patient raw-
+feature fusion is not available.
+Medium
+FR-09
+Explainability
+Generation
+The system shall generate prediction explanations
+and feature-importance summaries, including
+global and local attributions for the primary
+hospital model, to support transparent research-
+oriented clinical decision support.
+High
+FR-10
+Evaluation and
+Reporting
+The system shall evaluate models using
+discrimination, classification, and calibration
+metrics, including AUROC, AUPRC, F1-score,
+sensitivity, specificity, Brier score, and expected
+calibration error, to enable fair comparison
+beyond accuracy alone.
+High
+FR-11
+Prototype
+Visualization
+The system shall provide an interactive research
+prototype that presents calibrated risk output
+together with explanation views for stakeholder
+demonstration in a decision-support context; the
+implemented interface supports the primary
+MIMIC branch.
+High
+Non-functional requirements are the qualities that influence how the system operates, but are not
+really the work that it produces.
+Table 3.2: Non-Functional Requirements of the Proposed System
+NFR
+ID
+Requirement Name
+Description
+Priority
+NFR-
+01
+Reliability
+The system maintains consistent preprocessing
+rules, grouped data splits, and evaluation
+settings across training and reporting so that
+research results remain stable and auditable.
+High

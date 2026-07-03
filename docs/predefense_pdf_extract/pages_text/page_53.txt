@@ -1,0 +1,38 @@
+43
+reviewed in practice. MIMIC labels are based on ICD proxies, and not KDIGO staging and
+follow-up. Outputs will be limited to risk estimates in the assistance of research decision making
+and should not be used as a single source for diagnosis or treatment suggestions.
+
+Explainability limitations: SHAP attributions do not include the mechanics of any association,
+just only statistical. There can be coding and socioeconomic bias in the explanations, which rely
+on the manner in which information is documented in the sending hospital. The fitted linear
+model refers to the local distribution of data from clinical settings, and local explanations are
+only valid for this case.
+6.3
+Future Work
+Future work should be continued down realistic lines existing and based on evidence; with expansion
+of the current implementation.
+
+Aligned multimodal cohorts: Collect or synthesize datasets in which the clinical records and
+wearable sensors are the same patients, with the sole idea being that of exploring the usefulness
+of early fusion of data and multimodal benefit at the patient level.
+
+Prospective and external clinical validation: Test the hospital (admission) model on external
+databases, future workflows, as well as on separate hospitals, while at the same time get familiar
+with the temporal checking able within MIMIC.
+
+Richer hospital modalities: Add other physiological and time series information other than the
+many tabular data at the admission level like the waveform data available in the extended
+versions of MIMIC.
+
+Fairness and bias mitigation: Do auditing from the various the sub-populations with varying
+demographic features, insurance coverage and documentation and investigate fairness-aware
+training and threshold-based policies.
+
+Clinical integration: Set up interoperability and workflow integration with standards-based
+approach with nephrology and hospital stakeholders and try out clinician in the loop.
+
+Operational deployment research: Avoid conducting any pilot outside of the research context
+not featuring the calibration drift monitoring, model governance and versioning.
+These directions taken together may take the framework from a research prototype into one that is
+responsibly designed and calibrated as a decision-support tool.

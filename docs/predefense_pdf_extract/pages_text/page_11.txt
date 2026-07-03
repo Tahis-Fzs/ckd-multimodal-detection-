@@ -1,0 +1,49 @@
+1
+Chapter 1
+Introduction
+The chapter sets out the motivation and aims of the project and outlines its methodology and expected
+outcomes as well as formulating the overall structure of the project. It offers a glimpse into the early
+Chronic Kidney Disease risk prediction problem and introduces a proposed explainable multi-modal
+decision-support framework.
+1.1
+Introduction
+CKD is a slowly progressive disease where kidney function decreases over a period of time as shown
+by a declining eGFR or kidney damage in terms of structure or function [2], [18]. The severity of the
+disease varies and can lead to end stage renal failure (ESRF), dialysis and transplant which is very
+costly [2]. The prevalence of CKD is found worldwide, it often accompanies hypertension and type 2
+diabetes and it is a condition that may not present with symptoms in the initial stages and therefore
+not be diagnosed [2], [18]. Evidence of decreased kidney function or albuminuria early makes it
+possible to intervene with meds and a modification of the diet and management of risk factors [17],
+[18]. It is therefore a challenge for the nephrology and the preventive medicine community to be able
+to identify high-risk persons so early.
+Serum creatinine, eGFR using the CKD-EPI equation and urine ACR [17] have been the laboratory
+markers traditionally used for the diagnosis of CKD. They are clinically useful, but are not continuous,
+do not reflect the renal function, and are cross-sectional and dependent on time of day, muscle mass
+and hydration, and also on the presence of other illnesses [1]. Laboratory screening is also hamstrung
+by its intermittent lag time between clinic visits [2] and imaging has proven to be costly and less
+available with the added problem of the inability to continuously monitor patients [2]. Thus, novel
+diagnostic methods are needed that can detect any evolving alterations in the physiologic state before
+renal dysfunction becomes evident, in this high-risk group.
+There are new opportunities for using Artificial Intelligence (AI) in clinical risk prediction. Structured
+and high dimensional patient data can be leveraged by analysing such data with machine learning or
+deep learning algorithms, thus discovering complex nonlinear relationships which can supersede a
+humanly-designed clinical scoring system in many cases [1], [13], [43]. Using deep learning on EHR
+data has enabled better prediction of outcomes using temporal modelling on EHR data [8]. However,
+the existing approaches to predict a CKD are mostly performed at present on one particular modality
+of information, and fail to integrate complementary information from the other modality such as
+wearable physiological sensors [1], [13], [32], [35]. Multi-modal wearable signals and clinical records
+in structured format in the context of CKD remains an area that is yet to be explored in modelling [36].
+However, another restriction is its interpretability. Clinicians in a critical clinical context would have
+to view and understand the contributions of the inputs to the prediction, even in the event of good
+discriminative performance of a model [46], [49], [50]. In the area of CKD prediction, understanding
+feature attributions with explainable AI (XAI) methods and calibrated probabilistic outputs, and
+framing them as decision support, are not sufficiently developed and remain as non-reproducible
+elements of the same pipeline.
+The next major challenge addressed in the research is the need for a multi-modal framework which
+uses both EHR
+and clinical data along with wearable, physiological signals, is able to obtain
+estimates of personalized and calibrated risk scores, is explainable, and is feasible given lack of
+patient-level alignment with public EHR, clinical, and non-clinical datasets. This thesis tries to solve
+this issue by proposing a multi-modal deep learning framework, by connecting these data sources in a
+probability level late fusion [36] and explainable with SHAP-based explainability [15] in order to
+support transparent clinical decision making, instead of the autonomy of diagnosis [1], [42], [49].

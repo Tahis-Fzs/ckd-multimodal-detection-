@@ -1,0 +1,29 @@
+21
+NHANES cycles when the primary rule is applied, the availability of albuminuria in merged
+NHANES tables was limited to consider an alternative rule of eGFR alone, or eGFR and albuminuria
+thresholds. These steps are very inexpensive and can be repeated in the computer. Determinate
+processing with explicit rules to be checked and audited during deployment can be helpful as every
+transformation can be versioned and replayed on new admissions without being re-derived because of
+missing documentation of the rules.
+3.2.3
+Feature Engineering
+Engineering of features is modality specific. All the fields in the clinical use and EHR feature parts
+are structured, including demographic, admission, insurance, race, gender, length of stay, and
+laboratory; the categorical variables are one-hot, the numerical variables are train-only fitted and
+standardized. The wearable branch window process is to transform raw signal data into statistical
+information that is mean, standard deviation, minimum and maximum values of data in each window
+separately extracted from BVP, EDA, TEMP and Accelerometer magnitude signals.
+Selected approach prefer interpretable features, structured features and hand-summarized, wearable
+windows. An end-to-end convolutional or recurrent signal encoder was considered for modelling the
+wearable branch, but was rejected due to the small size of the WESAD dataset and lack of CKD labels,
+which would lead to an encoder overfitting and being unable to be validated against a renal outcome
+[5], [29]. Even another idea, which was to pass the raw sequence whose length is fixed directly to the
+deep network was rejected for the same reasons of amount of data and mismatch of effects of different
+labels. The benefits of the statistical window features are both their robustness and the fact that they
+only have a few parameters; the drawback is that subtle temporal evolutions and cross channel
+interactions in the window may be washed out. Windowed is lightweight computation and
+programmer-friendly for the deployment of prototypes on typical hardware. On a clinical level, the
+structured and interpretable features are consistent with practitioners understanding and reasoning
+about laboratory information and summary vital signs, and the features on the wearable are a proxy
+for physiological stress, but not a labelled predictor of CKD.
+Figure 3.6: Sample WESAD Wrist Signal Window

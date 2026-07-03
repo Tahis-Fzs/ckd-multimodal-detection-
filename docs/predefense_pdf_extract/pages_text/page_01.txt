@@ -1,0 +1,26 @@
+1
+A Deep Learning Framework for Early Detection
+of Chronic Kidney Disease: Integrating Multi-
+Modal Data from Wearable Devices and Clinical
+Records with Explainable AI
+By
+Md. Shadman Tahsin
+0242220005101461
+Md. Shadman Hasin
+0242220005101462
+FINAL YEAR DESIGN PROJECT REPORT
+This Report Presented in Partial Fulfillment of the Requirements for the
+Degree of Bachelor of Science in Computer Science and Engineering
+Supervised by
+Dr. Naznin Sultana
+Associate Professor
+Department of Computer Science and Engineering
+Daffodil International University
+Co-Supervised by
+Md. Abbas Ali Khan
+Assistant Professor
+Department of Computer Science and Engineering
+Daffodil International University
+DAFFODIL INTERNATIONAL UNIVERSITY
+Dhaka, Bangladesh
+July 06, 2026

@@ -1,0 +1,74 @@
+25
+the selection of the threshold, and calibration. The Robustness and temporal checks, SHAP analysis
+and Streamlit prototype testing have been done. Metrics, confusion matrices and calibration plots as
+well as UI screenshots were created.
+Phase 5 Integration and submission (Weeks 40 - 48), created Streamlit decision-support prototype,
+created and formatted thesis, and prepared defence. Final products were the complete report,
+presentation deck and research package for reproduction.
+Clearly, there were biases at each of the phases, preprocessing-splitting feeds training, training-
+calibration feeds explainability (locked models), prototype integration (primary-model-freeze) and the
+evaluation feeds writing up the result.
+Table 3.6: Project Plan Summary.
+Phase
+Phase Name
+Objectives
+Key Deliverable
+Weeks
+P1
+Research and
+Planning
+Systematic literature
+review; gap analysis;
+requirements
+specification;
+architecture and
+dataset strategy;
+Literature review (Ch. 2); gap
+analysis table; FR/NFR
+specification
+12–20
+P2
+Data
+Engineering
+NHANES, MIMIC-
+IV, and WESAD
+acquisition and
+verification; leakage-
+safe labelling;
+grouped splits; train-
+only imputation and
+scaling
+Clean branch datasets;
+preprocessing notebook; split
+integrity checks; Table 3.3 cohort
+summary
+18–26
+P3
+Model
+Development
+Tabular baselines
+and deep models per
+branch; wearable RF
+proxy; late-fusion
+protocol; primary
+model lock
+Trained models; frozen
+checkpoints; branch probability
+exports; final_reporting_lock.json
+24–36
+P4
+Evaluation &
+Testing
+Held-out test
+metrics; calibration
+analysis; SHAP
+integration;
+robustness and
+temporal validation;
+prototype functional
+testing
+Metric and calibration tables;
+confusion matrix; SHAP
+rankings; UI screenshots (Figs.
+3.3–3.5); evaluation report
+34–42

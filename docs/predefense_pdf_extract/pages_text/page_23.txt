@@ -1,0 +1,33 @@
+13
+Figure 3.1: Overall architecture of the proposed multimodal CKD risk-prediction framework
+There are three kinds of public data sources that provide data: population-scale clinical data collected
+by NHANES [16] and hospital EHR data from MIMIC-IV [6] and wearable physiological data
+collected by WESAD public data sharing repository [5]. Given that they represent different
+populations and cannot be connected on an individual patient basis, each is considered a separate
+branch, and follows its own preprocessing steps which involves table merging, leakage removal,
+imputation, standardization and train – validation – test splitting to prevent subject leakage, using
+CKD-EPI eGFR and albuminuria thresholds [17], [18]. We then have modality specific features such
+as structure admitting, modality specific demographic features on the clinical branch, windowed
+statistical descriptors of BVP, EDA, temperature, and accelerometer features on the wearable branch,
+which we use as a proxy for a CKD labeled source.
+For each branch, there are a number of models, including logistic regression with calibration, Random
+Forest and XGBoost and deep tabular models; the locked model in the EHR branch is the logistic
+regression with calibration which is used to generate well calibrated probabilities [14]. These
+probabilities at the branches are then combined at the level of the probabilities as an integration
+protocol like that of the non-aligned data [36]. A SHAP-based-component reports feature attributions,
+discrimination and calibration metrics such as AUROC, AUPRC, F1, sensitivity, specificity, brier and
+ECE are employed to assess the system with a multi-seed and a temporal robustness check.
+The system is divided into four blocks, which are respectively input and pre-processing, model
+inference with the frozen primary model, SHAP explanation and explanation presentation interface
+from system design perspective. The data is only transmitted from the computer to the user only one
+way; the system returns a calibrated CKD risk estimate and supporting explanation outputs to the user;
+inputs are admission-level features entered or selected through the prototype interface.
+3.1.3
+Functional and Nonfunctional Requirements
+Functional requirements specify what the system to be designed must do, based on conditions. They
+detail the actions the system needs to take to collect health data, and subsequently, in the next phases
+of health data preprocessing, modelling, fusion, explainability and reporting to derive calibrated
+health risk outputs that may be presented to a decision-maker. These requirements for this project
+involve all the various branches of the multimodal research pipeline, the locked primary hospital EHR
+model, the probability calibration and the SHAP based explanation, in addition to the Streamlit
+prototype to showcase the results. System's functional requirements:

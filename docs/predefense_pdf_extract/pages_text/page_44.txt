@@ -1,0 +1,34 @@
+34
+factors had seemed to play a greater role in the explanation of the model at the global level.
+Case level further tests of local behaviour are illustrated: A true positive was tested at calibrated
+probability 0.957 at threshold value 0.16, and a true negative was tested at calibrated probability 0.001
+at the same threshold value. These are association-based and for discussion and audit, not causal
+mechanism or for replacing expert opinion in the context of hospital training distribution.
+Figure 4.3: Global SHAP Feature Attribution for MIMIC model
+4.3.9
+Clinical Decision-Support Prototype Demonstration
+A Streamlit prototype was used to assess the locked MIMIC branch, as a research demonstration. The
+calibrated admission risk, the threshold customization and the review of example-cases are part of the
+interface, as well as the hand entry of features, and the global SHAP summary tab based on a frozen
+test-set analysis. The NHANES, WESAD and live fusion combination is not integrated since it was
+obvious that it wasn't within the model's range of evidence and scope in the prototype.
+This demonstration shows that offline model outputs can be presented in an inspectable decision-
+support workflow with explicit disclaimers and no therapeutic recommendations. It is not clinical
+deployment, live EHR integration, or prospective validation [39], [42].
+4.3.10
+Discussion
+However, the findings, when combined, suggest three conclusions in terms of this study.
+Firstly, sigmoid-calibrated logistic regression, on the primary branch of admission to MIMIC,
+achieved a sensible trade-off between discrimination and reliability. It attained AUROC 0.761 with
+ECE 0.020, while similar results were obtained with logistic regression with AUROC 0.761 and ECE
+0.249 (no calibration), and AUROC ~0.768 with ECE ~0.20 with the tree-based models. So,
+calibrated probabilities should be used instead of only ranking performance to support decisions.
+Second, the NHANES branch demonstrated very high population discrimination (0.992) which should
+not be assumed as hospital admission discrimination. There are differences in setting, in definition of
+label, in features available and their rates of use, and results from the branches should not be averaged
+or merely applied to the inpatient setting.
+Third, the wearable and fusion components remain methodological rather than clinically validated
+CKD detectors. WESAD was evaluated using a stress-versus-baseline proxy because CKD labels
+were unavailable in that cohort, while NHANES and MIMIC-IV used branch-specific CKD-related
+labels under different settings. Late fusion across disjoint public cohorts also did not show patient-
+level multimodal CKD benefit. These parts therefore describe a reproducible multimodal design under

@@ -1,0 +1,92 @@
+33
+4.3.5
+NHANES Population Branch Results
+The test-set for the NHANES is an independent study population and their test-set results are
+presented in the NHANES Table 4.6. XGBoost achieved the strongest overall results, accuracy 0.966,
+F1 0.798, AUROC 0.992, ECE 0.014. Logistic regression without change of AUROC 0.982 and F1
+0.692 was very discriminative and there was no significant change in sensitivity and specificity which
+were 0.928 and 0.940. The calibration error ECE 0.053 was the only one that was small. ResMLP had
+the best accuracy score of all classifiers which was 0.962, had the highest specificity 0.984 and the
+lowest sensitivity 0.681 among all the classifiers when considering with logistic regression.
+In summary, the results indicate that four features are built-in to NHANES population and lab, but
+they can be appropriately used independently and in combination to successfully separate NHANES
+CKD-risk into varying levels. Limiting this branch to reflect hospital admission or the average of
+MIMIC metrics should be avoided since the cohorts are different, as are the setting, label construction
+and features available [16], [17].
+Table 4.6: NHANES test-set performance.
+Model
+Accuracy
+F1
+Sensitivity
+Specificity
+AUROC
+AUPRC
+ECE
+XGBoost
+0.966
+0.798
+0.913
+0.970
+0.992
+0.932
+0.014
+Logistic
+Regression
+0.939
+0.692
+0.928
+0.940
+0.982
+0.852
+0.053
+Random
+Forest
+0.948
+0.714
+0.884
+0.953
+0.979
+0.832
+0.027
+Tabular MLP
+0.946
+0.687
+0.812
+0.956
+0.978
+0.826
+0.022
+ResMLP
+0.962
+0.723
+0.681
+0.984
+0.971
+0.816
+0.032
+4.3.6
+Wearable Proxy Branch Results
+A wearable Random Forest classifier with stress versus base line proxy task was tested, with 578
+windows, 15 subjects and was found to have AUROC 0.764, F1 0.667, Accuracy 0.812, Sensitivity
+0.528 and Specificity 0.969 with ECE of 0.123. This was low sensitivity, high specificity which is
+typically observed in stress-vs-baseline proxy task.
+This branch was included to evaluate the processing and classification capability of this type of
+Window in a reproducible manner in the multimodal approach. Not only, it's not just the one that does
+not classify the patient as CKD, it's not the measure of kidney outcome. It has not been tested on
+branch level yet and in the bigger study can only be measured as a methodological test and provide
+probabilities if tested in the branch level using a late fusion protocol.
+4.3.7
+Multimodal Fusion Protocol Evaluation
+Branch-level late fusion was not reported as a primary outcome because NHANES, MIMIC-IV, and
+WESAD are disjoint public cohorts without shared patient identifiers. Under proxy conditions, fusion
+performance is not interpretable as multimodal CKD detection.
+4.3.8
+Explainability Analysis
+The drivers of the predicted risk of CKD at each of the above levels of the admissions were extracted
+via global SHAP analysis on the locked primary model. Figure 4.3 shows that the top global
+attributions were patient age, Medicare insurance status, race, admission type, gender and length of
+stay and private insurance such as by an employer. Age 0.562, insurance_Medicare 0.275, and
+race_BLACK AFRICAN AMERICAN 0.199 were the top three features in terms of mean|SHAP.
+Other frequently used context variables for admission purpose like EU OBSERVATION and
+OBSERVATION ADMIT types were the other prominent features. Laboratory urea nitrogen
+contributed relatively little at the cohort level mean SHAP 0.047 and demographic and administrative

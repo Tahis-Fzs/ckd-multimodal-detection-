@@ -1,0 +1,76 @@
+30
+threshold policies were examined using operating point testing including the maximising F1 selection
+policy, the maximising recall policy and thresholding based on validation predictions according to
+Youden's method. Explainability and prototype testing assessed global SHAP consistency of locked
+model and functional behavior of Streamlit decision-support prototype for calibrated risk display,
+threshold adjustment and for providing explanations on the MIMIC branch only.
+All the above results were determined numerically by the model and provided branch-wise,
+performances of the main model, robust validation, temporal validation, proxy on the wearable, fusion
+protocol assessment, SHAP rankings.
+4.3
+Results and Discussion
+4.3.1
+Individual Model Performance
+Performance of the main classifiers in the hospital on the held out MIMIC test set of 5,997 admissions,
+summarized in table 4.3. There was no significant differences between model families as
+discrimination was fairly consistent AUROC 0.761 to 0.768. The highest AUROC 0.768 was obtained
+for the XGBoost model, followed closely by random Forest model 0.768 and Tabular MLP model
+0.766. Random Forest achieved the best accuracy 0.684 and F1 score 0.423 among the models, that
+have not been calibrated. In fact, logistic regression achieved a similar performance in ranking
+AUROC 0.761 but significantly higher calibration error ECE 0.249, whereas Tabular MLP exhibited
+competitive ranking AUROC 0.766 as well as a relatively low calibration error ECE 0.028.
+The results here suggest that while raising the capacity of the models did not lead to a clear
+discrimination in favour of the candidates, the certainty of the probability of being predicted was an
+important factor in candidating more than just the ranking by itself [14], [47].
+Table 4.3: MIMIC admission branch held-out test performance (uncalibrated models).
+Model
+Accuracy
+F1
+AUROC
+AUPRC
+ECE
+XGBoost
+0.649
+0.409
+0.768
+0.382
+0.207
+Random Forest
+0.684
+0.423
+0.768
+0.367
+0.198
+Tabular MLP
+0.645
+0.406
+0.766
+0.386
+0.028
+Logistic
+Regression
+0.702
+0.417
+0.761
+0.380
+0.249
+4.3.2
+Evaluation of the Locked Primary Model
+Model selection prioritized sigmoid-calibrated logistic regression over uncalibrated baselines and tree
+ensembles because it offered similar discrimination (AUROC 0.761) with substantially better
+probability reliability (ECE 0.020).
+On the test set, using a threshold of 0.16, the model achieved an accuracy of 0.692, F1-score of 0.415,
+sensitivity of 0.674, specificity of 0.696, AUROC of 0.761, and AUPRC of 0.379. Moreover, the
+scores on the calibration were quite satisfactory as can be seen from the score of ECE of 0.020 and the
+score of Brier of 0.119.
+The AUROC value for the uncalibrated logistic regression model with the cutoff of 0.52 was similar
+to this proposed model 0.761, however the uncalibrated logistic regression model showed
+substantially worse calibration (ECE = 0.249) than the sigmoid-calibrated primary model (ECE =
+0.020), while both retained similar AUROC (0.761) and also the F1-score for the proposed model was
+nearly equal to the uncalibrated logistic regression model which was 0.417 vs. 0.422. On the other
+hand, isotonic calibration further decreased the ECE = 0.014 but with a compromise on the values of
+accuracy = 0.630 and F1 = 0.404 at a threshold value of 0.12.
+Overall, the calibrated model, which is of sigmoid form would be the best compromise to be used for
+decision support applications. We found it to be clinically interpretable with linear structure, with
+stable ranking performance, as well as being well calibrated probabilities, a feature that has been
+typically used for threshold based risk communication [42], [49].

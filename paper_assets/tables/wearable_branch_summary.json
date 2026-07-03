@@ -1,0 +1,32 @@
+{
+  "branch": "wearable",
+  "dataset": "WESAD",
+  "wesad_root": "/Users/md.shadmantahsin/Desktop/STUDY/Dataset/WESAD",
+  "task": "binary_stress_vs_baseline_proxy",
+  "label_map": {
+    "1": "baseline",
+    "2": "stress"
+  },
+  "model": "wearable_rf",
+  "n_subjects": 15,
+  "n_windows": 578,
+  "feature_source": "wrist_BVP_EDA_TEMP_ACC_window_stats",
+  "window_samples": 1920,
+  "stride": 960,
+  "max_windows_per_subject": 120,
+  "limitations": [
+    "No CKD labels in WESAD; stress detection is a physiology proxy only.",
+    "No patient-level alignment with NHANES/MIMIC cohorts.",
+    "Demo-grade window aggregation; not a production wearable encoder."
+  ],
+  "metrics_holdout_group_split": {
+    "auroc": 0.7638561320754716,
+    "auprc": 0.7746987730406824,
+    "f1": 0.6666666666666666,
+    "accuracy": 0.8120805369127517,
+    "sensitivity_recall": 0.5283018867924528,
+    "specificity": 0.96875,
+    "ece": 0.12337807606263983,
+    "brier": 0.15180648769574942
+  }
+}

@@ -1,0 +1,56 @@
+2
+1.2
+Motivation
+The prevalence of Chronic Kidney Disease (CKD) is rising, as well as the lack of diagnosis of the
+disease before the time at which clinical interventions can make a real difference in the world. This
+change in renal function is a gradual process and in the early stages of CKD, there may be no
+identifiable signs or symptoms; many of those at risk of being diagnosed with the condition will only
+have nephron loss when diagnosed [2], [18]. This necessitates the demand for a predictive tool that
+can be employed in identifying the high risk patients early on and manage and monitor them with
+different types of drugs and changes in the lifestyle before taking them to end stage deterioration [17],
+[18].
+The workup for this is measurement of blood levels of creatinine, eGFR and urinary albumin to
+creatinine ratio [17] periodically in the laboratory. The measurements are episodic and static, are
+prone to non-renal effects and cannot be used in resource poor environments [1]. Current screening
+systems can't keep up with patients in between screenings and lack much data, including a need for AI
+systems that can process larger, more diverse data sets of patients.
+The need for the work is related to the computation aspect arising from the intrinsic intractability
+problem. When it comes to risk prediction of CKD, issues of high dimensionality of a sparse feature
+space, non-existence of a cohort of patients with clinical data and physiological signals gathered from
+wearable devices, heterogeneities of different data modalities and high degree of class imbalance all
+pose challenges. New architectures introduced by these constraints require non-classical design of
+classification and require principled design of architecture in deep learning models: (1) Late Fusion
+and (2) Selection of the model based on the calibration. An important computation issue is how to
+come up with solutions that can be applied to such real-world data sets.
+Wearable devices provide continuous measurement of more general physiological parameters such as
+BVP, EDA and skin temperature which have been demonstrated to be sensitive to more general
+autonomic and cardiovascular measures relevant to chronic disease state [32], [35]. Use of multimodal
+approach in combination with the structured data feature of EHR clinical can build up an enriched
+predictive environment as compared to considering only one of them. But there are some practical
+engineering problems to be addressed on a systematic basis, such as proxy label alignment, cross
+dataset generalization and mismatching sampling rate, to mention a few.
+There can be a number of direct hits to a problem's solution. But from a clinical point of view, if there
+is a validated early detection tool, nephrologists can find the patients at risk before they start to show
+symptoms, thus reducing dialysis burden, and improving the outcome of their quality of life [18], [43].
+From a technical perspective, it can be seen as an extension of multimodal deep learning and SHAP
+explainability to a relatively less explored field in healthcare that makes pipelines reproducible and
+calibrates multimodal models to deliver clinically interpretable or relevant values to the burgeoning
+field of explainable healthcare AI models [15], [49]. The project aims to enable the research team
+immediately to extend their capabilities in a field where there is a dire demand among both academic
+researchers and practitioners of AI in healthcare specially in clinical data engineering as well as deep
+learning model design and XAI systems.
+1.3
+Objectives
+The aim of the research is to develop an explainable machine learning and a Deep Learning
+framework able to predict the risk of CKD patients from the very early stage with the assistance of
+wearable generated physiological data and structured clinical data and a final system that instead of
+being an automatic diagnostic system, works as a system able to support clinical decisions.
+I.
+To prepare and preprocess CKD-relevant clinical datasets from NHANES and MIMIC-IV,
+including feature selection, missing-value handling, leakage removal, CKD label construction,
+and grouped train-validation-test splitting.
+II.
+To extract and prepare wearable physiological features from the WESAD dataset using window-
+based signal processing for the wearable branch of the system.
+III. To develop and compare branch-level prediction models for clinical and EHR data, including
+logistic regression with calibration, Random Forest, XGBoost, Tabular MLP, and residual MLP

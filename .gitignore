@@ -1,0 +1,26 @@
+# Environments
+.venv/
+.venv312/
+archive/legacy/.venv*/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# OS / IDE
+.DS_Store
+.vscode/
+.mplconfig/
+.jupyter/
+
+# Raw datasets (symlink to STUDY/Dataset — obtain separately)
+data/datasets/
+
+# Heavy outputs (keep paper_assets/ copies for thesis)
+outputs/
+*.pt
+*.pth
+
+# Optional: large checkpoints if using git (include in submission zip manually)
+# outputs/supervisor_runs/*.pkl

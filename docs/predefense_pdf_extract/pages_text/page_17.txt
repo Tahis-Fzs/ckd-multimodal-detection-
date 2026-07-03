@@ -1,0 +1,123 @@
+7
+For clinical applications the explainability of the AI systems are now an important prerequisite. In this
+paper, inspired by so called Shapley values from cooperative game theory, we present one approach
+called SHAP which was developed by Lundberg and Lee [15] that can be used for all types of models
+and give theoretically motivated locally consistent feature attributions. Recently, Ribeiro et al. [44]
+proposed LIME for providing surrogate explanation which is somehow trustworthy. For the
+convolutional models, Selvaraju et al. [45] have proposed to use gradient-weighted visual
+explanations named as Grad-CAM. Tree based model classes like the models in this thesis can be
+directly used in SHAP, or TreeSHAP [48] can be used to give exact polynomial time computation.
+According to Tonekaboni et al. [46] clinicians need to rely not only on uncertainty estimates but also
+on feature attributions; otherwise it is not clinically useful and relying on feature level attributions
+would not work during a high stake situation. Just as with any other model explanation editing, the
+goal of the model interpretation should be to understand how the model operates, so it could be used
+to inform a decision making process, and to ensure that the model has learned correct association,
+even an interpretable model can learn incorrect association in the clinical data context and this was
+illustrated by Caruana et al. [47]. There are two main problems, however, that impede the current AI
+prediction tools from their clinical use, miscalibration of the probability as identified by both
+Ghassemi et al. [49] and Vellido [50].
+Table 2.1: Summary of Literature Reviewed.
+Author (s)
+Year
+Title
+Methodology
+Key Findings
+Sawhney et
+al. [1]
+2023
+A comparative
+assessment of
+artificial
+intelligence
+models used for
+early prediction
+and evaluation
+of chronic
+kidney disease
+Deep neural network
+(multi-layer
+perceptron, PyTorch)
+on UCI-style CKD
+clinical dataset (400
+patients; age, blood
+sugar, RBC count,
+etc.)
+Reported 100% test
+accuracy for the
+proposed DNN;
+compared against
+SVM and Naive
+Bayes; small
+curated tabular
+dataset, not hospital
+EHR
+Almansour et
+al. [19]
+2019
+ANN and SVM
+for CKD
+prediction
+ANN, SVM; 400
+patients, 24 features
+ANN 99.75% vs
+SVM 97.75%;
+creatinine and urea
+most influential
+features
+Miotto et al.
+[24]
+2016
+Deep Patient:
+EHR
+representation
+learning
+Stacked denoising
+autoencoders; 700K
+patients
+AUC-ROC 0.773 vs
+0.659 baseline
+across 78 diseases;
+15% improvement
+over raw features
+Choi et al.
+[25]
+2016
+Doctor AI:
+Predicting
+clinical events
+via recurrent
+neural networks
+Attention-based RNN;
+263K patients, 14M
+visits
+Heart
+failure/clinical
+events focus; no
+wearable data; no
+calibration; not
+CKD-specific
+Lipton et al.
+[29]
+2016
+LSTM for
+clinical time
+series diagnosis
+LSTM on MIMIC;
+128 diagnoses
+Best micro-AUROC
+0.8730 with zero-
+imputation and
+missing indicators
+Rajkomar et
+al. [23]
+2018
+Deep learning
+for EHR at
+scale
+LSTM, Transformer;
+two hospital systems
+Mortality AUROC
+0.93–0.95;
+readmission 0.75–
+0.77; length of stay
+0.85–0.86

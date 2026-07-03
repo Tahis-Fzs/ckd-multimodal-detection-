@@ -1,0 +1,25 @@
+IV
+ABSTRACT
+CKD (Chronic Kidney Disease) is a big problem all over the world, and is often only associated
+with the affected kidney when it is at an advanced stage and there is not a lot that can be done.
+Most of the computational approaches involve a unique modality, and do not typically combine
+leakage-aware evaluation, and explainability in a single, reproducible pipeline for decision
+support. In this thesis, multi-modal solution using clinical records, population biochemistry and
+wearable physiology to predict the risk of CKD in the early stage using explainable AI is
+proposed. Three branches are created: NHANES is used for modelling the population; MIMIC-
+IV is used for admission level hospital risk stratification; and a proxy of stress-physiology
+(WESAD) is used for feature extraction as the labels of CKD are not available in the WESAD
+cohort. This also includes providing grouped splits at the subject level and providing
+standardized feature engineering, and explicit labeling from population or from hospital proxies.
+Calibrated logistic regression, gradient-boosted trees, and random forests and tabular neural
+networks have been tested; in late fusion, which does not involve any cross-cohort patient
+alignment, the probability of the trees is combined by following a published protocol. The main
+empirical finding is on the admission branch of the MIMIC: post-hoc calibration significantly
+improves the probability reliability, compared with baselines that aren't calibrated, while
+showing competitive discrimination. Global SHAP analysis on the MIMIC held-out test set
+shows that the top four factors are the insurance, race, admission characteristics and age. With a
+prototype built in Streamlit, we also introduced thresholds, and offer explanations to
+stakeholders on a local and global level. While NHANES and WESAD branches were tested
+separately, no significant CKD detection advantage of multi-modal fusion was found. The work
+is a purely research decision support framework to target leakage-aware, calibrated and
+explainable multi-modal hospital risk modelling.

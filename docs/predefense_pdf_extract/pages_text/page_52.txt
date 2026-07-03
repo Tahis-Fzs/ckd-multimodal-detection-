@@ -1,0 +1,52 @@
+42
+Chapter 6
+Conclusion
+This chapter gives a summary of the work done in this research, discusses the limitations of the
+proposed CKD risk prediction framework and points the way for future work. It is proposed to be a
+research framework to be used as a tool to help with a decision and not a separate clinical diagnostic
+system.
+6.1
+Summary
+Combining population clinical data (NHANES) with multimodal, wrist wearable physiological data
+(WESAD stress proxy) as well as multimodal data late fusion via probability level and SHAP
+explainability were explored as ancillary research decision support to the multimodal CKD risk
+prediction system. The Primary locked model which was sigmoid calibrated logistic regression
+classifier for MIMIC admission had a test AUROC of 0.761, F1 accuracy metric value of 0.415,
+sensitivity of 0.674, specificity of 0.696 and ECE value of 0.020 when threshold value was set at 0.16.
+This provided a similar level of discrimination to uncalibrated and treelike approaches as above, but
+with significantly better probability reliability measures; uncalibrated logistic regression discriminated
+about as well AUROC ~0.761, ECE 0.249 while treelike approaches of about the same quality
+achieved a somewhat higher AUROC ~0.768 but much lower probability reliability measures. test
+discrimination was high for NHANES logistic regression in separate cohorts and the AUROC value
+for proxy task was 0.764 for WESAD cohort. This was because it was considered to be a late fusion,
+and with no evidence of patient level multimodal CKD benefit proxy AUROC ~0.50. Temporal
+validation and grouping was done but MIMIC discrimination was not affected. Key risk drivers were
+found to be: age, insurance, race and admission context
+by the global SHAP Analysis. The risk
+values that were calculated were plotted in streamlit for MIMIC branch. Rather the project overall
+results is an explainable pipeline risk-modelling for admission calibrated for public research data for
+research decision support not in actual clinical practice.
+6.2
+Limitation
+While the framework exhibits valuable research evidence, there are some limitations of the framework.
+
+Dataset limitations: The evidence for the primary hospitals is obtained from only one centre
+(MIMIC-IV). Public datasets such as NHANES, MIMIC-IV and WESAD are not overlapping,
+meaning that no same patient multimodal fusion can be validated. WESAD does not have any
+CKD labelling, and only has a stress-versus-baseline physiology proxy. NHANES is based on a
+single cycle survey design and a single visit for the labelling of CKD instead of confirmed
+longitudinal disease. The laboratory coverage in the admission window is less with restrictions
+on availability of creatinine in MIMIC.
+
+Model limitations: MIMIC discrimination is moderate, but the screening operating point is at
+the cost of a high number of false positive cases. Limited search for hyperparameters was
+performed and there was no external benchmark run on the same splits with published CKD
+systems. Late fusion does not support acquisition of cross-modal processing of features. The
+wearable and fusion limbs do not yield renal outcome prediction benefit for individual patients.
+
+Computational limitations: The tables in the bigger hospital are voluminous and need a lot of
+local storage and processing. Primary model is CPU-feasible, optional GPUs are used for mainly
+neural baselines and for branch training. No production level serving or monitoring system was
+provided.
+
+Clinical limitations: The system was never deployed or prospective evaluated and not expertly

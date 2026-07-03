@@ -1,0 +1,6 @@
+branch,model,threshold,accuracy,f1,auroc,ece,note
+MIMIC (primary),logreg_sigmoid_cal,0.16,0.6923,0.4145,0.7614,0.0203,Locked primary — hospital admission CKD proxy
+NHANES,xgboost,,0.966,0.7975,0.9922,0.0137,Separate population cohort — not primary hospital evidence
+WESAD (wearable proxy),wearable_rf,,0.8120805369127517,0.6666666666666666,0.7638561320754716,0.12337807606263983,Stress vs baseline — NOT CKD labeled
+Fusion (proxy holdout),static_weighted,0.795,0.1861111111111111,0.2544529262086514,0.4969223935528904,0.7480314435101336,No same-patient aligned multimodal cohort
+Fusion (proxy holdout),meta_logreg_branch_probs,0.485,0.2805555555555555,0.2578796561604584,0.519131924614506,0.3570380728378052,No same-patient aligned multimodal cohort

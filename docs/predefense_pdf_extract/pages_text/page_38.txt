@@ -1,0 +1,65 @@
+28
+went towards the final MIMIC experimental cohort.
+Table 4.1: Hyperparameter configuration summary
+Item
+Setting
+Preprocessing
+One-hot (categorical); median impute + standardize (numeric, train-only)
+Splits
+NHANES & MIMIC: grouped 60/20/20; WESAD: grouped 75/25; seed =
+42
+Primary threshold
+F1-max on validation; 0.16 (MIMIC)
+Primary model
+Logistic regression + sigmoid calibration →logreg_sigmoid_cal
+RF / XGBoost
+400 estimators; max_depth 16 / 5; imbalance-aware weighting
+Tabular MLP
+128 →64; dropout 0.2; AdamW 1 × 10 ⁻ ³ ; 40 epochs (NHANES), 35
+(MIMIC)
+Tabular ResMLP
+128-dim; 3 residual blocks; AdamW 8×10⁻⁴; 50 epochs
+Wearable
+(WESAD)
+Random Forest; stress vs baseline proxy
+MIMIC cohort
+30,000 admissions
+4.1.3
+Experiment Parameters Summary
+The principal configuration settings are summarized in Table 4.2.
+Table 4.2: Summary of experiment configuration.
+Parameter
+Configuration
+Programming language
+Python 3.12
+Development interface
+Jupyter Notebook
+Core libraries
+scikit-learn, PyTorch, XGBoost
+MIMIC cohort (final run)
+30,000 admissions
+Random seed
+42
+NHANES / MIMIC partition
+Grouped 60% / 20% / 20%
+WESAD partition
+Subject-grouped 75% / 25%
+Optimizer (deep tabular models)
+AdamW
+Learning rate (MLP / ResMLP)
+1×10⁻³ / 8×10⁻⁴
+Batch size
+64
+Loss function
+CrossEntropyLoss
+Threshold selection
+F1-maximization on validation (locked
+primary: 0.16)
+Locked primary model
+Calibrated logistic regression
+(logreg_sigmoid_cal)
+Explainability method
+SHAP
+4.1.4
+Clinical Decision-Support Prototype Setup
+The main branch artefacts from MIMIC admissions were used to create a clinical decision support

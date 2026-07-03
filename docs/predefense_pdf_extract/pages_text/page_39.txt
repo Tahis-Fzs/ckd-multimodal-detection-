@@ -1,0 +1,52 @@
+29
+prototype, namely a Streamlit web application. The interface features a calibrated CKD risk prediction,
+user-specified thresholding, rich examples of patient admissions in the MIMIC cohort, manual entry
+of risk factors, and a Global SHAP Summary tab for the held-out test set. This prototype does not
+feature NHANES, WESAD, or live multimodal fusion, and the hospital model is read-locked to
+support an auditable decision-support workflow. Throughout a research-only disclaimer is displayed,
+the system is meant for risk-states presentation and explanation purposes, not self-diagnosis and
+therapeutic suggestions.
+4.2
+Testing and Evaluation
+4.2.1
+Validation Strategy
+The model validation process was designed and developed on a staged approach, in order to provide
+to a certain extent a level of independence and to reduce potential optimism bias in the process and
+ultimately in provision of decision support reports. The methodological approach that was used was
+grouped holdout evaluation with these separation performed as disjoint(user level grouping) and
+disjoint(subject level grouping), respectively between NHANES and MIMIC-IV. The training and
+validation data were used for pre-processing the data, fitting the model, calibration and setting
+thresholds while the held out test partition was used for a final evaluation.
+3 different validation designs were added to the main branch of the hospital. With repeating the
+experiments some times each time with different random-seeds for the subject-groups, the stability of
+the performance with the resampled subject-groups was investigated. For temporal external validation,
+the subjects were divided into training,validation and test groups according to the first admission and
+models of the training group were used for the prediction of the test admission to approximate the
+temporal generalization. From the inability to perform the experiments at the patient-level between
+NHANES, MIMIC-IV, and WESAD, the multimodal integration path was assessed using a branch
+level proxy, and as such the multimodal integration results represent a demonstration of integration
+protocol, rather than proof of multimodal CKD detection in a prospective setting.
+To study the window records of the WESAD, a proxy label was adopted and used separately in the
+wearable branch. The NHANES and MIMIC databases were independent; therefore, the patient level
+testing was carried out separately for the two databases.
+4.2.2
+Evaluation Metrics
+The performance of models were evaluated in a combination of discrimination, classification and
+calibration aspects. To take the imbalanced CKD related labels into account, discrimination was
+assessed based on area under the receiver operating characteristic curve (AUROC) and the area under
+the precision, recall curve (AUPRC). The accuracy, F1-score, sensitivity and specificity at the
+selected operating points in the validation were used to classify the threshold. The quality of
+calibration was assessed using the expected calibration error (ECE) and brier score since it is
+important that probabilities are trustworthy in order to make decisions based on risks [14], [47]. For
+locked primary hospital model, the number of items counted is from the held out test set which is
+shown in the confusion matrix. Explainability was measured with the help of the SHAP of the main
+classifier [15], [48].
+4.2.3
+Testing Procedures
+Testing was set up at 5 steps of the procedure. Data-integrity testing was conducted and integrity of
+the split and collective grouping, along with the integrity of imputation/scaling being applied only to
+the training data, was confirmed. In this model-comparison test all the candidate classifiers were
+trained in the same manner with same pre-processing method and a comparison of classifiers was
+done on the validation data before reporting the test-set results. All three of the models – the
+uncalibrated hospital logistic regression model, the model calibrated by sigmoid function, and the
+model calibrated by isotonic method were compared and locked the primary reporting model. Various

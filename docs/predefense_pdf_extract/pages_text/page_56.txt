@@ -1,0 +1,34 @@
+46
+[42]
+E. H. Shortliffe and M. J. Sepúlveda, "Clinical decision support in the era of artificial
+intelligence," JAMA, vol. 320, no. 21, pp. 2199–2200, 2018, doi: 10.1001/jama.2018.17163.
+[43]
+K.-H. Yu et al., "Artificial intelligence in healthcare," Nat. Biomed. Eng., vol. 2, no. 10, pp.
+719–731, 2018, doi: 10.1038/s41551-018-0305-z.
+[44]
+M. T. Ribeiro et al., "'Why should I trust you?': Explaining the predictions of any classifier,"
+in Proc. 22nd ACM SIGKDD Int. Conf. Knowl. Discovery Data Mining (KDD), 2016, pp.
+1135–1144, doi: 10.1145/2939672.2939778.
+[45]
+R. R. Selvaraju et al., "Grad-CAM: Visual explanations from deep networks via gradient-
+based localization," in Proc. IEEE Int. Conf. Comput. Vis. (ICCV), 2017, pp. 618–626, doi:
+10.1109/ICCV.2017.74.
+[46]
+S. Tonekaboni et al., "What clinicians want: Contextualizing explainable machine learning for
+clinical end use," in Proc. Mach. Learn. Healthcare (MLHC), PMLR, vol. 106, 2019, pp. 359–
+380.
+[47]
+R. Caruana et al., "Intelligible models for healthcare: Predicting pneumonia risk and hospital
+30-day readmission," in Proc. 21st ACM SIGKDD Int. Conf. Knowl. Discovery Data Mining
+(KDD), 2015, pp. 1721–1730, doi: 10.1145/2783258.2788613.
+[48]
+S. M. Lundberg et al., "From local explanations to global understanding with explainable AI
+for trees," Nat. Mach. Intell., vol. 2, pp. 56–67, 2020, doi: 10.1038/s42256-019-0138-9.
+[49]
+M. Ghassemi et al., "A review of challenges and opportunities in machine learning for
+health," Lancet Digit. Health, vol. 3, no. 11, pp. e745–e750, 2021, doi: 10.1016/S2589-
+7500(21)00184-6.
+[50]
+A. Vellido, "The importance of interpretability and visualization in machine learning for
+applications in medicine and health care," Neural Comput. Appl., vol. 32, no. 24, pp. 18069–
+18083, 2020, doi: 10.1007/s00521-019-04051-w.

@@ -1,0 +1,21 @@
+18
+Basically, the web interface is broken up into the following topographic areas: a header area, sidebar
+area and three primary tabs. Header has a disclaimer not for clinical use and calls the prototype an
+admissions-risk decision-support interface. A description of the content of the prototype is provided in
+the about section, and information on repeatability for the frozen model setup in the sidebar, with a
+slider for the different models as a primary model to control the decision-threshold.
+The first tab is Example admission where you can select one of the admissions (from the MIMIC
+cohort) from the admission ID or the admission ID in the row index. After selection, an outline of the
+patient regarding age, sex, creatinine results, blood urea nitrogen results as well as type of admissions
+which is displayed in the interface. The prediction output features calibrated CKD related risk
+percentage, risk band, screening flag and decision threshold as metric cards. A progress bar is created
+to give insight into, whether a predicted probability is close to the selected threshold or not and an
+explanation chart is created which displays the top contributing features affecting this admission
+locally.
+Figure 3.3: UI Design Example Admission Tab
+The other tabular form Manual entry is a very simple information sheet for the input of admission
+details such as age, length of the stay, gender, admission type, type of insurance, race and marital
+status, some laboratory value (e.g. creatinine, urea nitrogen, potassium and sodium). This tab is a
+prototype only because there are unspecified model features with default values. Hence, for the sake
+of demonstration of cohort-based prediction, the example admission tab has been provided.
+Figure 3.4: UI Design Manual Entry Tab

@@ -1,0 +1,73 @@
+44
+References
+[1]
+R. Sawhney, A. Malik, S. Sharma, and V. Narayan, “A comparative assessment of artificial
+intelligence models used for early prediction and evaluation of chronic kidney disease,”
+Decision Analytics J., vol. 7, Art. no. 100169, 2023, doi: 10.1016/j.dajour.2023.100169.
+[2]
+National Kidney Foundation, "K/DOQI clinical practice guidelines for chronic kidney disease:
+evaluation, classification, and stratification," Am. J. Kidney Dis., vol. 39, suppl. 1, pp. S1–
+S266, 2002.
+[3]
+K. Kapur, M. Freidank, and M. Rebhan, “Understanding the chronic kidney disease landscape
+using patient representation learning from electronic health records,” medRxiv, Oct. 26, 2022,
+doi: 10.1101/2022.10.25.22280440.
+[4]
+Y. Li et al., "Deep learning for kidney disease diagnosis and classification from medical
+imaging: A review," IEEE Trans. Med. Imaging, vol. 39, no. 11, pp. 3452–3463, 2020.
+[5]
+P. Schmidt et al., "Introducing WESAD, a multimodal dataset for wearable stress and affect
+detection," in Proc. 20th ACM Int. Conf. Multimodal Interaction (ICMI), 2018, pp. 400–408,
+doi: 10.1145/3242969.3242985.
+[6]
+A. E. W. Johnson et al., "MIMIC-IV, a freely accessible electronic health record dataset," Sci.
+Data, vol. 10, no. 1, p. 1, 2023, doi: 10.1038/s41597-023-02114-9.
+[7]
+J. Ma, J. Wang, L. Lu, Y. Sun, M. Feng, F. Zhang, P. Shen, Z. Jiang, S. Hong, and L. Zhang,
+“Development and validation of a dynamic kidney failure prediction model based on deep
+learning: A real-world study with external validation,” arXiv preprint arXiv:2501.16388,
+2025, doi: 10.48550/arxiv.2501.16388.
+[8]
+A. Moore, B. Orset, A. Yassaee, B. Irving, and D. Morelli, “HEalthRecordBERT
+(HERBERT): Leveraging transformers on electronic health records for chronic kidney disease
+risk stratification,” ACM Trans. Comput. Healthcare, vol. 5, no. 3, pp. 1–18, 2024, doi:
+10.1145/3665899.
+[9]
+M. Binsawad, "Enhancing kidney disease prediction with optimized forest and ECG signals
+data," Heliyon, vol. 10, no. 10, Art. no. e30792, May 2024, doi:
+10.1016/j.heliyon.2024.e30792.
+[10]
+B. Khan, R. Naseem, F. Muhammad, G. Abbas, and S. Kim, “An empirical evaluation of
+machine learning techniques for chronic kidney disease prophecy,” IEEE Access, vol. 8, pp.
+55012–55022, 2020, doi: 10.1109/ACCESS.2020.2981689.
+[11]
+S. A. Alsuhibany et al., “Ensemble of deep learning based clinical decision support system for
+chronic kidney disease diagnosis in medical Internet of Things environment,” Comput. Intell.
+Neurosci., vol. 2021, Art. no. 4931450, 2021, doi: 10.1155/2021/4931450.
+[12]
+R. L. Galloway et al., "Image-guided methods for kidney assessment and clinical decision
+support," IEEE Trans. Biomed. Eng., vol. 68, no. 5, pp. 1442–1452, 2021.
+[13]
+A. Dashtban et al., “Identifying subtypes of chronic kidney disease with machine learning:
+development, internal validation and prognostic validation using linked electronic health
+records in 350,067 individuals,” EBioMedicine, vol. 89, Art. no. 104489, 2023, doi:
+10.1016/j.ebiom.2023.104489.
+[14]
+C. Guo et al., "On calibration of modern neural networks," in Proc. 34th Int. Conf. Mach.
+Learn. (ICML), 2017, pp. 1321–1330.
+[15]
+S. M. Lundberg and S.-I. Lee, "A unified approach to interpreting model predictions," in Proc.
+Adv. Neural Inf. Process. Syst. (NeurIPS), vol. 30, 2017, pp. 4765–4774.
+[16]
+Centers for Disease Control and Prevention (CDC), "National Health and Nutrition
+Examination Survey (NHANES)." [Online]. Available: https://www.cdc.gov/nchs/nhanes/
+[17]
+A. S. Levey et al., "A new equation to estimate glomerular filtration rate," Ann. Intern. Med.,
+vol. 150, no. 9, pp. 604–612, 2009, doi: 10.7326/0003-4819-150-9-200905050-00006.
+[18]
+KDIGO CKD Work Group, "KDIGO 2012 clinical practice guideline for the evaluation and
+management of chronic kidney disease," Kidney Int. Suppl., vol. 3, pp. 1–150, 2013.
+[19]
+N. A. Almansour et al., "Neural network and support vector machine for the prediction of
+chronic kidney disease: A comparative study," Comput. Biol. Med., vol. 109, pp. 101–111,
+2019, doi: 10.1016/j.compbiomed.2019.04.017.

@@ -1,0 +1,102 @@
+38
+branch) and scope limits definition for wearable proxy and fusion branches.
+The cost of money was low. No new hardware was purchased, and the software used were all free
+open-source such as Python, scikit-learn, PyTorch, XGBoost and Streamlit, as well as the free public
+research data such as NHANES and WESAD, with a credentialed MIMIC-IV access. No cloud
+service, production deployment fees.
+Table 5.1: Project budget summary.
+Cost item
+Estimated cost
+(BDT)
+Notes
+Hardware
+0
+Existing laptop/workstation
+Software
+0
+Open-source stack
+Cloud
+0
+Not required for locked results
+Data
+0
+Public / credentialed research datasets
+Deployment
+0
+Localhost research prototype only
+Maintenance
+0
+No production system
+Electricity / internet
+1,500–3,000
+Local runs and downloads
+Printing / binding
+2,000–4,000
+Thesis submission
+Total
+3,500–7,000
+Incidental student costs only
+Table 5.2: Alternate budget summary.
+Cost item
+Estimated cost
+(BDT)
+Rationale
+External SSD (1–2 TB)
+~6,000–10,000
+Faster local storage for large MIMIC
+tables
+Optional cloud GPU credits
+~3,000–8,000
+Speed up PyTorch tabular training only
+Cloud backup storage
+~1,000–2,000
+Artifact backup and team sharing
+Deployment (pilot server)
+~5,000–15,000 /
+year
+Not implemented; hypothetical hospital
+pilot only
+Total (alternate academic path)
+~10,000–20,000
+Still far below production clinical
+deployment cost
+5.4
+Complex Engineering Problem
+5.4.1
+Complex Problem Solving
+This section discusses how the project is related to problems of complex engineering. Using Table5.3
+the reason behind each mapping is given below.
+Table 5.3: Mapping with Complex Engineering Problem.
+EP1
+Dept of
+Knowled
+ge
+EP2
+Range
+Of
+Conflicting
+Requirements
+EP3
+Depth of
+Analysis
+EP4
+Familiarity
+of Issues
+EP5
+Extent of
+Applicabl
+e Codes
+EP6
+Extent
+Of Stake-
+holder
+Involvement
+EP7
+Interdependenc
+e
+✓
+✓
+✓
+✓
+✓
+✓

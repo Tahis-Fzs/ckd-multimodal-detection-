@@ -1,0 +1,48 @@
+32
+330 false negatives (5.5% of test admissions) and 1,468 false positives (24.5% of test admissions).
+Figure 4.2: MIMIC Confusion Matrix
+The operating points picked from the matrix will represent a screening type frame in deciding whether
+or not to flag the patient for further CKD follow-up and emphasising missed opportunity of the
+treatment when the patient is falsely not flagged compared to inconvenience in clinic. This however
+does not occur to a high extent and they should be marketed as risk stratification support and not as
+sole diagnosis [49].
+4.3.4
+Robustness and Temporal Validation
+The results of the supplementary validations are given in Table 4.5. There were no inconsistencies in
+discriminating the resampled groups of subjects for the logistic regression classifier with AUROC of
+0.769 ± 0.007 (95% CI: [0.764, 0.774]) and an F1 score of 0.401 ± 0.015 from grouped-split
+experiments with five different seeds. The results from the temporal external validation including
+6126 admissions of subjects who first came in contact with the hospital after the 80th percentile
+hospital-to-hospital admission time, were AUROC 0.771, F1 0.442, recall 0.715, specificity 0.680,
+and ECE 0.022, with an improvement of +0.010 AUROC compared to AUROC in the grouped-split
+test AUROC 0.761.
+These results show that there was not significant loss of the discrimination at the level of admission
+under either random partitions of the subjects or forward-in-time holds out, which involved subjects in
+the same hospital database. They do not, however, stand in for the external institutional validations
+which happen in another institution [6].
+Table 4.5: Supplementary MIMIC validation results.
+Validation type
+AUROC
+F1
+Recall
+Specificity
+ECE
+Repeated grouped
+split (mean ± std,
+5 seeds)
+0.769 ±
+0.007
+0.401 ± 0.015
+0.742 ± 0.061
+0.649 ± 0.061
+0.261 ±
+0.008
+Temporal external
+holdout
+0.771
+0.442
+0.715
+0.680
+0.022
+Note: repeated-seed robustness rows report the uncalibrated logistic regression configuration; the
+locked primary model retains ECE = 0.020 on the standard held-out test partition (Table 4.4).

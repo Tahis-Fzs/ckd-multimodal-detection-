@@ -1,0 +1,57 @@
+3
+architectures.
+IV. To evaluate each model using clinically relevant classification and calibration metrics, including
+AUROC, AUPRC, F1-score, sensitivity, specificity, balanced accuracy, Brier score, and
+expected calibration error.
+V.
+To implement
+an explainability
+component using
+feature-importance
+and SHAP-based
+interpretation so that model predictions can be reviewed in a clinically understandable manner.
+VI. To design a late-fusion strategy that combines independently trained branch-level probability
+outputs from available clinical and wearable-related data sources under the constraint that no
+same-patient aligned multimodal CKD cohort is available.
+VII. To develop a prototype decision-support interface that presents CKD risk prediction outputs and
+explanation results in a usable format for demonstration and research evaluation.
+The locked primary hospital model is a calibrated logistic regression (LR) classifier; the LR classifiers
+were used as well as deep tabular models and wearable encoders as branch baselines. Multimodal
+integration is said to be a reproducible later fusion method on different publicly available cohorts, but
+not a clinically proven same patient multimodal CKD detector.
+1.4
+Methodology
+This research starts with a pipeline that begins with three publicly available datasets: The NHANES
+dataset, a population level dataset, in which the primary focus is on clinical data [16], the MIMIC-IV
+dataset, a hospital-based EHR dataset [6] and the WESAD dataset with a primary focus on wearable
+physiology modalities [5]. All the data in each of these datasets were separately preprocessed and
+labels of CKD were created using clinical criteria; subject level leakage was avoided by sampling the
+data in to three such set of training, validation and testing [17], [18]. For each branch clinical features
+were extracted from the structured data and statistical features were extracted cross-sectionally
+windowing the data of the wearable signals. The discrimination and calibration performances of these
+models were used for model selection as several supervised learning models: deep tabular models,
+Logistic regression with the probability calibration, Random Forest model and XGBoost model, were
+trained at each branch. Level fusion with quality fusion based on normalized predictions performances
+[36] was performed to fuse the predictions of different modalities. To gain clinical transparency from
+the main clinical model, SHAP-based explainability was added to the model to produce explainable
+feature attribution scores towards that end [15], [48]. The AUROC score, AUPRC score, F1 score,
+calibration error and robustness were used to evaluate system performance with different experimental
+conditions.
+1.5
+Project Outcome
+The outcome of the research will be a simple system to detect the early CKD risk from the structured
+clinical data, hospital EHR data and wearable data. This system will not be used as medical diagnosis
+system.
+The accuracy, AUROC, F1-Score, Specificity, Recall and ECE is 69.2%, 0.7614, 0.4145, 0.6959,
+0.6739 and 0.0203 respectively of the primary calibrated MIMIC-IV model on held-out test set. This
+best model of NHANES clinical branch achieved an accuracy of 96.60%, AUROC of 0.9922 and F1
+score of 0.7975. This proxy Stress vs Baseline task was able to achieve an accuracy of the wearable of
+81.21%, an AUROC value of 0.7639 and F1-Score of the standard value 0.6667
+The project also prepared a late-fusion combination framework which can be tailored to each branch
+on the basis of a concept labeled as probability of right prediction. However, the datasets have not
+been same-patient aligned, and as there currently are no CKD labels available in the WESAD data,
+fusion is a research outcome evaluated, and for this reason a clinically-validated multimodal CKD
+system cannot be considered yet.
+The reproducible CKD prediction pipeline, branch assessed models, calibrated main disease model,
+explainability via SHAPs, multimodal fusion and prototype decision support interface are the outputs
+of end-to-end.

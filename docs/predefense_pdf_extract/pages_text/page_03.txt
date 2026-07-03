@@ -1,0 +1,25 @@
+II
+DECLARATION
+We hereby declare that this project has been done by us under the supervision of Dr. Naznin
+Sultana, Associate Professor, Department of Computer Science and Engineering, Daffodil
+International University. We also declare that neither this project nor any part of this project has
+been submitted elsewhere for the award of any degree or diploma.
+Supervised by:
+Dr. Naznin Sultana
+Associate Professor
+Department of Computer Science and Engineering
+Daffodil International University
+Co-Supervised by:
+Md. Abbas Ali Khan
+Assistant Professor
+Department of Computer Science and Engineering
+Daffodil International University
+Submitted by:
+Md. Shadman Tahsin
+Student ID: 0242220005101461
+Department of Computer Science and Engineering
+Daffodil International University
+Md. Shadman Hasin
+Student ID: 0242220005101462
+Department of Computer Science and Engineering
+Daffodil International University
