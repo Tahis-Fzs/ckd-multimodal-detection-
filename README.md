@@ -324,6 +324,16 @@ Final environment example:
 
 ---
 
+
+## Team
+
+CKD Multimodal Detection research project · **Daffodil International University**
+
+| Member | ID |
+|--------|-----|
+| Md. Shadman Hasin | 0242220005101462 |
+| Md. Shadman Tahsin | 0242220005101461 |
+
 ## Limitations
 
 - Single-hospital primary evidence from MIMIC
